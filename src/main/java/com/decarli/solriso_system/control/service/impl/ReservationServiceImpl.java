@@ -22,7 +22,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation getReservationByResponsableName(String name) {
+    public Reservation getReservationByResponsibleName(String name) {
         return null;
     }
 

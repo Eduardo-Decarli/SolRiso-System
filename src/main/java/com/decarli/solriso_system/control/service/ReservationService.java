@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ReservationService {
     Reservation createReservation(Reservation reservation);
-    Reservation getReservationByResponsableName(String name);
+    Reservation getReservationByResponsibleName(String name);
     List<Reservation> getReservationsToday();
     List<Reservation> getReservationsByRoom(int roomNumber);
     List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout);

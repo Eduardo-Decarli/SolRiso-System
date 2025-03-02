@@ -22,7 +22,7 @@ public class Reservation {
     private double entryValue;
     private double totalValue;
 
-    private ResponsableBooking responsable;
+    private ResponsibleBooking responsible;
     private Parking parking;
 
 

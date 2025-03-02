@@ -35,7 +35,7 @@ public class ReservationController {
     }
 
     @GetMapping("/byResponsableName")
-    public ResponseEntity<List<Reservation>> getReservationByResponsableName(@PathVariable String responsableName) {
+    public ResponseEntity<List<Reservation>> getReservationByResponsibleName(@PathVariable String responsableName) {
         return null;
     }
 
