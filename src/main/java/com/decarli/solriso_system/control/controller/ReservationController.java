@@ -1,5 +1,6 @@
-package com.decarli.solriso_system.model.control.controller;
+package com.decarli.solriso_system.control.controller;
 
+import com.decarli.solriso_system.control.service.ReservationService;
 import com.decarli.solriso_system.model.entities.Reservation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,9 +12,16 @@ import java.util.UUID;
 @RequestMapping("/api/v1/reservation")
 public class ReservationController {
 
+    private final ReservationService reservationService;
+
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
+    }
+
     @PostMapping
     public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation) {
-        return null;
+        Reservation r = reservationService.createReservation(reservation);
+        return ResponseEntity.ok().body(r);
     }
 
     @GetMapping
