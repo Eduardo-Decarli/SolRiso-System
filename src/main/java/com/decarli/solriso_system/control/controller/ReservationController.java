@@ -1,6 +1,7 @@
 package com.decarli.solriso_system.control.controller;
 
 import com.decarli.solriso_system.control.service.ReservationService;
+import com.decarli.solriso_system.model.dto.ReservationResponseDto;
 import com.decarli.solriso_system.model.entities.Reservation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<Reservation> addReservation(@RequestBody Reservation reservation) {
-        Reservation r = reservationService.createReservation(reservation);
+    public ResponseEntity<ReservationResponseDto> addReservation(@RequestBody Reservation reservation) {
+        ReservationResponseDto r = reservationService.createReservation(reservation);
         return ResponseEntity.ok().body(r);
     }
 
@@ -34,7 +35,7 @@ public class ReservationController {
         return null;
     }
 
-    @GetMapping("/byResponsableName")
+    @GetMapping("/byResponsibleName")
     public ResponseEntity<List<Reservation>> getReservationByResponsibleName(@PathVariable String responsableName) {
         return null;
     }

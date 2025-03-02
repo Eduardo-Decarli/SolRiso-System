@@ -2,6 +2,8 @@ package com.decarli.solriso_system.control.service.impl;
 
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
 import com.decarli.solriso_system.control.service.ReservationService;
+import com.decarli.solriso_system.model.dto.ReservationResponseDto;
+import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
 
 import java.time.LocalDate;
@@ -16,33 +18,33 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation createReservation(Reservation reservation) {
+    public ReservationResponseDto createReservation(Reservation reservation) {
         Reservation r = reservationRepository.save(reservation);
-        return r;
+        return ReservationMapper.INSTANCE.toDto(r);
     }
 
     @Override
-    public Reservation getReservationByResponsibleName(String name) {
+    public ReservationResponseDto getReservationByResponsibleName(String name) {
         return null;
     }
 
     @Override
-    public List<Reservation> getReservationsToday() {
+    public List<ReservationResponseDto> getReservationsToday() {
         return List.of();
     }
 
     @Override
-    public List<Reservation> getReservationsByRoom(int roomNumber) {
+    public List<ReservationResponseDto> getReservationsByRoom(int roomNumber) {
         return List.of();
     }
 
     @Override
-    public List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
+    public List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
         return List.of();
     }
 
     @Override
-    public Reservation updateReservation(Reservation reservation) {
+    public ReservationResponseDto updateReservation(Reservation reservation) {
         return null;
     }
 
