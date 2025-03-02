@@ -1,4 +1,4 @@
-package com.decarli.solriso_system.model.controller;
+package com.decarli.solriso_system.model.control.controller;
 
 import com.decarli.solriso_system.model.entities.Reservation;
 import org.springframework.http.ResponseEntity;
