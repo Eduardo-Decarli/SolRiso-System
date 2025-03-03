@@ -2,13 +2,17 @@ package com.decarli.solriso_system.control.service.impl;
 
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
 import com.decarli.solriso_system.control.service.ReservationService;
+import com.decarli.solriso_system.model.dto.ReservationCreateDto;
 import com.decarli.solriso_system.model.dto.ReservationResponseDto;
+import com.decarli.solriso_system.model.dto.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Service
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
@@ -18,8 +22,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationResponseDto createReservation(Reservation reservation) {
-        Reservation r = reservationRepository.save(reservation);
+    public ReservationResponseDto createReservation(ReservationCreateDto reservation) {
+        Reservation r = reservationRepository.save(ReservationMapper.INSTANCE.toReservation(reservation));
         return ReservationMapper.INSTANCE.toDto(r);
     }
 
@@ -44,7 +48,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationResponseDto updateReservation(Reservation reservation) {
+    public ReservationResponseDto updateReservation(ReservationUpdateDto reservation) {
         return null;
     }
 

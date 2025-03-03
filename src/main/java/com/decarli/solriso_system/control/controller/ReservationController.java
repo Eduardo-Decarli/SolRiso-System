@@ -1,7 +1,9 @@
 package com.decarli.solriso_system.control.controller;
 
 import com.decarli.solriso_system.control.service.ReservationService;
+import com.decarli.solriso_system.model.dto.ReservationCreateDto;
 import com.decarli.solriso_system.model.dto.ReservationResponseDto;
+import com.decarli.solriso_system.model.dto.ReservationUpdateDto;
 import com.decarli.solriso_system.model.entities.Reservation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +22,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResponseDto> addReservation(@RequestBody Reservation reservation) {
+    public ResponseEntity<ReservationResponseDto> addReservation(@RequestBody ReservationCreateDto reservation) {
         ReservationResponseDto r = reservationService.createReservation(reservation);
         return ResponseEntity.ok().body(r);
     }
@@ -41,7 +43,7 @@ public class ReservationController {
     }
 
     @PutMapping
-    public ResponseEntity<Reservation> updateReservation(@RequestBody Reservation reservation) {
+    public ResponseEntity<Reservation> updateReservation(@RequestBody ReservationUpdateDto reservation) {
         return null;
     }
 

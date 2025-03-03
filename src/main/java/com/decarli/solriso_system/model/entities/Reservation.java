@@ -6,14 +6,13 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Document(collection = "reservations")
 public class Reservation {
 
     @Id
-    private UUID id;
+    private String id;
     private int roomNumber;
     private int quantGuests;
     private TypeReservation typeReservation;
@@ -24,6 +23,4 @@ public class Reservation {
 
     private ResponsibleBooking responsible;
     private Parking parking;
-
-
 }

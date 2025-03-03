@@ -8,8 +8,6 @@ import lombok.Data;
 public class ResponsibleBooking {
     @NotNull(message = "Responsible name can't be null")
     private String name;
-    @NotNull(message = "Responsible last name can't be null")
-    private String lastName;
     private String phoneNumber;
     @Email(message = "Insert a valid email")
     private String email;
