@@ -15,36 +15,40 @@ import java.util.List;
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
-    private final ReservationRepository reservationRepository;
+    private final ReservationRepository repository;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
+    public ReservationServiceImpl(ReservationRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public ReservationResponseDto createReservation(ReservationCreateDto reservation) {
-        Reservation r = reservationRepository.save(ReservationMapper.INSTANCE.toReservation(reservation));
+        Reservation r = repository.save(ReservationMapper.INSTANCE.toReservation(reservation));
         return ReservationMapper.INSTANCE.toDto(r);
     }
 
     @Override
-    public ReservationResponseDto getReservationByResponsibleName(String name) {
-        return null;
-    }
-
-    @Override
     public List<ReservationResponseDto> getReservationsToday() {
-        return List.of();
+        List<Reservation> reservations = repository.findReservationByCheckin(LocalDate.now());
+        return ReservationMapper.INSTANCE.toDtoList(reservations);
     }
 
     @Override
     public List<ReservationResponseDto> getReservationsByRoom(int roomNumber) {
-        return List.of();
+        List<Reservation> reservations = repository.findReservationByRoomNumber(roomNumber);
+        return ReservationMapper.INSTANCE.toDtoList(reservations);
+    }
+
+    @Override
+    public List<ReservationResponseDto> getReservationsByResponsibleName(String name) {
+        List<Reservation> reservations = repository.findReservationByResponsibleName(name);
+        return ReservationMapper.INSTANCE.toDtoList(reservations);
     }
 
     @Override
     public List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
-        return List.of();
+        List<Reservation> reservations = repository.findReservationByCheckinAfterAndCheckoutBefore(checkin, checkout);
+        return ReservationMapper.INSTANCE.toDtoList(reservations);
     }
 
     @Override

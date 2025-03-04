@@ -8,6 +8,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper(componentModel = "spring")
 public interface ReservationMapper {
     ReservationMapper INSTANCE = Mappers.getMapper(ReservationMapper.class);
@@ -18,5 +20,9 @@ public interface ReservationMapper {
     @Mapping(target = "id", ignore = true)
     Reservation toReservation(ReservationUpdateDto dto);
 
+    List<Reservation> toReservationList(List<ReservationCreateDto> dtoList);
+
     ReservationResponseDto toDto(Reservation reservation);
+
+    List<ReservationResponseDto> toDtoList(List<Reservation> reservations);
 }
