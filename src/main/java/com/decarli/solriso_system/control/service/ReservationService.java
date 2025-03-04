@@ -11,10 +11,11 @@ import java.util.List;
 
 public interface ReservationService {
     ReservationResponseDto createReservation(ReservationCreateDto reservation);
+    Reservation getReservationById(String id);
     List<ReservationResponseDto> getReservationsToday();
     List<ReservationResponseDto> getReservationsByRoom(int roomNumber);
     List<ReservationResponseDto> getReservationsByResponsibleName(String name);
     List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout);
     ReservationResponseDto updateReservation(ReservationUpdateDto reservation);
-    void deleteReservation(Reservation reservation);
+    void deleteReservation(String id);
 }

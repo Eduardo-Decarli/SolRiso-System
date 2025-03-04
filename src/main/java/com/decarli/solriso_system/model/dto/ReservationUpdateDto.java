@@ -12,6 +12,7 @@ import java.time.LocalDate;
 @Data
 public class ReservationUpdateDto {
 
+    private String id;
     @NotNull(message = "Room number can't be null")
     private int roomNumber;
     @NotNull(message = "quantity guests can't be null")

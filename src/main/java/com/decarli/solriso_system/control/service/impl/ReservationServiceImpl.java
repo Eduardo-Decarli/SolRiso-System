@@ -6,7 +6,10 @@ import com.decarli.solriso_system.model.dto.ReservationCreateDto;
 import com.decarli.solriso_system.model.dto.ReservationResponseDto;
 import com.decarli.solriso_system.model.dto.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
+import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.entities.Reservation;
+import com.decarli.solriso_system.model.entities.ResponsibleBooking;
+import com.decarli.solriso_system.model.enums.TypeReservation;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -25,6 +28,12 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationResponseDto createReservation(ReservationCreateDto reservation) {
         Reservation r = repository.save(ReservationMapper.INSTANCE.toReservation(reservation));
         return ReservationMapper.INSTANCE.toDto(r);
+    }
+
+    @Override
+    public Reservation getReservationById(String id) {
+        Reservation reservation = repository.findReservationById(id);
+        return reservation;
     }
 
     @Override
@@ -47,17 +56,29 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
-        List<Reservation> reservations = repository.findReservationByCheckinAfterAndCheckoutBefore(checkin, checkout);
+        List<Reservation> reservations = repository.findReservationBetween(checkin, checkout);
         return ReservationMapper.INSTANCE.toDtoList(reservations);
     }
 
     @Override
-    public ReservationResponseDto updateReservation(ReservationUpdateDto reservation) {
-        return null;
+    public ReservationResponseDto updateReservation(ReservationUpdateDto update) {
+        Reservation reservation = getReservationById(update.getId());
+
+        reservation.setRoomNumber(update.getRoomNumber());
+        reservation.setQuantGuests(update.getQuantGuests());
+        reservation.setTypeReservation(update.getTypeReservation());
+        reservation.setCheckin(update.getCheckin());
+        reservation.setCheckout(update.getCheckout());
+        reservation.setEntryValue(update.getEntryValue());
+        reservation.setTotalValue(update.getTotalValue());
+        reservation.setResponsible(update.getResponsible());
+        reservation.setParking(update.getParking());
+
+        return ReservationMapper.INSTANCE.toDto(repository.save(reservation));
     }
 
     @Override
-    public void deleteReservation(Reservation reservation) {
-
+    public void deleteReservation(String id) {
+        repository.deleteById(id);
     }
 }
