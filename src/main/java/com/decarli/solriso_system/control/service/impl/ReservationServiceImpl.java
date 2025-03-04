@@ -6,7 +6,10 @@ import com.decarli.solriso_system.model.dto.ReservationCreateDto;
 import com.decarli.solriso_system.model.dto.ReservationResponseDto;
 import com.decarli.solriso_system.model.dto.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
+import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.entities.Reservation;
+import com.decarli.solriso_system.model.entities.ResponsibleBooking;
+import com.decarli.solriso_system.model.enums.TypeReservation;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,45 +18,67 @@ import java.util.List;
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
-    private final ReservationRepository reservationRepository;
+    private final ReservationRepository repository;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository) {
-        this.reservationRepository = reservationRepository;
+    public ReservationServiceImpl(ReservationRepository repository) {
+        this.repository = repository;
     }
 
     @Override
     public ReservationResponseDto createReservation(ReservationCreateDto reservation) {
-        Reservation r = reservationRepository.save(ReservationMapper.INSTANCE.toReservation(reservation));
+        Reservation r = repository.save(ReservationMapper.INSTANCE.toReservation(reservation));
         return ReservationMapper.INSTANCE.toDto(r);
     }
 
     @Override
-    public ReservationResponseDto getReservationByResponsibleName(String name) {
-        return null;
+    public Reservation getReservationById(String id) {
+        Reservation reservation = repository.findReservationById(id);
+        return reservation;
     }
 
     @Override
     public List<ReservationResponseDto> getReservationsToday() {
-        return List.of();
+        List<Reservation> reservations = repository.findReservationByCheckin(LocalDate.now());
+        return ReservationMapper.INSTANCE.toDtoList(reservations);
     }
 
     @Override
     public List<ReservationResponseDto> getReservationsByRoom(int roomNumber) {
-        return List.of();
+        List<Reservation> reservations = repository.findReservationByRoomNumber(roomNumber);
+        return ReservationMapper.INSTANCE.toDtoList(reservations);
+    }
+
+    @Override
+    public List<ReservationResponseDto> getReservationsByResponsibleName(String name) {
+        List<Reservation> reservations = repository.findReservationByResponsibleName(name);
+        return ReservationMapper.INSTANCE.toDtoList(reservations);
     }
 
     @Override
     public List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
-        return List.of();
+        List<Reservation> reservations = repository.findReservationBetween(checkin, checkout);
+        return ReservationMapper.INSTANCE.toDtoList(reservations);
     }
 
     @Override
-    public ReservationResponseDto updateReservation(ReservationUpdateDto reservation) {
-        return null;
+    public ReservationResponseDto updateReservation(ReservationUpdateDto update) {
+        Reservation reservation = getReservationById(update.getId());
+
+        reservation.setRoomNumber(update.getRoomNumber());
+        reservation.setQuantGuests(update.getQuantGuests());
+        reservation.setTypeReservation(update.getTypeReservation());
+        reservation.setCheckin(update.getCheckin());
+        reservation.setCheckout(update.getCheckout());
+        reservation.setEntryValue(update.getEntryValue());
+        reservation.setTotalValue(update.getTotalValue());
+        reservation.setResponsible(update.getResponsible());
+        reservation.setParking(update.getParking());
+
+        return ReservationMapper.INSTANCE.toDto(repository.save(reservation));
     }
 
     @Override
-    public void deleteReservation(Reservation reservation) {
-
+    public void deleteReservation(String id) {
+        repository.deleteById(id);
     }
 }

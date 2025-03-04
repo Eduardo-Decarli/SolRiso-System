@@ -4,52 +4,72 @@ import com.decarli.solriso_system.control.service.ReservationService;
 import com.decarli.solriso_system.model.dto.ReservationCreateDto;
 import com.decarli.solriso_system.model.dto.ReservationResponseDto;
 import com.decarli.solriso_system.model.dto.ReservationUpdateDto;
+import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
+import jakarta.websocket.server.PathParam;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/reservation")
 public class ReservationController {
 
-    private final ReservationService reservationService;
+    private final ReservationService service;
 
-    public ReservationController(ReservationService reservationService) {
-        this.reservationService = reservationService;
+    public ReservationController(ReservationService service) {
+        this.service = service;
     }
 
     @PostMapping
     public ResponseEntity<ReservationResponseDto> addReservation(@RequestBody ReservationCreateDto reservation) {
-        ReservationResponseDto r = reservationService.createReservation(reservation);
-        return ResponseEntity.ok().body(r);
+        ReservationResponseDto response = service.createReservation(reservation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
     @GetMapping
-    public ResponseEntity<List<Reservation>> getReservationsByToday() {
-        return null;
+    public ResponseEntity<List<ReservationResponseDto>> getReservationsByToday() {
+        List<ReservationResponseDto> response = service.getReservationsToday();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+
+    @GetMapping("/id")
+    public ResponseEntity<ReservationResponseDto> getReservationsById(@RequestParam String id) {
+        Reservation response = service.getReservationById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(ReservationMapper.INSTANCE.toDto(response));
     }
 
     @GetMapping("/byRoom")
-    public ResponseEntity<List<Reservation>> getReservationByRoom(@PathVariable int roomNumber) {
-        return null;
+    public ResponseEntity<List<ReservationResponseDto>> getReservationsByRoom(@RequestParam int roomNumber) {
+        List<ReservationResponseDto> response = service.getReservationsByRoom(roomNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @GetMapping("/byResponsibleName")
-    public ResponseEntity<List<Reservation>> getReservationByResponsibleName(@PathVariable String responsableName) {
-        return null;
+    public ResponseEntity<List<ReservationResponseDto>> getReservationsByResponsibleName(@RequestParam String responsableName) {
+        List<ReservationResponseDto> response = service.getReservationsByResponsibleName(responsableName);
+        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+    }
+
+    @GetMapping("/byBetween")
+    public ResponseEntity<List<ReservationResponseDto>> getReservationsByBetween(@RequestParam LocalDate checkin, @RequestParam LocalDate checkout) {
+        List<ReservationResponseDto> response = service.getReservationsBetween(checkin, checkout);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @PutMapping
-    public ResponseEntity<Reservation> updateReservation(@RequestBody ReservationUpdateDto reservation) {
-        return null;
+    public ResponseEntity<ReservationResponseDto> updateReservation(@RequestBody ReservationUpdateDto reservation) {
+        ReservationResponseDto response = service.updateReservation(reservation);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
     @DeleteMapping
-    public ResponseEntity<Reservation> deleteReservation(@PathVariable UUID id) {
-        return null;
+    public ResponseEntity<Void> deleteReservation(@RequestParam String id) {
+        service.deleteReservation(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
 }
