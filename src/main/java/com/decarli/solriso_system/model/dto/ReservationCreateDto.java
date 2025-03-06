@@ -2,6 +2,7 @@ package com.decarli.solriso_system.model.dto;
 
 import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.entities.ResponsibleBooking;
+import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotNull;
@@ -17,6 +18,8 @@ public class ReservationCreateDto {
     @NotNull(message = "quantity guests can't be null")
     private int quantGuests;
     private TypeReservation typeReservation;
+    @NotNull(message = "Status can't be null")
+    private Status status;
     @NotNull(message = "Date of Check-in can't be null")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkin;

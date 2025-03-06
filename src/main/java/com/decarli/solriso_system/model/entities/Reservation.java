@@ -1,5 +1,6 @@
 package com.decarli.solriso_system.model.entities;
 
+import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -15,6 +16,7 @@ public class Reservation {
     private String id;
     private int roomNumber;
     private int quantGuests;
+    private Status status;
     private TypeReservation typeReservation;
     private LocalDate checkin;
     private LocalDate checkout;
