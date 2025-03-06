@@ -14,7 +14,7 @@ public class Reservation {
 
     @Id
     private String id;
-    private int roomNumber;
+    private int room;
     private int quantGuests;
     private Status status;
     private TypeReservation typeReservation;

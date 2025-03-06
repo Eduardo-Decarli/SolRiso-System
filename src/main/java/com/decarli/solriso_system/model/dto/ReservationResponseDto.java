@@ -15,7 +15,7 @@ public class ReservationResponseDto {
 
     private String id;
     @NotNull(message = "Room number can't be null")
-    private int roomNumber;
+    private int room;
     @NotNull(message = "quantity guests can't be null")
     private int quantGuests;
     private TypeReservation typeReservation;

@@ -43,8 +43,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsByRoom(int roomNumber) {
-        List<Reservation> reservations = repository.findReservationByRoomNumber(roomNumber);
+    public List<ReservationResponseDto> getReservationsByRoom(int room) {
+        List<Reservation> reservations = repository.findReservationByRoom(room);
         return ReservationMapper.INSTANCE.toDtoList(reservations);
     }
 
@@ -64,9 +64,10 @@ public class ReservationServiceImpl implements ReservationService {
     public ReservationResponseDto updateReservation(ReservationUpdateDto update) {
         Reservation reservation = getReservationById(update.getId());
 
-        reservation.setRoomNumber(update.getRoomNumber());
+        reservation.setRoom(update.getRoom());
         reservation.setQuantGuests(update.getQuantGuests());
         reservation.setTypeReservation(update.getTypeReservation());
+        reservation.setStatus(update.getStatus());
         reservation.setCheckin(update.getCheckin());
         reservation.setCheckout(update.getCheckout());
         reservation.setEntryValue(update.getEntryValue());

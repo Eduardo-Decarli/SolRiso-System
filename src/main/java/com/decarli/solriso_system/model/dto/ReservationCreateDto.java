@@ -14,7 +14,7 @@ import java.time.LocalDate;
 public class ReservationCreateDto {
 
     @NotNull(message = "Room number can't be null")
-    private int roomNumber;
+    private int room;
     @NotNull(message = "quantity guests can't be null")
     private int quantGuests;
     private TypeReservation typeReservation;

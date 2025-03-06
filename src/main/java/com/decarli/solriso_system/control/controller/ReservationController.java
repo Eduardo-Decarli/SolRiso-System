@@ -6,7 +6,7 @@ import com.decarli.solriso_system.model.dto.ReservationResponseDto;
 import com.decarli.solriso_system.model.dto.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
-import jakarta.websocket.server.PathParam;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResponseDto> addReservation(@RequestBody ReservationCreateDto reservation) {
+    public ResponseEntity<ReservationResponseDto> addReservation(@RequestBody @Valid ReservationCreateDto reservation) {
         ReservationResponseDto response = service.createReservation(reservation);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -43,8 +43,8 @@ public class ReservationController {
     }
 
     @GetMapping("/byRoom")
-    public ResponseEntity<List<ReservationResponseDto>> getReservationsByRoom(@RequestParam int roomNumber) {
-        List<ReservationResponseDto> response = service.getReservationsByRoom(roomNumber);
+    public ResponseEntity<List<ReservationResponseDto>> getReservationsByRoom(@RequestParam int room) {
+        List<ReservationResponseDto> response = service.getReservationsByRoom(room);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 
@@ -61,7 +61,7 @@ public class ReservationController {
     }
 
     @PutMapping
-    public ResponseEntity<ReservationResponseDto> updateReservation(@RequestBody ReservationUpdateDto reservation) {
+    public ResponseEntity<ReservationResponseDto> updateReservation(@RequestBody @Valid ReservationUpdateDto reservation) {
         ReservationResponseDto response = service.updateReservation(reservation);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
