@@ -82,6 +82,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getAllReservations() {
-        return List.of();
+        List<Reservation> reservations = repository.findAll();
+        return reservations;
     }
 }
