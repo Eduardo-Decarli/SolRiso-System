@@ -17,4 +17,5 @@ public interface ReservationService {
     List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout);
     ReservationResponseDto updateReservation(ReservationUpdateDto reservation);
     void deleteReservation(String id);
+    List<Reservation> getAllReservations();
 }

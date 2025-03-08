@@ -42,6 +42,12 @@ public class ReservationController {
         return ResponseEntity.status(HttpStatus.OK).body(ReservationMapper.INSTANCE.toDto(response));
     }
 
+    @GetMapping("/allReservations")
+    public ResponseEntity<List<ReservationResponseDto>> getAllReservations() {
+        List<Reservation> response = service.getAllReservations();
+        return ResponseEntity.status(HttpStatus.OK).body(ReservationMapper.INSTANCE.toDtoList(response));
+    }
+
     @GetMapping("/byRoom")
     public ResponseEntity<List<ReservationResponseDto>> getReservationsByRoom(@RequestParam int room) {
         List<ReservationResponseDto> response = service.getReservationsByRoom(room);
