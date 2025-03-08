@@ -1,10 +1,10 @@
 package com.decarli.solriso_system.control.service;
 
-import com.decarli.solriso_system.model.dto.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.ReservationResponseDto;
-import com.decarli.solriso_system.model.dto.ReservationUpdateDto;
+import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
+import com.decarli.solriso_system.model.dto.reservation.ReservationResponseDto;
+import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
 import com.decarli.solriso_system.model.entities.Reservation;
-import org.springframework.data.mongodb.repository.Query;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;

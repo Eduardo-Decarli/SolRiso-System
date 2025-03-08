@@ -1,4 +1,4 @@
-package com.decarli.solriso_system.model.dto;
+package com.decarli.solriso_system.model.dto.reservation;
 
 import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.entities.ResponsibleBooking;
