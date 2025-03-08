@@ -42,4 +42,12 @@ public class AuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return "User " + email + " logged in successfully";
     }
+
+    public Admin getAdminById(String id) {
+        return adminRepository.findById(id).orElse(null);
+    }
+
+    public Admin getAdminByEmail(String email) {
+        return adminRepository.findByEmail(email);
+    }
 }
