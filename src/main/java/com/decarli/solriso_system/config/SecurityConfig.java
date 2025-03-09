@@ -25,6 +25,7 @@ public class SecurityConfig {
                 )
                 .csrf(csrf -> csrf.disable())
                 .httpBasic(Customizer.withDefaults())
+                .formLogin(Customizer.withDefaults())
                 .logout()
                     .permitAll();
 
