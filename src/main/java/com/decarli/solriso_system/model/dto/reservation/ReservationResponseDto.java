@@ -5,6 +5,7 @@ import com.decarli.solriso_system.model.entities.ResponsibleBooking;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
@@ -32,6 +33,9 @@ public class ReservationResponseDto {
     private double totalValue;
 
     @NotNull(message = "The responsible of the reservation can't be null")
+    @Valid
     private ResponsibleBooking responsible;
+
+    @Valid
     private Parking parking;
 }

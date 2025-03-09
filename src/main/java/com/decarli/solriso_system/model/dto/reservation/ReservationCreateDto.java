@@ -5,12 +5,17 @@ import com.decarli.solriso_system.model.entities.ResponsibleBooking;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReservationCreateDto {
 
     @NotNull(message = "Room number can't be null")
@@ -31,6 +36,9 @@ public class ReservationCreateDto {
     private double totalValue;
 
     @NotNull(message = "The responsible of the reservation can't be null")
+    @Valid
     private ResponsibleBooking responsible;
+
+    @Valid
     private Parking parking;
 }

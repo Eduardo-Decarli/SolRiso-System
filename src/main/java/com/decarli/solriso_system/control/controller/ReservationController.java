@@ -25,7 +25,7 @@ public class ReservationController {
     }
 
     @PostMapping
-    public ResponseEntity<ReservationResponseDto> addReservation(@RequestBody @Valid ReservationCreateDto reservation) {
+    public ResponseEntity<ReservationResponseDto> addReservation(@Valid @RequestBody ReservationCreateDto reservation) {
         ReservationResponseDto response = service.createReservation(reservation);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
