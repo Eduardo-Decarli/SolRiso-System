@@ -3,14 +3,17 @@ package com.decarli.solriso_system.control.service.impl;
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
 import com.decarli.solriso_system.control.service.ReservationService;
 import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationResponseDto;
 import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
+import com.decarli.solriso_system.model.exceptions.RoomReservationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ReservationServiceImpl implements ReservationService {
@@ -22,9 +25,17 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationResponseDto createReservation(ReservationCreateDto reservation) {
+    public Reservation createReservation(ReservationCreateDto reservation) {
+        List<Reservation> reservationsBetween = getReservationsBetween(reservation.getCheckin(), reservation.getCheckout());
+        for(Reservation r : reservationsBetween) {
+            if(r.getRoom() == reservation.getRoom()) {
+                throw new RoomReservationException("This room is already occupied");
+            }
+        }
+
+
         Reservation r = repository.save(ReservationMapper.INSTANCE.toReservation(reservation));
-        return ReservationMapper.INSTANCE.toDto(r);
+        return r;
     }
 
     @Override
@@ -34,31 +45,31 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsToday() {
+    public List<Reservation> getReservationsToday() {
         List<Reservation> reservations = repository.findReservationByCheckin(LocalDate.now());
-        return ReservationMapper.INSTANCE.toDtoList(reservations);
+        return reservations;
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsByRoom(int room) {
+    public List<Reservation> getReservationsByRoom(int room) {
         List<Reservation> reservations = repository.findReservationByRoom(room);
-        return ReservationMapper.INSTANCE.toDtoList(reservations);
+        return reservations;
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsByResponsibleName(String name) {
+    public List<Reservation> getReservationsByResponsibleName(String name) {
         List<Reservation> reservations = repository.findReservationByResponsibleName(name);
-        return ReservationMapper.INSTANCE.toDtoList(reservations);
+        return reservations;
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
+    public List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
         List<Reservation> reservations = repository.findReservationBetween(checkin, checkout);
-        return ReservationMapper.INSTANCE.toDtoList(reservations);
+        return reservations;
     }
 
     @Override
-    public ReservationResponseDto updateReservation(ReservationUpdateDto update) {
+    public Reservation updateReservation(ReservationUpdateDto update) {
         Reservation reservation = getReservationById(update.getId());
 
         reservation.setRoom(update.getRoom());
@@ -72,7 +83,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setResponsible(update.getResponsible());
         reservation.setParking(update.getParking());
 
-        return ReservationMapper.INSTANCE.toDto(repository.save(reservation));
+        return reservation;
     }
 
     @Override

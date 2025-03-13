@@ -19,57 +19,59 @@ import java.util.List;
 public class ReservationController {
 
     private final ReservationService service;
+    private final ReservationMapper mapper;
 
-    public ReservationController(ReservationService service) {
+    public ReservationController(ReservationService service, ReservationMapper mapper) {
         this.service = service;
+        this.mapper = mapper;
     }
 
     @PostMapping
     public ResponseEntity<ReservationResponseDto> addReservation(@Valid @RequestBody ReservationCreateDto reservation) {
-        ReservationResponseDto response = service.createReservation(reservation);
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        Reservation response = service.createReservation(reservation);
+        return ResponseEntity.status(HttpStatus.CREATED).body(mapper.toDto(response));
     }
 
     @GetMapping
     public ResponseEntity<List<ReservationResponseDto>> getReservationsByToday() {
-        List<ReservationResponseDto> response = service.getReservationsToday();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        List<Reservation> response = service.getReservationsToday();
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.toDtoList(response));
     }
 
     @GetMapping("/id")
     public ResponseEntity<ReservationResponseDto> getReservationsById(@RequestParam String id) {
         Reservation response = service.getReservationById(id);
-        return ResponseEntity.status(HttpStatus.OK).body(ReservationMapper.INSTANCE.toDto(response));
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(response));
     }
 
     @GetMapping("/allReservations")
     public ResponseEntity<List<ReservationResponseDto>> getAllReservations() {
         List<Reservation> response = service.getAllReservations();
-        return ResponseEntity.status(HttpStatus.OK).body(ReservationMapper.INSTANCE.toDtoList(response));
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.toDtoList(response));
     }
 
     @GetMapping("/byRoom")
     public ResponseEntity<List<ReservationResponseDto>> getReservationsByRoom(@RequestParam int room) {
-        List<ReservationResponseDto> response = service.getReservationsByRoom(room);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        List<Reservation> response = service.getReservationsByRoom(room);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.toDtoList(response));
     }
 
     @GetMapping("/byResponsibleName")
     public ResponseEntity<List<ReservationResponseDto>> getReservationsByResponsibleName(@RequestParam String responsableName) {
-        List<ReservationResponseDto> response = service.getReservationsByResponsibleName(responsableName);
-        return ResponseEntity.status(HttpStatus.FOUND).body(response);
+        List<Reservation> response = service.getReservationsByResponsibleName(responsableName);
+        return ResponseEntity.status(HttpStatus.FOUND).body(mapper.toDtoList(response));
     }
 
     @GetMapping("/byBetween")
     public ResponseEntity<List<ReservationResponseDto>> getReservationsByBetween(@RequestParam LocalDate checkin, @RequestParam LocalDate checkout) {
-        List<ReservationResponseDto> response = service.getReservationsBetween(checkin, checkout);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        List<Reservation> response = service.getReservationsBetween(checkin, checkout);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.toDtoList(response));
     }
 
     @PutMapping
     public ResponseEntity<ReservationResponseDto> updateReservation(@RequestBody @Valid ReservationUpdateDto reservation) {
-        ReservationResponseDto response = service.updateReservation(reservation);
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        Reservation response = service.updateReservation(reservation);
+        return ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(response));
     }
 
     @DeleteMapping

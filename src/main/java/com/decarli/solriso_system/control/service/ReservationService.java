@@ -9,13 +9,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface ReservationService {
-    ReservationResponseDto createReservation(ReservationCreateDto reservation);
+    Reservation createReservation(ReservationCreateDto reservation);
     Reservation getReservationById(String id);
-    List<ReservationResponseDto> getReservationsToday();
-    List<ReservationResponseDto> getReservationsByRoom(int roomNumber);
-    List<ReservationResponseDto> getReservationsByResponsibleName(String name);
-    List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout);
-    ReservationResponseDto updateReservation(ReservationUpdateDto reservation);
+    List<Reservation> getReservationsToday();
+    List<Reservation> getReservationsByRoom(int roomNumber);
+    List<Reservation> getReservationsByResponsibleName(String name);
+    List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout);
+    Reservation updateReservation(ReservationUpdateDto reservation);
     void deleteReservation(String id);
     List<Reservation> getAllReservations();
 }
