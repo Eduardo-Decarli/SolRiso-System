@@ -24,5 +24,5 @@ public class AdminCreateDto {
 
     @NotBlank(message = "Role can't be null")
     @Pattern(regexp = "ADMIN|USER")
-    private Role role;
+    private String role;
 }

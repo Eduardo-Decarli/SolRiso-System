@@ -57,8 +57,8 @@ public class ReservationController {
     }
 
     @GetMapping("/byResponsibleName")
-    public ResponseEntity<List<ReservationResponseDto>> getReservationsByResponsibleName(@RequestParam String responsableName) {
-        List<Reservation> response = service.getReservationsByResponsibleName(responsableName);
+    public ResponseEntity<List<ReservationResponseDto>> getReservationsByResponsibleName(@RequestParam String name) {
+        List<Reservation> response = service.getReservationsByResponsibleName(name);
         return ResponseEntity.status(HttpStatus.FOUND).body(mapper.toDtoList(response));
     }
 
