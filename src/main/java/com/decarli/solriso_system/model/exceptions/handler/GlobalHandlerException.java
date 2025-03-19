@@ -1,8 +1,6 @@
 package com.decarli.solriso_system.model.exceptions.handler;
 
-import com.decarli.solriso_system.model.exceptions.DateReservationException;
-import com.decarli.solriso_system.model.exceptions.EntityNotFoundException;
-import com.decarli.solriso_system.model.exceptions.RoomReservationException;
+import com.decarli.solriso_system.model.exceptions.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,6 +17,12 @@ public class GlobalHandlerException {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest request, BindingResult result){
         ErrorMessage error = new ErrorMessage(request, HttpStatus.BAD_REQUEST, "The fields entered are invalid", result);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body(error);
+    }
+
+    @ExceptionHandler(LoginFailedException.class)
+    public ResponseEntity<ErrorMessage> handlerLoginFailedException(LoginFailedException ex, HttpServletRequest request, BindingResult result){
+        ErrorMessage error = new ErrorMessage(request, HttpStatus.BAD_REQUEST, "Login Failed", result);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body(error);
     }
 
@@ -41,5 +45,19 @@ public class GlobalHandlerException {
     public ResponseEntity<ErrorMessage> handlerRoomReservationException(RoomReservationException ex, HttpServletRequest request) {
         ErrorMessage error = new ErrorMessage(request, HttpStatus.CONFLICT, ex.getMessage());
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ErrorMessage> handlerUserAlreadyExistsException(UserAlreadyExistsException ex, HttpServletRequest request) {
+        ErrorMessage error = new ErrorMessage(request, HttpStatus.CONFLICT, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
+
+    @ExceptionHandler(AdminNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public ResponseEntity<ErrorMessage> handlerAdminNotFoundException(AdminNotFoundException ex, HttpServletRequest request) {
+        ErrorMessage error = new ErrorMessage(request, HttpStatus.NOT_FOUND, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 }

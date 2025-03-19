@@ -4,9 +4,12 @@ import com.decarli.solriso_system.control.repositories.AdminRepository;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
 import com.decarli.solriso_system.model.entities.security.Admin;
+import com.decarli.solriso_system.model.exceptions.LoginFailedException;
+import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -27,7 +30,9 @@ public class AuthService {
     }
 
     public String register(AdminCreateDto adminCreateDto) {
-        if(adminRepository.existsByEmail(adminCreateDto.getEmail())) throw new RuntimeException("This user already exists by email!");
+        if (adminRepository.existsByEmail(adminCreateDto.getEmail())) {
+            throw new UserAlreadyExistsException("User Already created in the system");
+        }
 
         Admin admin = adminMapper.toAdmin(adminCreateDto);
         admin.setPassword(passwordEncoder.encode(adminCreateDto.getPassword()));
@@ -36,18 +41,24 @@ public class AuthService {
     }
 
     public String login(String email, String password) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+        try {
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
 
-        Authentication authentication = authenticationManager.authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        return "User " + email + " logged in successfully";
+            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            return "User " + email + " logged in successfully";
+        } catch (AuthenticationException e) {
+            throw new LoginFailedException("Fail autentication");
+        }
     }
 
     public Admin getAdminById(String id) {
-        return adminRepository.findById(id).orElse(null);
+        return adminRepository.findById(id)
+                .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com ID: " + id));
     }
 
     public Admin getAdminByEmail(String email) {
-        return adminRepository.findByEmail(email);
+        return Optional.ofNullable(adminRepository.findByEmail(email))
+                .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com email: " + email));
     }
 }
