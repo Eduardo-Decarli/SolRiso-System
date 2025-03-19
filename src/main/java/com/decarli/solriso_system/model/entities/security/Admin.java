@@ -1,5 +1,6 @@
 package com.decarli.solriso_system.model.entities.security;
 
+import com.decarli.solriso_system.model.enums.Role;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -13,5 +14,5 @@ public class Admin {
     private String name;
     private String email;
     private String password;
-    private String role;
+    private Role role;
 }

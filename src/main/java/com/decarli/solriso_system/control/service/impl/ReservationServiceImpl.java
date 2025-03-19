@@ -10,6 +10,7 @@ import com.decarli.solriso_system.model.exceptions.DateReservationException;
 import com.decarli.solriso_system.model.exceptions.EntityNotFoundException;
 import com.decarli.solriso_system.model.exceptions.RoomReservationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,18 +25,30 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public Reservation createReservation(ReservationCreateDto create) {
-        List<Reservation> reservationsBetween = getReservationsBetween(create.getCheckin(), create.getCheckout());
-        for(Reservation r : reservationsBetween) {
-            if(r.getRoom() == create.getRoom()) {
+
+        validateReservationDates(create.getCheckin(), create.getCheckout());
+        validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
+
+        return repository.save(ReservationMapper.INSTANCE.toReservation(create));
+    }
+
+    private void validateReservationDates(LocalDate checkin, LocalDate checkout) {
+        if(checkin == null || checkout == null) throw new IllegalArgumentException("Date of checkin or checkout can't be null");
+
+        if(checkin.isAfter(checkout) || checkin.isEqual(checkout)) throw new DateReservationException("Date of check-in would be before checkout");
+
+        if(checkin.isBefore(LocalDate.now())) throw new DateReservationException("Date of checkin can't be before today");
+    }
+
+    private void validateRoomViability( int room, LocalDate checkin, LocalDate checkout) {
+        List<Reservation> reservations = getReservationsBetween(checkin, checkout);
+        for(Reservation current : reservations) {
+            if(current.getRoom() == room) {
                 throw new RoomReservationException("This room is already occupied");
             }
         }
-        if(create.getCheckin().isAfter(create.getCheckout()) || create.getCheckout().isEqual(create.getCheckin())) {
-            throw new DateReservationException("Date of checkin would be before checkout");
-        }
-
-        return repository.save(ReservationMapper.INSTANCE.toReservation(create));
     }
 
     @Override
@@ -65,6 +78,7 @@ public class ReservationServiceImpl implements ReservationService {
         if(reservations.isEmpty()) {
             throw new EntityNotFoundException("there are no reservations for this room");
         }
+
         return reservations;
     }
 
@@ -74,6 +88,7 @@ public class ReservationServiceImpl implements ReservationService {
         if(reservations.isEmpty()) {
             throw new EntityNotFoundException("there are no reservations for this responsible");
         }
+
         return reservations;
     }
 
@@ -84,23 +99,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public Reservation updateReservation(ReservationUpdateDto update) {
         Reservation reservation = getReservationById(update.getId());
 
-        if(reservation == null) {
-            throw new EntityNotFoundException("Reservation not found");
-        }
-
-        List<Reservation> reservationsBetween = getReservationsBetween(update.getCheckin(), update.getCheckout());
-        for(Reservation r : reservationsBetween) {
-            if(r.getRoom() == update.getRoom()) {
-                throw new RoomReservationException("This room is already occupied");
-            }
-        }
-
-        if(update.getCheckin().isAfter(update.getCheckout()) || update.getCheckout().isEqual(update.getCheckin())) {
-            throw new DateReservationException("Date of checkin would be before checkout");
-        }
+        validateReservationDates(update.getCheckin(), update.getCheckout());
+        validateRoomViability(update.getRoom(), update.getCheckin(), update.getCheckout());
 
         reservation.setRoom(update.getRoom());
         reservation.setQuantGuests(update.getQuantGuests());
@@ -117,12 +121,17 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
+    @Transactional
     public void deleteReservation(String id) {
-        if(id == null || id.isEmpty()) {
-            throw new IllegalArgumentException("Id cannot be empty");
-        } else if(repository.findReservationById(id) == null) {
+
+        if(id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Id cannot be empty or null");
+        }
+
+        if(repository.findReservationById(id) == null) {
             throw new EntityNotFoundException("Reservation not found");
         }
+
         repository.deleteById(id);
     }
 

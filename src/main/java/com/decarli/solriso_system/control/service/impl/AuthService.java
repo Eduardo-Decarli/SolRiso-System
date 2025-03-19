@@ -4,6 +4,7 @@ import com.decarli.solriso_system.control.repositories.AdminRepository;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
 import com.decarli.solriso_system.model.entities.security.Admin;
+import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
 import com.decarli.solriso_system.model.exceptions.LoginFailedException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,6 +14,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
@@ -48,17 +51,17 @@ public class AuthService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             return "User " + email + " logged in successfully";
         } catch (AuthenticationException e) {
-            throw new LoginFailedException("Fail autentication");
+            throw new LoginFailedException("authentication failure");
         }
     }
 
     public Admin getAdminById(String id) {
         return adminRepository.findById(id)
-                .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com ID: " + id));
+                .orElseThrow(() -> new AdminNotFoundException("Admin not found with ID: " + id));
     }
 
     public Admin getAdminByEmail(String email) {
         return Optional.ofNullable(adminRepository.findByEmail(email))
-                .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com email: " + email));
+                .orElseThrow(() -> new AdminNotFoundException("Admin not found with email: " + email));
     }
 }
