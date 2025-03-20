@@ -2,15 +2,15 @@ package com.decarli.solriso_system.control.service.impl;
 
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
 import com.decarli.solriso_system.control.service.ReservationService;
-import com.decarli.solriso_system.model.dto.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.ReservationResponseDto;
-import com.decarli.solriso_system.model.dto.ReservationUpdateDto;
+import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
+import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
-import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.entities.Reservation;
-import com.decarli.solriso_system.model.entities.ResponsibleBooking;
-import com.decarli.solriso_system.model.enums.TypeReservation;
+import com.decarli.solriso_system.model.exceptions.DateReservationException;
+import com.decarli.solriso_system.model.exceptions.EntityNotFoundException;
+import com.decarli.solriso_system.model.exceptions.RoomReservationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,48 +25,91 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public ReservationResponseDto createReservation(ReservationCreateDto reservation) {
-        Reservation r = repository.save(ReservationMapper.INSTANCE.toReservation(reservation));
-        return ReservationMapper.INSTANCE.toDto(r);
+    @Transactional
+    public Reservation createReservation(ReservationCreateDto create) {
+
+        validateReservationDates(create.getCheckin(), create.getCheckout());
+        validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
+
+        return repository.save(ReservationMapper.INSTANCE.toReservation(create));
+    }
+
+    private void validateReservationDates(LocalDate checkin, LocalDate checkout) {
+        if(checkin == null || checkout == null) throw new IllegalArgumentException("Date of checkin or checkout can't be null");
+
+        if(checkin.isAfter(checkout) || checkin.isEqual(checkout)) throw new DateReservationException("Date of check-in would be before checkout");
+
+        if(checkin.isBefore(LocalDate.now())) throw new DateReservationException("Date of checkin can't be before today");
+    }
+
+    private void validateRoomViability( int room, LocalDate checkin, LocalDate checkout) {
+        List<Reservation> reservations = getReservationsBetween(checkin, checkout);
+        for(Reservation current : reservations) {
+            if(current.getRoom() == room) {
+                throw new RoomReservationException("This room is already occupied");
+            }
+        }
     }
 
     @Override
     public Reservation getReservationById(String id) {
+        if(id.isEmpty()) {
+            throw new IllegalArgumentException("Id cannot be empty");
+        }
         Reservation reservation = repository.findReservationById(id);
+        if(reservation == null) {
+            throw new EntityNotFoundException("Reservation not found");
+        }
         return reservation;
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsToday() {
+    public List<Reservation> getReservationsToday() {
         List<Reservation> reservations = repository.findReservationByCheckin(LocalDate.now());
-        return ReservationMapper.INSTANCE.toDtoList(reservations);
+        if(reservations.isEmpty()) {
+            throw new EntityNotFoundException("there are no reservations today");
+        }
+        return reservations;
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsByRoom(int roomNumber) {
-        List<Reservation> reservations = repository.findReservationByRoomNumber(roomNumber);
-        return ReservationMapper.INSTANCE.toDtoList(reservations);
+    public List<Reservation> getReservationsByRoom(int room) {
+        List<Reservation> reservations = repository.findReservationByRoom(room);
+        if(reservations.isEmpty()) {
+            throw new EntityNotFoundException("there are no reservations for this room");
+        }
+
+        return reservations;
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsByResponsibleName(String name) {
+    public List<Reservation> getReservationsByResponsibleName(String name) {
         List<Reservation> reservations = repository.findReservationByResponsibleName(name);
-        return ReservationMapper.INSTANCE.toDtoList(reservations);
+        if(reservations.isEmpty()) {
+            throw new EntityNotFoundException("there are no reservations for this responsible");
+        }
+
+        return reservations;
     }
 
     @Override
-    public List<ReservationResponseDto> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
+    public List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
         List<Reservation> reservations = repository.findReservationBetween(checkin, checkout);
-        return ReservationMapper.INSTANCE.toDtoList(reservations);
+        return reservations;
     }
 
     @Override
-    public ReservationResponseDto updateReservation(ReservationUpdateDto update) {
+    @Transactional
+    public Reservation updateReservation(ReservationUpdateDto update) {
         Reservation reservation = getReservationById(update.getId());
 
-        reservation.setRoomNumber(update.getRoomNumber());
+        validateReservationDates(update.getCheckin(), update.getCheckout());
+        validateRoomViability(update.getRoom(), update.getCheckin(), update.getCheckout());
+
+        reservation.setRoom(update.getRoom());
         reservation.setQuantGuests(update.getQuantGuests());
         reservation.setTypeReservation(update.getTypeReservation());
+        reservation.setStatus(update.getStatus());
         reservation.setCheckin(update.getCheckin());
         reservation.setCheckout(update.getCheckout());
         reservation.setEntryValue(update.getEntryValue());
@@ -74,11 +117,30 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setResponsible(update.getResponsible());
         reservation.setParking(update.getParking());
 
-        return ReservationMapper.INSTANCE.toDto(repository.save(reservation));
+        return reservation;
     }
 
     @Override
+    @Transactional
     public void deleteReservation(String id) {
+
+        if(id == null || id.trim().isEmpty()) {
+            throw new IllegalArgumentException("Id cannot be empty or null");
+        }
+
+        if(repository.findReservationById(id) == null) {
+            throw new EntityNotFoundException("Reservation not found");
+        }
+
         repository.deleteById(id);
+    }
+
+    @Override
+    public List<Reservation> getAllReservations() {
+        List<Reservation> reservations = repository.findAll();
+        if(reservations.isEmpty()) {
+            throw new EntityNotFoundException("there are no reservations in the system");
+        }
+        return reservations;
     }
 }

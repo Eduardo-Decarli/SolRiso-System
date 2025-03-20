@@ -7,13 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Repository
 public interface ReservationRepository extends MongoRepository<Reservation, String> {
     @Query("{'checkin': {$eq: ?0}}")
     List<Reservation> findReservationByCheckin(LocalDate checkinAfter);
-    List<Reservation> findReservationByRoomNumber(int roomNumber);
+    List<Reservation> findReservationByRoom(int room);
     @Query("{'checkin':  {$gte:  ?0},  'checkout': {$lte:  ?1} }")
     List<Reservation> findReservationBetween(LocalDate checkin, LocalDate checkout);
     List<Reservation> findReservationByResponsibleName(String responsibleName);

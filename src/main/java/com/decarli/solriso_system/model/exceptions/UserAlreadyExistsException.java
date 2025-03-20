@@ -1,0 +1,7 @@
+package com.decarli.solriso_system.model.exceptions;
+
+public class UserAlreadyExistsException extends RuntimeException {
+    public UserAlreadyExistsException(String message) {
+        super(message);
+    }
+}
