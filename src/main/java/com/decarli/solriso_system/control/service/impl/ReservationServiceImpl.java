@@ -117,7 +117,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setResponsible(update.getResponsible());
         reservation.setParking(update.getParking());
 
-        return reservation;
+        return repository.save(reservation);
     }
 
     @Override

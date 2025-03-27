@@ -5,7 +5,6 @@ import com.decarli.solriso_system.model.dto.admin.AdminLoginDto;
 import com.decarli.solriso_system.model.dto.admin.AdminResponseDto;
 import com.decarli.solriso_system.model.entities.security.Admin;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
