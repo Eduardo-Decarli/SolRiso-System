@@ -1,10 +1,7 @@
 package com.decarli.solriso_system.controllers;
 
-import com.decarli.solriso_system.control.controller.AdminController;
-import com.decarli.solriso_system.control.service.impl.AuthService;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.admin.AdminLoginDto;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

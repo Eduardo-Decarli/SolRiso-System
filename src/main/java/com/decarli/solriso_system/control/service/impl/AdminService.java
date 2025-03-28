@@ -18,14 +18,14 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AuthService {
+public class AdminService {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
     private final AdminMapper adminMapper;
     private final AuthenticationManager authenticationManager;
 
-    public AuthService(com.decarli.solriso_system.control.repositories.AdminRepository adminRepository, PasswordEncoder passwordEncoder, com.decarli.solriso_system.model.dto.mapper.AdminMapper adminMapper, AuthenticationManager authenticationManager) {
+    public AdminService(com.decarli.solriso_system.control.repositories.AdminRepository adminRepository, PasswordEncoder passwordEncoder, com.decarli.solriso_system.model.dto.mapper.AdminMapper adminMapper, AuthenticationManager authenticationManager) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminMapper = adminMapper;
@@ -44,15 +44,12 @@ public class AuthService {
     }
 
     public String login(String email, String password) {
-        try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
 
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
             return "User " + email + " logged in successfully";
-        } catch (AuthenticationException e) {
-            throw new LoginFailedException("authentication failure");
-        }
     }
 
     public Admin getAdminById(String id) {

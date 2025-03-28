@@ -10,6 +10,4 @@ public class AdminResponseDto {
     private String name;
     @NotNull(message = "Email can't be null")
     private String email;
-    @NotNull(message = "Role can't be null")
-    private String role;
 }
