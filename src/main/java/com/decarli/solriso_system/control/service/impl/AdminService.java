@@ -3,14 +3,14 @@ package com.decarli.solriso_system.control.service.impl;
 import com.decarli.solriso_system.control.repositories.AdminRepository;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
-import com.decarli.solriso_system.model.entities.security.Admin;
+import com.decarli.solriso_system.model.security.Admin;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
-import com.decarli.solriso_system.model.exceptions.LoginFailedException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
+import com.decarli.solriso_system.model.security.SecurityAdminDetails;
+import com.decarli.solriso_system.model.security.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,12 +24,14 @@ public class AdminService {
     private final PasswordEncoder passwordEncoder;
     private final AdminMapper adminMapper;
     private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
-    public AdminService(com.decarli.solriso_system.control.repositories.AdminRepository adminRepository, PasswordEncoder passwordEncoder, com.decarli.solriso_system.model.dto.mapper.AdminMapper adminMapper, AuthenticationManager authenticationManager) {
+    public AdminService(com.decarli.solriso_system.control.repositories.AdminRepository adminRepository, PasswordEncoder passwordEncoder, com.decarli.solriso_system.model.dto.mapper.AdminMapper adminMapper, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminMapper = adminMapper;
         this.authenticationManager = authenticationManager;
+        this.tokenService = tokenService;
     }
 
     public String register(AdminCreateDto adminCreateDto) {
@@ -44,12 +46,13 @@ public class AdminService {
     }
 
     public String login(String email, String password) {
+
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
-
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
 
-            return "User " + email + " logged in successfully";
+        var token = tokenService.generateToken((Admin) authentication.getPrincipal());
+
+            return token;
     }
 
     public Admin getAdminById(String id) {

@@ -1,4 +1,4 @@
-package com.decarli.solriso_system.model.entities.security;
+package com.decarli.solriso_system.model.security;
 
 import com.decarli.solriso_system.control.repositories.AdminRepository;
 import org.springframework.security.core.userdetails.UserDetails;

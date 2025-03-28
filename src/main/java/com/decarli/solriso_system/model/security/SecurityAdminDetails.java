@@ -1,4 +1,4 @@
-package com.decarli.solriso_system.model.entities.security;
+package com.decarli.solriso_system.model.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
