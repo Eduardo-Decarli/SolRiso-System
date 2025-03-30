@@ -6,12 +6,10 @@ import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
 import com.decarli.solriso_system.model.security.Admin;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
-import com.decarli.solriso_system.model.security.SecurityAdminDetails;
 import com.decarli.solriso_system.model.security.TokenService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 

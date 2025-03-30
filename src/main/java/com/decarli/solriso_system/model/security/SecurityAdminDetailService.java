@@ -21,6 +21,6 @@ public class SecurityAdminDetailService implements UserDetailsService {
         if(admin == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
-        return new SecurityAdminDetails(admin);
+        return admin;
     }
 }
