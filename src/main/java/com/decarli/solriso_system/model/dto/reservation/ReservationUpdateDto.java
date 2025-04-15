@@ -1,5 +1,6 @@
 package com.decarli.solriso_system.model.dto.reservation;
 
+import com.decarli.solriso_system.model.dto.responsibleBooking.ResponsibleBookingCreateDto;
 import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.entities.ResponsibleBooking;
 import com.decarli.solriso_system.model.enums.Status;
@@ -22,29 +23,27 @@ public class ReservationUpdateDto {
     private String id;
 
     @Schema(description = "Número do quarto associado à reserva", example = "101")
-    @NotBlank(message = "Room number can't be null")
+    @NotNull(message = "Room number can't be null")
     private Integer room;
 
     @Schema(description = "Quantidade de hóspedes associados à reserva", example = "2")
-    @NotBlank(message = "Quantity guests can't be null")
+    @NotNull(message = "Quantity guests can't be null")
     private Integer quantGuests;
 
     @Schema(description = "Tipo da reserva (ex: PHONE, EMAIL, BOOKING, AIRBNB, EXPEDIA)", example = "PHONE")
-    @Pattern(regexp = "PHONE|EMAIL|BOOKING|AIRBNB|EXPEDIA")
     private TypeReservation typeReservation;
 
     @Schema(description = "Status da reserva (ex: ACTIVE, MISSED, CANCELED)", example = "ACTIVE")
-    @NotBlank(message = "Status can't be null")
-    @Pattern(regexp = "ACTIVE|MISSED|CANCELED")
+    @NotNull(message = "Status can't be null")
     private Status status;
 
     @Schema(description = "Data de check-in no formato dd/MM/yyyy", example = "01/04/2025")
-    @NotBlank(message = "Date of Check-in can't be null")
+    @NotNull(message = "Date of Check-in can't be null")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkin;
 
     @Schema(description = "Data de check-out no formato dd/MM/yyyy", example = "07/04/2025")
-    @NotBlank(message = "Date of check-out can't be null")
+    @NotNull(message = "Date of check-out can't be null")
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkout;
 
@@ -52,13 +51,13 @@ public class ReservationUpdateDto {
     private Double entryValue;
 
     @Schema(description = "Valor total da reserva", example = "1200.75")
-    @NotBlank(message = "The total value can't be null")
+    @NotNull(message = "The total value can't be null")
     private Double totalValue;
 
     @Schema(description = "Responsável pela reserva")
-    @NotBlank(message = "The responsible of the reservation can't be null")
+    @NotNull(message = "The responsible of the reservation can't be null")
     @Valid
-    private ResponsibleBooking responsible;
+    private ResponsibleBookingCreateDto responsible;
 
     @Schema(description = "Informações sobre o estacionamento (se aplicável)")
     @Valid

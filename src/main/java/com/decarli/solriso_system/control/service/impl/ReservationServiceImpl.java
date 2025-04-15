@@ -2,6 +2,7 @@ package com.decarli.solriso_system.control.service.impl;
 
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
 import com.decarli.solriso_system.control.service.ReservationService;
+import com.decarli.solriso_system.model.dto.mapper.ResponsibleBookingMapper;
 import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
 import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
@@ -19,9 +20,11 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository repository;
+    private final ResponsibleBookingMapper responsibleBookingMapper;
 
-    public ReservationServiceImpl(ReservationRepository repository) {
+    public ReservationServiceImpl(ReservationRepository repository, ResponsibleBookingMapper responsibleBookingMapper) {
         this.repository = repository;
+        this.responsibleBookingMapper = responsibleBookingMapper;
     }
 
     @Override
@@ -114,7 +117,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setCheckout(update.getCheckout());
         reservation.setEntryValue(update.getEntryValue());
         reservation.setTotalValue(update.getTotalValue());
-        reservation.setResponsible(update.getResponsible());
+        reservation.setResponsible(responsibleBookingMapper.toResponsibleBooking(update.getResponsible()));
         reservation.setParking(update.getParking());
 
         return reservation;
