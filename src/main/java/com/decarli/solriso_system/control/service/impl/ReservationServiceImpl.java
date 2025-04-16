@@ -120,7 +120,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setResponsible(responsibleBookingMapper.toResponsibleBooking(update.getResponsible()));
         reservation.setParking(update.getParking());
 
-        return reservation;
+        return repository.save(reservation);
     }
 
     @Override
