@@ -1,5 +1,9 @@
-package com.decarli.solriso_system.model.entities.security;
+package com.decarli.solriso_system.model.security;
 
+import com.decarli.solriso_system.model.enums.Role;
+import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -7,27 +11,32 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class SecurityAdminDetails implements UserDetails {
+@Data
+@Document(collection = "users")
+public class Admin implements UserDetails {
 
-    private final Admin admin;
+    @Id
+    private String id;
+    private String name;
+    private String email;
+    private String password;
+    private Role role;
 
-    public SecurityAdminDetails(Admin admin) {
-        this.admin = admin;
-    }
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority(admin.getRole().name()));
+        return Collections.singleton(new SimpleGrantedAuthority(this.role.name()));
     }
 
     @Override
     public String getPassword() {
-        return admin.getPassword();
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return admin.getEmail();
+        return email;
     }
 
     @Override

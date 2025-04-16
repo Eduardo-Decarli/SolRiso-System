@@ -1,8 +1,8 @@
 package com.decarli.solriso_system.model.enums;
 
 public enum Role {
-    ADMIN("Administrador"),
-    USER("Usuário");
+    ADMIN("Admin"),
+    USER("User");
 
     private final String description;
 
@@ -12,6 +12,6 @@ public enum Role {
     }
 
     public String getDescription(Role role) {
-        return description;
+        return this.description;
     }
 }

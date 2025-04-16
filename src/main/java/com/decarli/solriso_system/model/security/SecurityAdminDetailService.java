@@ -1,4 +1,4 @@
-package com.decarli.solriso_system.model.entities.security;
+package com.decarli.solriso_system.model.security;
 
 import com.decarli.solriso_system.control.repositories.AdminRepository;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +21,6 @@ public class SecurityAdminDetailService implements UserDetailsService {
         if(admin == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
-        return new SecurityAdminDetails(admin);
+        return admin;
     }
 }
