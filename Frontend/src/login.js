@@ -18,7 +18,7 @@ loginForm.addEventListener('submit', async function(event) {
             },
             body: JSON.stringify({
                 email: email,
-                senha: senha
+                password: senha
             })
         });
 
@@ -28,8 +28,8 @@ loginForm.addEventListener('submit', async function(event) {
         }
 
         // Obtém o token JWT da resposta
-        const data = await response.json();
-        const token = data.token;
+        const data = response;
+        const token = data;
 
         // Armazena o token na sessão
         sessionStorage.setItem('jwt_token', token);

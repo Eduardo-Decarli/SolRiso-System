@@ -45,12 +45,12 @@ public class AdminService {
 
     public String login(String email, String password) {
 
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
-            Authentication authentication = authenticationManager.authenticate(authenticationToken);
+        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
+        Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
         var token = tokenService.generateToken((Admin) authentication.getPrincipal());
 
-            return token;
+        return token;
     }
 
     public Admin getAdminById(String id) {
