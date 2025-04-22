@@ -28,14 +28,13 @@ loginForm.addEventListener('submit', async function(event) {
         }
 
         // Obtém o token JWT da resposta
-        const data = response;
-        const token = data;
+        const token = await response.text();
 
         // Armazena o token na sessão
         sessionStorage.setItem('jwt_token', token);
 
         // Redireciona o usuário para outra página após o login
-        window.location.href = 'http://localhost:8080/api/v1/reservation/allReservations'; // Altere para a página desejada
+        window.location.href = 'http://127.0.0.1:5500/public/index.html';
     } catch (error) {
         alert('Erro: ' + error.message);
     }

@@ -22,8 +22,6 @@ public class Admin implements UserDetails {
     private String password;
     private Role role;
 
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority(this.role.name()));
