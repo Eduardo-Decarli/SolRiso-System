@@ -1,32 +1,30 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
     <link rel="stylesheet" href="../assets/styles/login.css">
     <link rel="stylesheet" href="../assets/styles/style.css">
 </head>
-
 <body>
     <main class="container">
-        <div class="login-container">
+        <div class="register-container">
+            
+            <div class="right-side">
+                <form class="register" id="register">
+                    <input type="name-user" id="name-user" name="name-user" placeholder="Nome" required>
+                    <input type="email" id="email" name="email" placeholder="Email" required>
+                    <input type="password" id="password" name="senha" placeholder="Senha" required>
+                    <button type="submit" id="submit-login">Cadastrar</button>
+                    <a href="#" class="link">Fazer Login</a>
+                </form>
+            </div>
             <div class="left-side">
                 
             </div>
-            <div class="right-side">
-                <form class="login" id="login">
-                    <input type="email" id="email" name="email" placeholder="Email" required>
-                    <input type="password" id="password" name="senha" placeholder="Senha" required>
-                    <a href="#" class="link forgot-password">Esqueci minha senha</a>
-                    <button type="submit" id="submit-login">Login</button>
-                    <a href="#" class="link">Cadastrar</a>
-                </form>
-            </div>
         </div>
     </main>
-    <script src="../assets/src/services/authService.js"></script>
+    <script src="../assets/src/services/registerService.js"></script>
 </body>
-
 </html>
