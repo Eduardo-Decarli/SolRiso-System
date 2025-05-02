@@ -31,7 +31,7 @@ const auth = async function (email, password) {
 
         localStorage.setItem("jwt", token);
     
-        window.location.href = "http://localhost:8080/api/v1/reservation/allReservations"
+        window.location.href = "./reservations.html"
     } catch(error) {
         alert("Houve um erro ao tentar fazer a requisição: " + error)
     }
