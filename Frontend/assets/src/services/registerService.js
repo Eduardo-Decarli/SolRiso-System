@@ -1,5 +1,7 @@
 const formRegister = document.getElementById('register');
 
+localStorage.clear();
+
 formRegister.addEventListener('submit', (event) => {
     event.preventDefault();
     const name = document.getElementById('name-user').value;

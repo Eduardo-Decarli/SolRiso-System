@@ -22,8 +22,8 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 0 2rem;
-    background: linear-gradient(to bottom, #fab802);
-    color: white;
+    background: linear-gradient(to bottom, #ff9c07);
+    color: #FFF;
     font-size: 1.5rem;
 }
 
@@ -71,6 +71,8 @@ aside a:hover {
 
 /* Main content */
 main {
+    position: relative;
+
     padding: 2rem;
     background-color: #f9f9f9;
     overflow-y: auto;
@@ -84,6 +86,7 @@ main h1 {
 /* Reservation cards *//* Reservation cards */
 .card {
     display: flex;
+    z-index: 1;
     padding: 2rem;
     margin-bottom: 1.5rem;
     background-color: #fab802;
@@ -145,6 +148,71 @@ main h1 {
 
 .card button:hover {
     background-color: #FFFFFF;
+}
+
+.modal {
+    position: absolute;
+    top: 100px;
+    background-color: red;
+    width: 100%;
+    z-index: 2;
+}
+
+.modal.hidden {
+    display: none;
+}
+
+
+/* Modal visível */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-section {
+    background-color: #f0f0f0;
+    margin: 1rem 0;
+    padding: 1rem;
+    border-radius: 8px;
+    text-align: left;
+}
+
+/* Conteúdo interno do modal */
+.modal-content {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 10px;
+    text-align: center;
+    position: relative;
+}
+
+#modalInfo {
+    display: flex;
+    flex-direction: row;
+    
+    margin-bottom: 1.5rem;
+}
+
+#modalInfo h3 {
+    margin-bottom: 10px;
+}
+
+/* Botão fechar */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #333;
 }
 
 /* Adjustments for smaller screens */

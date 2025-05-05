@@ -1,5 +1,7 @@
 const forms = document.getElementById('login');
 
+localStorage.clear();
+
 forms.addEventListener('submit', (event) => {
     event.preventDefault();
 

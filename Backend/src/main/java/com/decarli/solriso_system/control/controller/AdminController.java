@@ -1,6 +1,6 @@
 package com.decarli.solriso_system.control.controller;
 
-import com.decarli.solriso_system.control.service.impl.AdminService;
+import com.decarli.solriso_system.control.service.impl.AdminServiceImp;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.admin.AdminLoginDto;
 import io.swagger.v3.oas.annotations.Operation;
@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/auth")
 public class AdminController {
 
-    private final AdminService adminService;
+    private final AdminServiceImp adminServiceImp;
 
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
+    public AdminController(AdminServiceImp adminServiceImp) {
+        this.adminServiceImp = adminServiceImp;
     }
 
     @Operation(
@@ -36,7 +36,7 @@ public class AdminController {
     })
     @PostMapping("/login")
     public ResponseEntity<String> login(@Parameter(description = "Objeto contendo as credenciais de login", required = true) @RequestBody @Valid AdminLoginDto adminLoginDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(adminService.login(adminLoginDto.getEmail(), adminLoginDto.getPassword()));
+        return ResponseEntity.status(HttpStatus.OK).body(adminServiceImp.login(adminLoginDto.getEmail(), adminLoginDto.getPassword()));
     }
 
     @Operation(
@@ -50,7 +50,7 @@ public class AdminController {
             @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(mediaType = "application/json"))
     })
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Parameter(description = "Objeto contendo as informações para registrar um novo administrador", required = true) @RequestBody @Valid AdminCreateDto createDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(adminService.register(createDto));
+    public ResponseEntity<Void> register(@Parameter(description = "Objeto contendo as informações para registrar um novo administrador", required = true) @RequestBody @Valid AdminCreateDto createDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

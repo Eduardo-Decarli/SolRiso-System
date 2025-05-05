@@ -1,6 +1,7 @@
 package com.decarli.solriso_system.control.service.impl;
 
 import com.decarli.solriso_system.control.repositories.AdminRepository;
+import com.decarli.solriso_system.control.service.AdminService;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
 import com.decarli.solriso_system.model.security.Admin;
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AdminService {
+public class AdminServiceImp implements AdminService {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
@@ -24,7 +25,7 @@ public class AdminService {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
-    public AdminService(com.decarli.solriso_system.control.repositories.AdminRepository adminRepository, PasswordEncoder passwordEncoder, com.decarli.solriso_system.model.dto.mapper.AdminMapper adminMapper, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AdminServiceImp(AdminRepository adminRepository, PasswordEncoder passwordEncoder, AdminMapper adminMapper, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminMapper = adminMapper;
@@ -32,7 +33,7 @@ public class AdminService {
         this.tokenService = tokenService;
     }
 
-    public String register(AdminCreateDto adminCreateDto) {
+    public void register(AdminCreateDto adminCreateDto) {
         if (adminRepository.existsByEmail(adminCreateDto.getEmail())) {
             throw new UserAlreadyExistsException("User Already created in the system");
         }
@@ -40,7 +41,6 @@ public class AdminService {
         Admin admin = adminMapper.toAdmin(adminCreateDto);
         admin.setPassword(passwordEncoder.encode(adminCreateDto.getPassword()));
         adminRepository.save(admin);
-        return "Admin " + admin.getEmail() + " registered successfully";
     }
 
     public String login(String email, String password) {
