@@ -2,8 +2,10 @@ package com.decarli.solriso_system.model.entities;
 
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
+import com.decarli.solriso_system.model.security.Admin;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
@@ -23,6 +25,8 @@ public class Reservation {
     private double entryValue;
     private double totalValue;
 
+    @DBRef
+    private Admin admin;
     private ResponsibleBooking responsible;
     private Parking parking;
 }

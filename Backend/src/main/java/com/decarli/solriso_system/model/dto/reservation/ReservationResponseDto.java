@@ -1,10 +1,12 @@
 package com.decarli.solriso_system.model.dto.reservation;
 
+import com.decarli.solriso_system.model.dto.admin.AdminResponseDto;
 import com.decarli.solriso_system.model.dto.responsibleBooking.ResponsibleBookingResponseDto;
 import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.entities.ResponsibleBooking;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
+import com.decarli.solriso_system.model.security.Admin;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
@@ -53,6 +55,8 @@ public class ReservationResponseDto {
     @Schema(description = "Valor total da reserva", example = "1200.75")
     @NotNull(message = "The total value can't be null")
     private Double totalValue;
+
+    private Admin admin;
 
     @Schema(description = "Responsável pela reserva")
     @NotNull(message = "The responsible of the reservation can't be null")

@@ -2,15 +2,13 @@ package com.decarli.solriso_system.model.dto.reservation;
 
 import com.decarli.solriso_system.model.dto.responsibleBooking.ResponsibleBookingCreateDto;
 import com.decarli.solriso_system.model.entities.Parking;
-import com.decarli.solriso_system.model.entities.ResponsibleBooking;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
+import com.decarli.solriso_system.model.security.Admin;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -54,6 +52,8 @@ public class ReservationCreateDto {
     @Schema(description = "Valor total da reserva", example = "1200.75")
     @NotNull(message = "The total value can't be null")
     private double totalValue;
+
+    private Admin admin;
 
     @Schema(description = "Responsável pela reserva")
     @NotNull(message = "The responsible of reservation can't be null")

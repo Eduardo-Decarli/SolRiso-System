@@ -1,6 +1,8 @@
 package com.decarli.solriso_system.control.service.impl;
 
+import com.decarli.solriso_system.control.repositories.AdminRepository;
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
+import com.decarli.solriso_system.control.service.AdminService;
 import com.decarli.solriso_system.control.service.ReservationService;
 import com.decarli.solriso_system.model.dto.mapper.ResponsibleBookingMapper;
 import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
@@ -20,10 +22,12 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository repository;
+    private final AdminService adminService;
     private final ResponsibleBookingMapper responsibleBookingMapper;
 
-    public ReservationServiceImpl(ReservationRepository repository, ResponsibleBookingMapper responsibleBookingMapper) {
+    public ReservationServiceImpl(ReservationRepository repository, AdminRepository adminRepository, AdminService adminService, ResponsibleBookingMapper responsibleBookingMapper) {
         this.repository = repository;
+        this.adminService = adminService;
         this.responsibleBookingMapper = responsibleBookingMapper;
     }
 
@@ -33,6 +37,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         validateReservationDates(create.getCheckin(), create.getCheckout());
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
+        create.setAdmin(adminService.getAdminById(create.getAdmin().getId()));
 
         return repository.save(ReservationMapper.INSTANCE.toReservation(create));
     }
