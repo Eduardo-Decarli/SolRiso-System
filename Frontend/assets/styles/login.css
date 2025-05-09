@@ -113,6 +113,19 @@ form.login button:hover, form.register button:hover {
     color: #dfe6e9;
 }
 
+.wrong-password {
+    width: 70%;
+    margin-top: 20px;
+    display: none;
+    padding: 20px;
+    color: #FFFFFF;
+    text-align: center;
+    font-weight: bolder;
+    border-radius: 30px;
+    background-color: red;
+    transition: .8s;
+}
+
 /* Responsivo */
 @media (max-width: 768px) {
     .login-container {

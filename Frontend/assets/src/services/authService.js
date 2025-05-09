@@ -25,16 +25,28 @@ const auth = async function (email, password) {
             body: JSON.stringify({ email, password })
         });
 
+
+        if(response.status === 400) {
+            const error = await response.json();
+            console.log(error)
+            throw new Error(error.message)
+        }
         if(response.status !== 200) {
-            throw new Error("Login Inválido")
+            const error = await response.json();
+            throw new Error(error.message)
         }
 
         const token = await response.text();
 
         localStorage.setItem("jwt", token);
     
-        window.location.href = "./reservations.html"
+        window.location.href = "./index.html"
     } catch(error) {
-        alert("Houve um erro ao tentar fazer a requisição: " + error)
+        const errorMessage = document.getElementById("wrong-password");
+        
+        console.log(error)
+            errorMessage.innerText += error
+            errorMessage.style.display = "block"
+
     }
 }

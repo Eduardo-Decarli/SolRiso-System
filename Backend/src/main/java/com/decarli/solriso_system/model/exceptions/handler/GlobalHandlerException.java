@@ -23,13 +23,13 @@ public class GlobalHandlerException{
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest request, BindingResult result){
-        ErrorMessage error = new ErrorMessage(request, HttpStatus.BAD_REQUEST, "The fields entered are invalid", result);
+        ErrorMessage error = new ErrorMessage(request, HttpStatus.BAD_REQUEST, "Os campos de entrada são inválidos", result);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body(error);
     }
 
     @ExceptionHandler(LoginFailedException.class)
     public ResponseEntity<ErrorMessage> handlerLoginFailedException(LoginFailedException ex, HttpServletRequest request, BindingResult result){
-        ErrorMessage error = new ErrorMessage(request, HttpStatus.BAD_REQUEST, "Login Failed", result);
+        ErrorMessage error = new ErrorMessage(request, HttpStatus.BAD_REQUEST, "Falha ao realizar o login", result);
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).contentType(MediaType.APPLICATION_JSON).body(error);
     }
 

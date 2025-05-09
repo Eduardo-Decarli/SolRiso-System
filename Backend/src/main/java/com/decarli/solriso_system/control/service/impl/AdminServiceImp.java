@@ -35,7 +35,7 @@ public class AdminServiceImp implements AdminService {
 
     public void register(AdminCreateDto adminCreateDto) {
         if (adminRepository.existsByEmail(adminCreateDto.getEmail())) {
-            throw new UserAlreadyExistsException("User Already created in the system");
+            throw new UserAlreadyExistsException("Usuário já está registrado no sistema");
         }
 
         Admin admin = adminMapper.toAdmin(adminCreateDto);
@@ -55,7 +55,7 @@ public class AdminServiceImp implements AdminService {
 
     public Admin getAdminById(String id) {
         return adminRepository.findById(id)
-                .orElseThrow(() -> new AdminNotFoundException("Admin not found with ID: " + id));
+                .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com o id: " + id));
     }
 
     public Admin getAdminByEmail(String email) {
