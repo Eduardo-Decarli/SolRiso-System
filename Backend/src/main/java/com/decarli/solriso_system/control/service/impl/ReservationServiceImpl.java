@@ -23,6 +23,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository repository;
     private final AdminService adminService;
+    private ReservationMapper reservationMapper;
     private final ResponsibleBookingMapper responsibleBookingMapper;
 
     public ReservationServiceImpl(ReservationRepository repository, AdminRepository adminRepository, AdminService adminService, ResponsibleBookingMapper responsibleBookingMapper) {
@@ -37,9 +38,11 @@ public class ReservationServiceImpl implements ReservationService {
 
         validateReservationDates(create.getCheckin(), create.getCheckout());
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
-        create.setAdmin(adminService.getAdminById(create.getAdmin().getId()));
+        Reservation reservation = reservationMapper.toReservation(create);
+        reservation.setAdmin(adminService.getAdminByEmail(create.getAdminEmail()));
+        System.out.println(reservation.getAdmin().toString());
 
-        return repository.save(ReservationMapper.INSTANCE.toReservation(create));
+        return repository.save(reservation);
     }
 
     private void validateReservationDates(LocalDate checkin, LocalDate checkout) {
@@ -50,7 +53,7 @@ public class ReservationServiceImpl implements ReservationService {
         if(checkin.isBefore(LocalDate.now())) throw new DateReservationException("Date of checkin can't be before today");
     }
 
-    private void validateRoomViability( int room, LocalDate checkin, LocalDate checkout) {
+    private void validateRoomViability(int room, LocalDate checkin, LocalDate checkout) {
         List<Reservation> reservations = getReservationsBetween(checkin, checkout);
         for(Reservation current : reservations) {
             if(current.getRoom() == room) {
@@ -102,8 +105,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
-        List<Reservation> reservations = repository.findReservationBetween(checkin, checkout);
-        return reservations;
+        return repository.findReservationBetween(checkin, checkout);
     }
 
     @Override

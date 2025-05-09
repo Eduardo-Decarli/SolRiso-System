@@ -59,7 +59,6 @@ public class AdminServiceImp implements AdminService {
     }
 
     public Admin getAdminByEmail(String email) {
-        return Optional.ofNullable(adminRepository.findByEmail(email))
-                .orElseThrow(() -> new AdminNotFoundException("Admin not found with email: " + email));
+        return adminRepository.findByEmail(email);
     }
 }

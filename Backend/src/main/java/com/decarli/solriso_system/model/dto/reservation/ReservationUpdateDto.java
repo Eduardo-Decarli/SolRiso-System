@@ -55,7 +55,7 @@ public class ReservationUpdateDto {
     @NotNull(message = "The total value can't be null")
     private Double totalValue;
 
-    private Admin admin;
+    private String adminEmail;
 
     @Schema(description = "Responsável pela reserva")
     @NotNull(message = "The responsible of the reservation can't be null")

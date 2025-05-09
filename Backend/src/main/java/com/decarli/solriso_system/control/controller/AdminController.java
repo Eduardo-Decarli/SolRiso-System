@@ -51,6 +51,7 @@ public class AdminController {
     })
     @PostMapping("/register")
     public ResponseEntity<Void> register(@Parameter(description = "Objeto contendo as informações para registrar um novo administrador", required = true) @RequestBody @Valid AdminCreateDto createDto) {
+        adminServiceImp.register(createDto);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
