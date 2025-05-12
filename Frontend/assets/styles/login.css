@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* Reset básico */
 * {
     margin: 0;
     padding: 0;
@@ -45,7 +44,7 @@ body, html {
     justify-content: center;
 }
 
-form.login, form.register {
+form.login, form.register, form.forgot-password {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,7 +53,7 @@ form.login, form.register {
     padding: 30px;
 }
 
-form.login input, form.register input {
+form.login input, form.register, form.forgot-password input {
     margin: 10px 0;
     padding: 15px;
     width: 70%;
@@ -65,18 +64,20 @@ form.login input, form.register input {
     transition: all 0.3s ease;
 }
 
-form.login input:focus, form.register input:focus {
+form.login input:focus, form.register input:focus, form.forgot-password input:focus {
     outline: none;
     border: solid 1px #FF6B09;
     transform: scale(1.02);
     box-shadow: #ff9c3d 4px 4px 12px;
 }
 
-form.login input:focus::placeholder, form.register input:focus::placeholder {
+form.login input:focus::placeholder, 
+form.register input:focus::placeholder, 
+form.forgot-password input:focus::placeholder {
     color: #FF6B09;
 }
 
-form.login button, form.register button {
+form.login button, form.register button, form.forgot-password button {
     margin-top: 20px;
     padding: 15px;
     width: 70%;
@@ -124,6 +125,21 @@ form.login button:hover, form.register button:hover {
     border-radius: 30px;
     background-color: red;
     transition: .8s;
+}
+
+/******************
+Forget Password Screen
+*/
+
+.full-side {
+    width: 100%;
+    background-image: linear-gradient(to bottom, #FFd91B, #FF6B09);
+}
+
+.forgot-password h2 {
+    padding: 20px;
+    margin: 20px;
+    background: transparent;
 }
 
 /* Responsivo */
