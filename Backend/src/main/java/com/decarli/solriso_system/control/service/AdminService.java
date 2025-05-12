@@ -1,7 +1,7 @@
 package com.decarli.solriso_system.control.service;
 
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
-import com.decarli.solriso_system.model.security.Admin;
+import com.decarli.solriso_system.model.entities.Admin;
 
 public interface AdminService {
 

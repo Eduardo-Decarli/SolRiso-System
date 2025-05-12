@@ -5,7 +5,6 @@ import com.decarli.solriso_system.model.dto.responsibleBooking.ResponsibleBookin
 import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
-import com.decarli.solriso_system.model.security.Admin;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;

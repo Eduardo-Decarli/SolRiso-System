@@ -4,7 +4,7 @@ import com.decarli.solriso_system.control.repositories.AdminRepository;
 import com.decarli.solriso_system.control.service.AdminService;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
-import com.decarli.solriso_system.model.security.Admin;
+import com.decarli.solriso_system.model.entities.Admin;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
 import com.decarli.solriso_system.model.security.TokenService;
@@ -13,8 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class AdminServiceImp implements AdminService {
