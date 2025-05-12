@@ -1,7 +1,7 @@
 let main = document.getElementById('reservations');
 
 (async function insertReservationsToday() {
-    const reservations = await getReservationToday()
+    const reservations = await getReservationToday();
     reservations.forEach((reservation) => {
         const content = `<div class="card">
             <div class="reservation-details">
