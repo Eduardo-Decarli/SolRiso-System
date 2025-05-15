@@ -40,7 +40,6 @@ public class ReservationServiceImpl implements ReservationService {
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
         Reservation reservation = reservationMapper.toReservation(create);
         reservation.setAdmin(adminService.getAdminByEmail(create.getAdminEmail()));
-        System.out.println(reservation.getAdmin().toString());
 
         return repository.save(reservation);
     }
