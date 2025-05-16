@@ -23,12 +23,13 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository repository;
     private final AdminService adminService;
-    private ReservationMapper reservationMapper;
+    private final ReservationMapper reservationMapper;
     private final ResponsibleBookingMapper responsibleBookingMapper;
 
-    public ReservationServiceImpl(ReservationRepository repository, AdminRepository adminRepository, AdminService adminService, ResponsibleBookingMapper responsibleBookingMapper) {
+    public ReservationServiceImpl(ReservationRepository repository, AdminRepository adminRepository, AdminService adminService, ReservationMapper reservationMapper, ResponsibleBookingMapper responsibleBookingMapper) {
         this.repository = repository;
         this.adminService = adminService;
+        this.reservationMapper = reservationMapper;
         this.responsibleBookingMapper = responsibleBookingMapper;
     }
 
@@ -104,7 +105,11 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
-        return repository.findReservationBetween(checkin, checkout);
+        List<Reservation> reservations = repository.findReservationBetween(checkin, checkout);
+        if(reservations.isEmpty()) {
+            throw new EntityNotFoundException("There are no reservations for this time");
+        }
+        return reservations;
     }
 
     @Override
@@ -123,6 +128,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setCheckout(update.getCheckout());
         reservation.setEntryValue(update.getEntryValue());
         reservation.setTotalValue(update.getTotalValue());
+        reservation.setAdmin(adminService.getAdminByEmail(update.getAdminEmail()));
         reservation.setResponsible(responsibleBookingMapper.toResponsibleBooking(update.getResponsible()));
         reservation.setParking(update.getParking());
 
