@@ -1,8 +1,9 @@
-package com.decarli.solriso_system.model.security;
+package com.decarli.solriso_system.model.entities;
 
 import com.decarli.solriso_system.model.enums.Role;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,11 +19,10 @@ public class Admin implements UserDetails {
     @Id
     private String id;
     private String name;
+    @Indexed(unique = true)
     private String email;
     private String password;
     private Role role;
-
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -1,6 +1,7 @@
 package com.decarli.solriso_system.model.security;
 
 import com.decarli.solriso_system.control.repositories.AdminRepository;
+import com.decarli.solriso_system.model.entities.Admin;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

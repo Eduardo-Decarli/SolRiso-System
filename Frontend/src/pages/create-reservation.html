@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Criação de Reserva - Pousada SolRiso</title>
+
+    <link rel="stylesheet" href="/src/styles/global.css">
+    <link rel="stylesheet" href="/src/styles/vendor/reset.css">
+
+    <link rel="stylesheet" href="/src/styles/layout/container.css">
+    <link rel="stylesheet" href="/src/styles/layout/header.css">
+
+    <link rel="stylesheet" href="/src/styles/pages/new-reservation.css">
+</head>
+
+<body class="container">
+    <header class="header">
+        <h2>Pousada <br><span>SolRiso</span></h2>
+        <div class="user-icon">👤</div>
+    </header>
+
+    <aside class="left-content">
+        <nav>
+            <ul>
+                <li><a href="/src/pages/reservations.html">Reservas</a></li>
+                <li><a href="#">Relatórios</a></li>
+                <li><a href="/src/pages/login.html">Sair</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main>
+        <h1>Nova Reserva</h1>
+        <form>
+            <div class="create-reservation-container">
+                <fieldset class="reservation-properties">
+                    <legend>Dados da Reserva</legend>
+                    <label>Quarto: <br><input type="number" name="room" required></label>
+                    <label>Quantidade de Hóspedes: <br><input type="number" name="quantGuests" required></label>
+                    <label>Check-in: <br><input type="date" name="checkin" required></label>
+                    <label>Check-out: <br><input type="date" name="checkout" required></label>
+                    <label>Tipo de Reserva:<br>
+                        <select name="typeReservation" required>
+                            <option value="EMAIL">Email</option>
+                            <option value="WHATSAPP">WhatsApp</option>
+                            <option value="TELEFONE">Telefone</option>
+                        </select>
+                    </label>
+                    <label>Status:<br>
+                        <select name="status">
+                            <option value="ACTIVE">Ativa</option>
+                            <option value="CANCELED">Cancelada</option>
+                        </select>
+                    </label>
+                    <label>Valor de Entrada: <br><input type="number" name="entryValue" step="0.01" required></label>
+                    <label>Valor Total: <br><input type="number" name="totalValue" step="0.01" required></label>
+                    <label>Email do Admin: <br><input type="email" name="adminEmail" required></label>
+                </fieldset>
+
+                <fieldset class="responsable-properties">
+                    <legend>Responsável</legend>
+                    <label>Nome: <br><input type="text" name="name" required></label>
+                    <label>Telefone: <br><input type="tel" name="phoneNumber" required></label>
+                    <label>Email: <br><input type="email" name="email" required></label>
+                    <label>CPF: <br><input type="text" name="cpf" required></label>
+                    <label>País: <br><input type="text" name="country" required></label>
+                    <label>Cidade: <br><input type="text" name="city" required></label>
+                    <label>Rua: <br><input type="text" name="street" required></label>
+                    <label>Número: <br><input type="text" name="number" required></label>
+                </fieldset>
+
+                <fieldset class="parking-properties">
+                    <legend>Estacionamento</legend>
+                    <label>Tipo do Carro: <br><input type="text" name="carType"></label>
+                    <label>Check-in: <br><input type="date" name="parkingCheckin"></label>
+                    <label>Check-out: <br><input type="date" name="parkingCheckout"></label>
+                </fieldset>
+            </div>
+
+            <button type="submit">Salvar Reserva</button>
+        </form>
+
+    </main>
+</body>
+
+</html>

@@ -9,9 +9,8 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring" ,uses = { AdminMapper.class, ResponsibleBookingMapper.class })
 public interface ReservationMapper {
-    ReservationMapper INSTANCE = Mappers.getMapper(ReservationMapper.class);
 
     Reservation toReservation(ReservationCreateDto dto);
 

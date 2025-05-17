@@ -1,0 +1,71 @@
+
+h1 {
+  margin-bottom: 24px;
+  font-size: 28px;
+  color: #000000;
+}
+
+.create-reservation-container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto auto auto;
+}
+
+.create-reservation-container fieldset {
+  border: 1px solid #E5E7EB;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 10px 15px;
+}
+
+legend {
+  font-weight: 600;
+  padding: 10 8px;
+  color: #374151;
+}
+
+label {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+input, select {
+  width: 85%;
+  padding: 10px;
+  margin-top: 4px;
+  border: 1px solid #D1D5DB;
+  border-radius: 6px;
+  font-size: 15px;
+  background-color: #F3F4F6;
+}
+
+button {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background-color: #4F46E5;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #4338CA;
+}
+
+.reservation-properties {
+    grid-column: 1;
+}
+
+.responsable-properties {
+    grid-column: 2;
+}
+
+.parking-properties {
+    grid-column: 1/3;
+}

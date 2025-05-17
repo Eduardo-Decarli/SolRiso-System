@@ -1,8 +1,12 @@
 package com.decarli.solriso_system.control.controller;
 
-import com.decarli.solriso_system.control.service.impl.AdminService;
+import com.decarli.solriso_system.control.service.AdminService;
+import com.decarli.solriso_system.control.service.impl.AdminServiceImp;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.admin.AdminLoginDto;
+import com.decarli.solriso_system.model.dto.admin.AdminResponseDto;
+import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
+import com.decarli.solriso_system.model.entities.Admin;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -14,43 +18,40 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/auth")
 public class AdminController {
 
     private final AdminService adminService;
+    private final AdminMapper adminMapper;
 
-    public AdminController(AdminService adminService) {
+    public AdminController(AdminService adminService, AdminMapper adminMapper) {
         this.adminService = adminService;
+        this.adminMapper = adminMapper;
     }
 
-    @Operation(
-            summary = "Admin Login",
-            description = "Realiza o login de um administrador com email e senha.",
-            tags = {"Auth"}
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Login realizado com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "token-xyz"))),
-            @ApiResponse(responseCode = "400", description = "Credenciais inválidas", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Email ou senha incorretos"))),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(mediaType = "application/json"))
-    })
     @PostMapping("/login")
-    public ResponseEntity<String> login(@Parameter(description = "Objeto contendo as credenciais de login", required = true) @RequestBody @Valid AdminLoginDto adminLoginDto) {
+    public ResponseEntity<String> login(@RequestBody @Valid AdminLoginDto adminLoginDto) {
         return ResponseEntity.status(HttpStatus.OK).body(adminService.login(adminLoginDto.getEmail(), adminLoginDto.getPassword()));
     }
 
-    @Operation(
-            summary = "Admin Register",
-            description = "Realiza o registro de um novo administrador com informações básicas.",
-            tags = {"Auth"}
-    )
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Administração registrada com sucesso", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Admin criado com sucesso"))),
-            @ApiResponse(responseCode = "400", description = "Dados inválidos", content = @Content(mediaType = "application/json", schema = @Schema(type = "string", example = "Email já registrado"))),
-            @ApiResponse(responseCode = "500", description = "Erro interno do servidor", content = @Content(mediaType = "application/json"))
-    })
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Parameter(description = "Objeto contendo as informações para registrar um novo administrador", required = true) @RequestBody @Valid AdminCreateDto createDto) {
-        return ResponseEntity.status(HttpStatus.OK).body(adminService.register(createDto));
+    public ResponseEntity<Void> register(@RequestBody @Valid AdminCreateDto createDto) {
+        adminService.register(createDto);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping("/admins")
+    public ResponseEntity<List<AdminResponseDto>> getAllAdmins() {
+        List<Admin> admins = adminService.getAllAdmins();
+        return ResponseEntity.status(HttpStatus.FOUND).body(adminMapper.toDtoList(admins));
+    }
+
+    @GetMapping("/admins/byEmail")
+    public ResponseEntity<AdminResponseDto> getAllAdmins(@RequestParam String email) {
+        Admin admin = adminService.getAdminByEmail(email);
+        return ResponseEntity.status(HttpStatus.FOUND).body(adminMapper.toResponseDto(admin));
     }
 }
