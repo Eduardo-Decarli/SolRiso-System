@@ -14,6 +14,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class AdminServiceImp implements AdminService {
 
@@ -31,13 +33,14 @@ public class AdminServiceImp implements AdminService {
         this.tokenService = tokenService;
     }
 
-    public void register(AdminCreateDto adminCreateDto) {
-        if (adminRepository.existsByEmail(adminCreateDto.getEmail())) {
+    public void register(AdminCreateDto create) {
+        if (adminRepository.existsByEmail(create.getEmail())) {
             throw new UserAlreadyExistsException("Usuário já está registrado no sistema");
         }
 
-        Admin admin = adminMapper.toAdmin(adminCreateDto);
-        admin.setPassword(passwordEncoder.encode(adminCreateDto.getPassword()));
+        Admin admin = adminMapper.toAdmin(create);
+        admin.setEmail(create.getEmail().toLowerCase());
+        admin.setPassword(passwordEncoder.encode(create.getPassword()));
         adminRepository.save(admin);
     }
 
@@ -58,5 +61,10 @@ public class AdminServiceImp implements AdminService {
 
     public Admin getAdminByEmail(String email) {
         return adminRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Admin> getAllAdmins() {
+        return adminRepository.findAll();
     }
 }
