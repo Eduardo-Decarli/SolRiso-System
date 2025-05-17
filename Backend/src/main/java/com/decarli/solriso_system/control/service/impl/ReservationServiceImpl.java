@@ -12,12 +12,15 @@ import com.decarli.solriso_system.model.entities.Reservation;
 import com.decarli.solriso_system.model.exceptions.DateReservationException;
 import com.decarli.solriso_system.model.exceptions.EntityNotFoundException;
 import com.decarli.solriso_system.model.exceptions.RoomReservationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
@@ -55,6 +58,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     private void validateRoomViability(int room, LocalDate checkin, LocalDate checkout) {
         List<Reservation> reservations = getReservationsBetween(checkin, checkout);
+
         for(Reservation current : reservations) {
             if(current.getRoom() == room) {
                 throw new RoomReservationException("This room is already occupied");
@@ -105,12 +109,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
-        List<Reservation> reservations = repository.findReservationBetween(checkin, checkout);
-        if(reservations.isEmpty()) {
-            throw new EntityNotFoundException("There are no reservations for this time");
-        }
-        return reservations;
+        return repository.findReservationsBetween(checkin, checkout);
     }
+
 
     @Override
     @Transactional
