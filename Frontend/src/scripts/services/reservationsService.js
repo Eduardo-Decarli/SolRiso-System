@@ -37,7 +37,7 @@ export async function PostReservation(reservation) {
                 'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ reservation })
+            body: JSON.stringify( reservation )
         })
 
         const data = await response.json();

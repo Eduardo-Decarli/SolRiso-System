@@ -43,14 +43,17 @@
                     <label>Check-out: <br><input type="date" name="checkout" required></label>
                     <label>Tipo de Reserva:<br>
                         <select name="typeReservation" required>
+                            <option value="PHONE">Telefone</option>
                             <option value="EMAIL">Email</option>
-                            <option value="WHATSAPP">WhatsApp</option>
-                            <option value="TELEFONE">Telefone</option>
+                            <option value="BOOKING">Booking</option>
+                            <option value="AIRBNB">Airbnb</option>
+                            <option value="EXPEDIA">Expedia</option>
                         </select>
                     </label>
                     <label>Status:<br>
                         <select name="status">
                             <option value="ACTIVE">Ativa</option>
+                            <option value="MISSED">Não Compareceu</option>
                             <option value="CANCELED">Cancelada</option>
                         </select>
                     </label>

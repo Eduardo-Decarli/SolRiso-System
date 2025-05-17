@@ -102,8 +102,8 @@ async function CreateReservation() {
         const reservation = {
             room: Number(formData.get('room')),
             quantGuests: Number(formData.get('quantGuests')),
-            checkin: formData.get('checkin'),
-            checkout: formData.get('checkout'),
+            checkin: FormatDate(formData.get('checkin')),
+            checkout: FormatDate(formData.get('checkout')),
             typeReservation: formData.get('typeReservation'),
             status: formData.get('status'),
             entryValue: Number(formData.get('entryValue')),
@@ -125,8 +125,8 @@ async function CreateReservation() {
             },
             parking: {
                 carType: formData.get('carType'),
-                checkin: formData.get('parkingCheckin'),
-                checkout: formData.get('parkingCheckout')
+                checkin: FormatDate(formData.get('parkingCheckin')),
+                checkout: FormatDate(formData.get('parkingCheckout'))
             }
         };
 
@@ -135,3 +135,12 @@ async function CreateReservation() {
 }
 
 CreateReservation();
+
+function FormatDate(date) {
+    let data = new Date(date);
+    data.setHours(data.getHours() + 3);
+    let day = String(data.getDate()).padStart(2, '0');
+    let month = String(data.getMonth() + 1).padStart(2, '0');
+    let year = data.getFullYear();
+    return `${day}/${month}/${year}`;
+}
