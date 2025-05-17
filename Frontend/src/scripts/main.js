@@ -1,10 +1,13 @@
 import { auth } from "./services/authService.js";
 import { CreateRegister } from "./services/registerService.js"
+import { GetReservationsToday } from "./services/reservationsService.js"
 
 let main = document.getElementById('reservations');
 
-async function insertReservationsToday() {
-    const reservations = await getReservationToday();
+async function InsertReservationsToday() {
+
+    const reservations = await GetReservationsToday();
+
     reservations.forEach((reservation) => {
         const content = `<div class="card">
             <div class="reservation-details">
@@ -27,6 +30,8 @@ async function insertReservationsToday() {
         main.innerHTML += content;
     })
 }
+
+InsertReservationsToday();
 
 async function Login() {
 

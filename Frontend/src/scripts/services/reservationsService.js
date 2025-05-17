@@ -1,6 +1,6 @@
 const URL_ReservationToday = "http://localhost:8080/api/v1/reservation"
 
-async function getReservationToday() {
+export async function GetReservationsToday() {
     try {
         const response = await fetch(URL_ReservationToday, {
             method: "GET",
