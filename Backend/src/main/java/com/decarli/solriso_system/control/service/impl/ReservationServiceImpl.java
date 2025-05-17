@@ -1,6 +1,8 @@
 package com.decarli.solriso_system.control.service.impl;
 
+import com.decarli.solriso_system.control.repositories.AdminRepository;
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
+import com.decarli.solriso_system.control.service.AdminService;
 import com.decarli.solriso_system.control.service.ReservationService;
 import com.decarli.solriso_system.model.dto.mapper.ResponsibleBookingMapper;
 import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
@@ -10,20 +12,27 @@ import com.decarli.solriso_system.model.entities.Reservation;
 import com.decarli.solriso_system.model.exceptions.DateReservationException;
 import com.decarli.solriso_system.model.exceptions.EntityNotFoundException;
 import com.decarli.solriso_system.model.exceptions.RoomReservationException;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Service
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository repository;
+    private final AdminService adminService;
+    private final ReservationMapper reservationMapper;
     private final ResponsibleBookingMapper responsibleBookingMapper;
 
-    public ReservationServiceImpl(ReservationRepository repository, ResponsibleBookingMapper responsibleBookingMapper) {
+    public ReservationServiceImpl(ReservationRepository repository, AdminRepository adminRepository, AdminService adminService, ReservationMapper reservationMapper, ResponsibleBookingMapper responsibleBookingMapper) {
         this.repository = repository;
+        this.adminService = adminService;
+        this.reservationMapper = reservationMapper;
         this.responsibleBookingMapper = responsibleBookingMapper;
     }
 
@@ -33,8 +42,10 @@ public class ReservationServiceImpl implements ReservationService {
 
         validateReservationDates(create.getCheckin(), create.getCheckout());
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
+        Reservation reservation = reservationMapper.toReservation(create);
+        reservation.setAdmin(adminService.getAdminByEmail(create.getAdminEmail()));
 
-        return repository.save(ReservationMapper.INSTANCE.toReservation(create));
+        return repository.save(reservation);
     }
 
     private void validateReservationDates(LocalDate checkin, LocalDate checkout) {
@@ -45,8 +56,9 @@ public class ReservationServiceImpl implements ReservationService {
         if(checkin.isBefore(LocalDate.now())) throw new DateReservationException("Date of checkin can't be before today");
     }
 
-    private void validateRoomViability( int room, LocalDate checkin, LocalDate checkout) {
+    private void validateRoomViability(int room, LocalDate checkin, LocalDate checkout) {
         List<Reservation> reservations = getReservationsBetween(checkin, checkout);
+
         for(Reservation current : reservations) {
             if(current.getRoom() == room) {
                 throw new RoomReservationException("This room is already occupied");
@@ -97,9 +109,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
-        List<Reservation> reservations = repository.findReservationBetween(checkin, checkout);
-        return reservations;
+        return repository.findReservationsBetween(checkin, checkout);
     }
+
 
     @Override
     @Transactional
@@ -117,6 +129,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setCheckout(update.getCheckout());
         reservation.setEntryValue(update.getEntryValue());
         reservation.setTotalValue(update.getTotalValue());
+        reservation.setAdmin(adminService.getAdminByEmail(update.getAdminEmail()));
         reservation.setResponsible(responsibleBookingMapper.toResponsibleBooking(update.getResponsible()));
         reservation.setParking(update.getParking());
 

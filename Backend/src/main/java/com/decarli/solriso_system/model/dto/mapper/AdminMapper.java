@@ -3,7 +3,7 @@ package com.decarli.solriso_system.model.dto.mapper;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.admin.AdminLoginDto;
 import com.decarli.solriso_system.model.dto.admin.AdminResponseDto;
-import com.decarli.solriso_system.model.security.Admin;
+import com.decarli.solriso_system.model.entities.Admin;
 import org.mapstruct.Mapper;
 
 import java.util.List;

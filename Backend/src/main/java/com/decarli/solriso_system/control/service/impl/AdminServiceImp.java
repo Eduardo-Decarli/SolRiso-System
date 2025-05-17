@@ -1,9 +1,10 @@
 package com.decarli.solriso_system.control.service.impl;
 
 import com.decarli.solriso_system.control.repositories.AdminRepository;
+import com.decarli.solriso_system.control.service.AdminService;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
-import com.decarli.solriso_system.model.security.Admin;
+import com.decarli.solriso_system.model.entities.Admin;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
 import com.decarli.solriso_system.model.security.TokenService;
@@ -13,10 +14,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
-public class AdminService {
+public class AdminServiceImp implements AdminService {
 
     private final AdminRepository adminRepository;
     private final PasswordEncoder passwordEncoder;
@@ -24,7 +25,7 @@ public class AdminService {
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
 
-    public AdminService(com.decarli.solriso_system.control.repositories.AdminRepository adminRepository, PasswordEncoder passwordEncoder, com.decarli.solriso_system.model.dto.mapper.AdminMapper adminMapper, AuthenticationManager authenticationManager, TokenService tokenService) {
+    public AdminServiceImp(AdminRepository adminRepository, PasswordEncoder passwordEncoder, AdminMapper adminMapper, AuthenticationManager authenticationManager, TokenService tokenService) {
         this.adminRepository = adminRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminMapper = adminMapper;
@@ -32,15 +33,15 @@ public class AdminService {
         this.tokenService = tokenService;
     }
 
-    public String register(AdminCreateDto adminCreateDto) {
-        if (adminRepository.existsByEmail(adminCreateDto.getEmail())) {
-            throw new UserAlreadyExistsException("User Already created in the system");
+    public void register(AdminCreateDto create) {
+        if (adminRepository.existsByEmail(create.getEmail())) {
+            throw new UserAlreadyExistsException("Usuário já está registrado no sistema");
         }
 
-        Admin admin = adminMapper.toAdmin(adminCreateDto);
-        admin.setPassword(passwordEncoder.encode(adminCreateDto.getPassword()));
+        Admin admin = adminMapper.toAdmin(create);
+        admin.setEmail(create.getEmail().toLowerCase());
+        admin.setPassword(passwordEncoder.encode(create.getPassword()));
         adminRepository.save(admin);
-        return "Admin " + admin.getEmail() + " registered successfully";
     }
 
     public String login(String email, String password) {
@@ -55,11 +56,15 @@ public class AdminService {
 
     public Admin getAdminById(String id) {
         return adminRepository.findById(id)
-                .orElseThrow(() -> new AdminNotFoundException("Admin not found with ID: " + id));
+                .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com o id: " + id));
     }
 
     public Admin getAdminByEmail(String email) {
-        return Optional.ofNullable(adminRepository.findByEmail(email))
-                .orElseThrow(() -> new AdminNotFoundException("Admin not found with email: " + email));
+        return adminRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<Admin> getAllAdmins() {
+        return adminRepository.findAll();
     }
 }
