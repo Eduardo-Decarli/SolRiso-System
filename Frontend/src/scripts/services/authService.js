@@ -1,21 +1,15 @@
-const forms = document.getElementById('login');
+import {InvalidCaracter} from "../errors/InvalidCaracter.js";
 
-localStorage.clear();
-
-forms.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+export async function auth(email, password) {
 
     if (email === "" || password === "") {
-        alert("Preencha corretamente todos os campos");
+        throw new InvalidCaracter("Os atributos email e password não podem ser nulos");
     }
 
-    auth(email, password);
-});
+    getAuth(email, password);
+}
 
-const auth = async function (email, password) {
+const getAuth = async function (email, password) {
     try {
         const response = await fetch("http://localhost:8080/auth/login", {
             method: "POST",
@@ -25,11 +19,10 @@ const auth = async function (email, password) {
             body: JSON.stringify({ email, password })
         });
 
-
         if(response.status === 400) {
             const error = await response.json();
             console.log(error)
-            throw new Error(error.message)
+            throw new InvalidCaracter(error.message)
         }
         if(response.status !== 200) {
             const error = await response.json();
@@ -39,14 +32,14 @@ const auth = async function (email, password) {
         const token = await response.text();
 
         localStorage.setItem("jwt", token);
+        
+        window.location.href = "/index.html"
     
-        window.location.href = "./index.html"
     } catch(error) {
         const errorMessage = document.getElementById("wrong-password");
         
         console.log(error)
             errorMessage.innerText += error
             errorMessage.style.display = "block"
-
     }
 }

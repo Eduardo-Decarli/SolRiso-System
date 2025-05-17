@@ -1,8 +1,6 @@
-class InvalidPassword extends Error {
+export class InvalidCaracter extends Error {
     constructor(message) {
         super(message)
         this.name = "InvalidPassword"
     }
 }
-
-export default InvalidPassword;

@@ -1,22 +1,15 @@
-const formRegister = document.getElementById('register');
+import { InvalidCaracter } from "../errors/InvalidCaracter.js";
 
-localStorage.clear();
-
-formRegister.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const name = document.getElementById('name-user').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+export async function CreateRegister(name, email, password){
 
     if (name === "" || email === "" || password === "") {
-        alert("Insira dados válidos");
-        return;
+        throw new InvalidCaracter("Os caracteres são inválidos");
     }
 
-    register(name, email, password)
-});
+    getRegister(name, email, password);
+};
 
-const register = async function (name, email, password, role = "ADMIN") {
+const getRegister = async function (name, email, password, role = "ADMIN") {
     try {
         const response = await fetch("http://localhost:8080/auth/register", {
             method: "POST",
@@ -38,4 +31,4 @@ const register = async function (name, email, password, role = "ADMIN") {
     } catch (error) {
         return "Houve um erro ao tentar fazer o cadastro: " + error;
     }
-} 
+}
