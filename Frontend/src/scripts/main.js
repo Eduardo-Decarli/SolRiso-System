@@ -1,6 +1,8 @@
 import { auth } from "./services/authService.js";
-import { CreateRegister } from "./services/registerService.js"
-import { GetReservationsToday } from "./services/reservationsService.js"
+import { CreateRegister } from "./services/registerService.js";
+import { GetReservationsToday } from "./services/reservationsService.js";
+import { PostReservation } from "./services/reservationsService.js";
+import { getAddressByCEP } from "./services/getAddress.js"
 
 async function Login() {
 
@@ -68,3 +70,68 @@ async function InsertReservationsToday() {
 }
 
 InsertReservationsToday();
+
+async function insertAddress() {
+    try {
+        const cepInput = document.getElementById('cep');
+        cepInput.addEventListener('focusout', async () => {
+            const address = await getAddressByCEP(cepInput.value);
+
+            document.getElementsByName('uf')[0].value = address.state;
+            document.getElementsByName('city')[0].value = address.city;
+            document.getElementsByName('neighborhood')[0].value = address.neighborhood;
+            document.getElementsByName('street')[0].value = address.street;
+        })
+        
+    } catch(error) {
+        alert(error);
+    }
+}
+
+insertAddress();
+
+async function CreateReservation() {
+
+    const form = document.getElementById('create-reservation-form');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        const reservation = {
+            room: Number(formData.get('room')),
+            quantGuests: Number(formData.get('quantGuests')),
+            checkin: formData.get('checkin'),
+            checkout: formData.get('checkout'),
+            typeReservation: formData.get('typeReservation'),
+            status: formData.get('status'),
+            entryValue: Number(formData.get('entryValue')),
+            totalValue: Number(formData.get('totalValue')),
+            adminEmail: formData.get('adminEmail'),
+            responsible: {
+                name: formData.get('name'),
+                phoneNumber: formData.get('phoneNumber'),
+                email: formData.get('email'),
+                cpf: formData.get('cpf'),
+                address: {
+                    cep: formData.get('cep'),
+                    state: formData.get('uf'),
+                    city: formData.get('city'),
+                    neighborhood: formData.get('neighborhood'),
+                    street: formData.get('street'),
+                    number: formData.get('number')
+                }
+            },
+            parking: {
+                carType: formData.get('carType'),
+                checkin: formData.get('parkingCheckin'),
+                checkout: formData.get('parkingCheckout')
+            }
+        };
+
+        PostReservation(reservation);
+    })
+}
+
+CreateReservation();

@@ -33,7 +33,7 @@
 
     <main>
         <h1>Nova Reserva</h1>
-        <form>
+        <form id="create-reservation-form">
             <div class="create-reservation-container">
                 <fieldset class="reservation-properties">
                     <legend>Dados da Reserva</legend>
@@ -65,8 +65,10 @@
                     <label>Telefone: <br><input type="tel" name="phoneNumber" required></label>
                     <label>Email: <br><input type="email" name="email" required></label>
                     <label>CPF: <br><input type="text" name="cpf" required></label>
-                    <label>País: <br><input type="text" name="country" required></label>
+                    <label>CEP: <br><input type="text" name="cep" id="cep" required></label>
+                    <label>Estado: <br><input type="text" name="uf" required></label>
                     <label>Cidade: <br><input type="text" name="city" required></label>
+                    <label>Bairro: <br><input type="text" name="neighborhood" required></label>
                     <label>Rua: <br><input type="text" name="street" required></label>
                     <label>Número: <br><input type="text" name="number" required></label>
                 </fieldset>
@@ -83,6 +85,7 @@
         </form>
 
     </main>
+    <script type="module" src="/src/scripts/main.js"></script>
 </body>
 
 </html>
