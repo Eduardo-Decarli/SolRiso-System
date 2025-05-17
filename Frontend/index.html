@@ -5,21 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home - Pousada SolRiso</title>
+
+    <link rel="stylesheet" href="./src/styles/global.css">
     <link rel="stylesheet" href="src/styles/vendor/reset.css">
+
     <link rel="stylesheet" href="./src/styles/layout/container.css">
+    <link rel="stylesheet" href="./src/styles/layout/header.css">
+
     <link rel="stylesheet" href="./src/styles/pages/reservations.css">
 </head>
 
 <body class="container">
     <header class="header">
-        <h1>Pousada <br><span>SolRiso</span></h1>
+        <h2>Pousada <br><span>SolRiso</span></h2>
         <div class="user-icon">👤</div>
     </header>
 
     <aside class="left-content">
         <nav>
             <ul>
-                <li><a href="#">Reservas</a></li>
+                <li><a href="/src/pages/reservations.html">Reservas</a></li>
                 <li><a href="#">Relatórios</a></li>
                 <li><a href="/src/pages/login.html">Sair</a></li>
             </ul>
@@ -27,10 +32,12 @@
     </aside>
 
     <main>
-        <h1>Reservas de Hoje</h1>
-
+        <div class="new-reservation">
+            <h1>Reservas de Hoje</h1>
+            <a href="/src/pages/create-reservation.html">Cadastrar nova reserva</a>
+        </div>
         <div id="reservations" class="reservations">
-            
+
         </div>
 
     </main>
