@@ -4,6 +4,22 @@ import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js"
 
+document.addEventListener("DOMContentLoaded", () => {
+    const login = document.getElementById("login");
+    const register = document.getElementById('register-form');
+    const reservationToday = document.getElementById('reservations');
+    const cepInput = document.getElementById('cep');
+    const createReservation = document.getElementById('create-reservation-form');
+    let exitButton = document.getElementById('exit-button');
+
+    if(login) Login();
+    if(register) Register();
+    if(reservationToday) InsertReservationsToday();
+    if(cepInput) InsertAddress();
+    if(createReservation) CreateReservation();
+    if(exitButton) Logout();
+})
+
 async function Login() {
 
     let form = document.getElementById("login");
@@ -24,8 +40,6 @@ async function Login() {
     })
 }
 
-Login();
-
 async function Register() {
     let form = document.getElementById('register-form');
 
@@ -39,8 +53,6 @@ async function Register() {
         CreateRegister(name, email, password);
     })
 }
-
-Register();
 
 async function InsertReservationsToday() {
     let main = document.getElementById('reservations');
@@ -69,9 +81,7 @@ async function InsertReservationsToday() {
     })
 }
 
-InsertReservationsToday();
-
-async function insertAddress() {
+async function InsertAddress() {
     try {
         const cepInput = document.getElementById('cep');
         cepInput.addEventListener('focusout', async () => {
@@ -87,8 +97,6 @@ async function insertAddress() {
         alert(error);
     }
 }
-
-insertAddress();
 
 async function CreateReservation() {
 
@@ -134,8 +142,6 @@ async function CreateReservation() {
     })
 }
 
-CreateReservation();
-
 function FormatDate(date) {
     let data = new Date(date);
     data.setHours(data.getHours() + 3);
@@ -143,4 +149,14 @@ function FormatDate(date) {
     let month = String(data.getMonth() + 1).padStart(2, '0');
     let year = data.getFullYear();
     return `${day}/${month}/${year}`;
+}
+
+/* Provisório */
+
+function Logout() {
+    let exitButton = document.getElementById('exit-button');
+
+    exitButton.addEventListener('click', () => {
+        localStorage.clear();
+    })
 }
