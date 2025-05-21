@@ -7,15 +7,16 @@ h1 {
 
 .create-reservation-container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 0.5fr 0.5fr;
     grid-template-rows: auto auto auto;
+    gap: 20px;
 }
 
 .create-reservation-container fieldset {
   border: 1px solid #E5E7EB;
   padding: 20px;
   border-radius: 8px;
-  margin: 10px 15px;
+  
 }
 
 legend {
