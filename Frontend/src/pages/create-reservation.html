@@ -37,11 +37,15 @@
             <div class="create-reservation-container">
                 <fieldset class="reservation-properties">
                     <legend>Dados da Reserva</legend>
-                    <label>Quarto: <br><input type="number" name="room" required></label>
-                    <label>Quantidade de Hóspedes: <br><input type="number" name="quantGuests" required></label>
-                    <label>Check-in: <br><input type="date" name="checkin" required></label>
-                    <label>Check-out: <br><input type="date" name="checkout" required></label>
-                    <label>Tipo de Reserva:<br>
+                    <label>Quarto: <span class="priority">*</span> <br>
+                        <input type="number" name="room" required></label>
+                    <label>Quantidade de Hóspedes: <span class="priority">*</span><br>
+                        <input type="number" name="quantGuests" required></label>
+                    <label>Check-in: <span class="priority">*</span> <br> 
+                        <input type="date" name="checkin" required></label>
+                    <label>Check-out: <span class="priority">*</span> <br>
+                        <input type="date" name="checkout" required></label>
+                    <label>Tipo de Reserva: <span class="priority">*</span><br>
                         <select name="typeReservation" required>
                             <option value="PHONE">Telefone</option>
                             <option value="EMAIL">Email</option>
@@ -50,23 +54,28 @@
                             <option value="EXPEDIA">Expedia</option>
                         </select>
                     </label>
-                    <label>Status:<br>
+                    <label>Status: <span class="priority">*</span> <br>
                         <select name="status" required>
                             <option value="ACTIVE">Ativa</option>
                             <option value="MISSED">Não Compareceu</option>
                             <option value="CANCELED">Cancelada</option>
                         </select>
                     </label>
-                    <label>Valor de Entrada: <br><input type="number" name="entryValue" step="0.01"></label>
-                    <label>Valor Total: <br><input type="number" name="totalValue" step="0.01" required></label>
-                    <label>Email do Admin: <br><input type="email" name="adminEmail" required></label>
+                    <label>Valor de Entrada: <br> <input type="number" name="entryValue" step="0.01"></label>
+                    <label>Valor Total: <span class="priority">*</span> <br>
+                        <input type="number" name="totalValue" step="0.01" required></label>
+                        
+                    <label>Email do Admin: <span class="priority">*</span> <br>
+                        <input type="email" name="adminEmail" required></label>
                 </fieldset>
 
                 <fieldset class="responsable-properties">
                     <legend>Responsável</legend>
-                    <label>Nome: <br><input type="text" name="name" required></label>
+                    <label>Nome: <span class="priority">*</span> <br> 
+                        <input type="text" name="name" required></label>
                     <label>Telefone: <br><input type="tel" name="phoneNumber"></label>
-                    <label>Email: <br><input type="email" name="email"></label>
+                    <label>Email: <span class="priority">*</span> <br> 
+                        <input type="email" name="email"></label>
                     <label>CPF: <br><input type="text" name="cpf"></label>
                     <label>CEP: <br><input type="text" name="cep" id="cep"></label>
                     <label>Estado: <br><input type="text" name="uf"></label>
