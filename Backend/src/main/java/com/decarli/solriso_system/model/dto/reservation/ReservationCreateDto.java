@@ -52,6 +52,7 @@ public class ReservationCreateDto {
     @NotNull(message = "The total value can't be null")
     private double totalValue;
 
+    @NotNull(message = "Admin email can't be null")
     private String adminEmail;
 
     @Schema(description = "Responsável pela reserva")
