@@ -12,12 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const createReservation = document.getElementById('create-reservation-form');
     let exitButton = document.getElementById('exit-button');
 
-    if(login) Login();
-    if(register) Register();
-    if(reservationToday) InsertReservationsToday();
-    if(cepInput) InsertAddress();
-    if(createReservation) CreateReservation();
-    if(exitButton) Logout();
+    if (login) Login();
+    if (register) Register();
+    if (reservationToday) InsertReservationsToday();
+    if (cepInput) InsertAddress();
+    if (createReservation) CreateReservation();
+    if (exitButton) Logout();
 })
 
 if(localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html') {
@@ -97,8 +97,8 @@ async function InsertAddress() {
             document.getElementsByName('neighborhood')[0].value = address.neighborhood;
             document.getElementsByName('street')[0].value = address.street;
         })
-        
-    } catch(error) {
+
+    } catch (error) {
         alert(error);
     }
 }
@@ -110,40 +110,47 @@ async function CreateReservation() {
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
-        const formData = new FormData(form);
+        try {
 
-        const reservation = {
-            room: Number(formData.get('room')),
-            quantGuests: Number(formData.get('quantGuests')),
-            checkin: FormatDate(formData.get('checkin')),
-            checkout: FormatDate(formData.get('checkout')),
-            typeReservation: formData.get('typeReservation'),
-            status: formData.get('status'),
-            entryValue: Number(formData.get('entryValue')),
-            totalValue: Number(formData.get('totalValue')),
-            adminEmail: formData.get('adminEmail'),
-            responsible: {
-                name: formData.get('name'),
-                phoneNumber: formData.get('phoneNumber'),
-                email: formData.get('email'),
-                cpf: formData.get('cpf'),
-                address: {
-                    cep: formData.get('cep'),
-                    state: formData.get('uf'),
-                    city: formData.get('city'),
-                    neighborhood: formData.get('neighborhood'),
-                    street: formData.get('street'),
-                    number: formData.get('number')
+            const formData = new FormData(form);
+
+            const reservation = {
+                room: Number(formData.get('room')),
+                quantGuests: Number(formData.get('quantGuests')),
+                checkin: FormatDate(formData.get('checkin')),
+                checkout: FormatDate(formData.get('checkout')),
+                typeReservation: formData.get('typeReservation'),
+                status: formData.get('status'),
+                entryValue: Number(formData.get('entryValue')),
+                totalValue: Number(formData.get('totalValue')),
+                adminEmail: formData.get('adminEmail'),
+                responsible: {
+                    name: formData.get('name'),
+                    phoneNumber: formData.get('phoneNumber'),
+                    email: formData.get('email'),
+                    cpf: formData.get('cpf'),
+                    address: {
+                        cep: formData.get('cep'),
+                        state: formData.get('uf'),
+                        city: formData.get('city'),
+                        neighborhood: formData.get('neighborhood'),
+                        street: formData.get('street'),
+                        number: formData.get('number')
+                    }
+                },
+                parking: {
+                    carType: formData.get('carType'),
+                    checkin: FormatDate(formData.get('parkingCheckin')),
+                    checkout: FormatDate(formData.get('parkingCheckout'))
                 }
-            },
-            parking: {
-                carType: formData.get('carType'),
-                checkin: FormatDate(formData.get('parkingCheckin')),
-                checkout: FormatDate(formData.get('parkingCheckout'))
-            }
-        };
+            };
 
-        PostReservation(reservation);
+            PostReservation(reservation);
+            
+        }
+        catch (error) {
+            console.log(error)
+        }
     })
 }
 
