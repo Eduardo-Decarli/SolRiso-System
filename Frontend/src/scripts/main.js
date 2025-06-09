@@ -20,6 +20,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if(exitButton) Logout();
 })
 
+if(localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html') {
+    window.location.href = '/src/pages/login.html'
+}
+
+
 async function Login() {
 
     let form = document.getElementById("login");
