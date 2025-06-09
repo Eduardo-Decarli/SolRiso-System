@@ -1,5 +1,4 @@
-import { auth } from "./services/authService.js";
-import { CreateRegister } from "./services/registerService.js";
+import { auth, createRegister } from "./services/authService.js";
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js"
@@ -28,7 +27,6 @@ async function Login() {
         event.preventDefault();
 
         try {
-
             let email = document.getElementById('email-login').value;
             let password = document.getElementById('password-login').value;
 
@@ -50,7 +48,7 @@ async function Register() {
         let email = document.getElementById('email-register').value;
         let password = document.getElementById('password-register').value;
 
-        CreateRegister(name, email, password);
+        createRegister(name, email, password);
     })
 }
 
