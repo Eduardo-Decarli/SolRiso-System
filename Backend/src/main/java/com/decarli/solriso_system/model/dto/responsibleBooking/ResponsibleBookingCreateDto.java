@@ -26,6 +26,7 @@ public class ResponsibleBookingCreateDto {
 
     @Schema(description = "E-mail do responsável", example = "joao.silva@email.com")
     @Email(message = "Insert a valid email")
+    @NotBlank(message = "Responsible email can't be blank")
     private String email;
 
     @Schema(description = "CPF do responsável", example = "123.456.789-09")
