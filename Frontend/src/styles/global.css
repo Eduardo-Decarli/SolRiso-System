@@ -1,5 +1,6 @@
 :root {
     --primary-color: #ff9c07;
     --secudary-color: #fab802;
+    --dark-color-font: #272525;
     --background-linear: linear-gradient(to bottom, #fab802, #ff6f00);
 }
