@@ -29,6 +29,7 @@ public class ReservationCreateDto {
     private int quantGuests;
 
     @Schema(description = "Tipo da reserva (ex: PHONE, EMAIL, BOOKING)", example = "PHONE")
+    @NotNull(message = "type of reservation can't be null")
     private TypeReservation typeReservation;
 
     @Schema(description = "Status da reserva (ex: ACTIVE, MISSED, CANCELED)", example = "ACTIVE")
@@ -52,6 +53,7 @@ public class ReservationCreateDto {
     @NotNull(message = "The total value can't be null")
     private double totalValue;
 
+    @NotNull(message = "Admin email can't be null")
     private String adminEmail;
 
     @Schema(description = "Responsável pela reserva")

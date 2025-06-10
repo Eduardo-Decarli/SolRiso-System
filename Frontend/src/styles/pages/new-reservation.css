@@ -1,3 +1,6 @@
+* {
+  box-sizing: border-box;
+}
 
 h1 {
   margin-bottom: 24px;
@@ -7,15 +10,16 @@ h1 {
 
 .create-reservation-container {
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 0.5fr 0.5fr;
     grid-template-rows: auto auto auto;
+    gap: 20px;
 }
 
 .create-reservation-container fieldset {
   border: 1px solid #E5E7EB;
   padding: 20px;
   border-radius: 8px;
-  margin: 10px 15px;
+  
 }
 
 legend {
@@ -37,7 +41,7 @@ input, select {
   border: 1px solid #D1D5DB;
   border-radius: 6px;
   font-size: 15px;
-  background-color: #F3F4F6;
+  background-color: #FFF;
 }
 
 button {
@@ -68,4 +72,8 @@ button:hover {
 
 .parking-properties {
     grid-column: 1/3;
+}
+
+.priority {
+  color: red;
 }
