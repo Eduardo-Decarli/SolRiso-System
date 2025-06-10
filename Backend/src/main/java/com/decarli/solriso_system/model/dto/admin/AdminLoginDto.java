@@ -14,7 +14,7 @@ public class AdminLoginDto {
     private String email;
 
     @Schema(description = "Senha do Usuário, chave de acesso do usuário", example = "Teste@123")
-    @NotNull(message = "Password can't be null")
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "The password has be eight characters, a uppercase, a lowercase, a number and a special character")
+    @NotNull(message = "A senha não pode ser null")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "A senha precisa ter no mínimo 8 caracteres, uma letra maiúscula, uma minuscula, um número e um caracter especial")
     private String password;
 }
