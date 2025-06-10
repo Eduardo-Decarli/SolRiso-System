@@ -14,7 +14,7 @@ export async function auth(email, password) {
     if (response.status !== 200) {
         const error = await response.json();
         console.log(error);
-        if (error.errors.password != null) {
+        if (error.errors?.password) {
             throw new ResponseErrorMessage(error.errors.password)
         } else {
             throw new ResponseErrorMessage(error.message)
@@ -27,35 +27,25 @@ export async function auth(email, password) {
 }
 
 
-export async function createRegister(name, email, password) {
+export async function createRegister(name, email, password, role = 'ADMIN') {
 
-    if (name === "" || email === "" || password === "") {
-        throw new InvalidCaracter("Os caracteres são inválidos");
-    }
+    const response = await fetch("http://localhost:8080/auth/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ name, email, password, role })
+    })
 
-    getRegister(name, email, password);
-};
-
-const getRegister = async function (name, email, password, role = "ADMIN") {
-    try {
-        const response = await fetch("http://localhost:8080/auth/register", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name, email, password, role })
-        })
-
-        switch (response.status) {
-            case 201:
-                window.location.href = "./login.html"
-                break;
-
-            case 409:
-                alert("Dados Incorretos");
-                break;
+    if (response.status !== 201) {
+        const error = await response.json();
+        console.log(error);
+        if (error.errors?.password) {
+            throw new ResponseErrorMessage(error.errors.password)
+        } else {
+            throw new ResponseErrorMessage(error.message)
         }
-    } catch (error) {
-        return "Houve um erro ao tentar fazer o cadastro: " + error;
     }
+
+    window.location.href = "./login.html"
 }

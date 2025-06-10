@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (exitButton) Logout();
 })
 
-if(localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html') {
+if (localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html' && window.location.pathname !== '/src/pages/register.html') {
     window.location.href = '/src/pages/login.html'
 }
 
@@ -39,10 +39,9 @@ function Login() {
             }
 
             await auth(email, password);
-        }
-        catch (error) {
+
+        } catch (error) {
             const errorTemplate = document.getElementById("wrong-password");
-            console.log(errorTemplate)
             console.log(error.message)
             errorTemplate.innerText = error.message
             errorTemplate.style.display = "block"
@@ -50,17 +49,29 @@ function Login() {
     })
 }
 
-async function Register() {
+function Register() {
     let form = document.getElementById('register-form');
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
-        let name = document.getElementById('name-register').value;
-        let email = document.getElementById('email-register').value;
-        let password = document.getElementById('password-register').value;
+        try {
+            let name = document.getElementById('name-register').value;
+            let email = document.getElementById('email-register').value;
+            let password = document.getElementById('password-register').value;
 
-        createRegister(name, email, password);
+            if (name === "" || email === "" || password === "") {
+                throw new InvalidCaracter("Os caracteres são inválidos");
+            }
+
+            await createRegister(name, email, password);
+
+        } catch (error) {
+            const errorTemplate = document.getElementById("wrong-password");
+            console.log(error.message)
+            errorTemplate.innerText = error.message
+            errorTemplate.style.display = "block"
+        }
     })
 }
 
@@ -151,7 +162,7 @@ async function CreateReservation() {
             };
 
             PostReservation(reservation);
-            
+
         }
         catch (error) {
             console.log(error)
