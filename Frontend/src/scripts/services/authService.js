@@ -3,44 +3,31 @@ import { ResponseErrorMessage } from "../errors/ResponseErrorMessage.js";
 
 export async function auth(email, password) {
 
-    if (email === "" || password === "") {
-        throw new InvalidCaracter("Os atributos email e password não podem ser nulos");
-    }
+    const response = await fetch("http://localhost:8080/auth/login", {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, password })
+    });
 
-    getAuth(email, password);
-}
-
-const getAuth = async function (email, password) {
-    try {
-        const response = await fetch("http://localhost:8080/auth/login", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-
-        if(response.status !== 200) {
-            const error = await response.json();
+    if (response.status !== 200) {
+        const error = await response.json();
+        console.log(error);
+        if (error.errors.password != null) {
+            throw new ResponseErrorMessage(error.errors.password)
+        } else {
             throw new ResponseErrorMessage(error.message)
         }
-
-        const token = await response.text();
-
-        localStorage.setItem("jwt", token);
-        
-        window.location.href = "/index.html"
-    
-    } catch(error) {
-        const errorMessage = document.getElementById("wrong-password");
-        
-        console.log(error)
-        errorMessage.innerText = error
-        errorMessage.style.display = "block"
     }
+
+    const token = await response.text();
+    localStorage.setItem("jwt", token);
+    window.location.href = "/index.html"
 }
 
-export async function CreateRegister(name, email, password){
+
+export async function createRegister(name, email, password) {
 
     if (name === "" || email === "" || password === "") {
         throw new InvalidCaracter("Os caracteres são inválidos");

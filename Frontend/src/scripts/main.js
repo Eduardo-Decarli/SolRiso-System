@@ -23,22 +23,29 @@ if(localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pa
     window.location.href = '/src/pages/login.html'
 }
 
-
-async function Login() {
+function Login() {
 
     let form = document.getElementById("login");
 
-    form.addEventListener("submit", (event) => {
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
 
         try {
             let email = document.getElementById('email-login').value;
             let password = document.getElementById('password-login').value;
 
-            auth(email, password);
+            if (email === "" || password === "") {
+                throw new InvalidCaracter("Os atributos email e password não podem ser nulos");
+            }
+
+            await auth(email, password);
         }
         catch (error) {
-            console.log(error)
+            const errorTemplate = document.getElementById("wrong-password");
+            console.log(errorTemplate)
+            console.log(error.message)
+            errorTemplate.innerText = error.message
+            errorTemplate.style.display = "block"
         }
     })
 }
