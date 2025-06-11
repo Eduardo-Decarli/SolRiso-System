@@ -3,6 +3,7 @@ package com.decarli.solriso_system.control.service.impl;
 import com.decarli.solriso_system.control.repositories.AdminRepository;
 import com.decarli.solriso_system.control.service.AdminService;
 import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
+import com.decarli.solriso_system.model.dto.admin.AdminLoginDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
 import com.decarli.solriso_system.model.entities.Admin;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
@@ -66,5 +67,12 @@ public class AdminServiceImp implements AdminService {
     @Override
     public List<Admin> getAllAdmins() {
         return adminRepository.findAll();
+    }
+
+    @Override
+    public void forgotPassword(AdminLoginDto dto) {
+        Admin adm = adminRepository.findByEmail(dto.getEmail());
+        adm.setPassword(passwordEncoder.encode(dto.getPassword()));
+        adminRepository.save(adm);
     }
 }
