@@ -43,7 +43,7 @@ function Login() {
             await auth(email, password);
 
         } catch (error) {
-            const errorTemplate = document.getElementById("wrong-password");
+            let errorTemplate = document.getElementById("wrong-password");
             console.log(error.message);
             errorTemplate.innerText = error.message;
             errorTemplate.style.display = "block";
@@ -69,7 +69,7 @@ function Register() {
             await createRegister(name, email, password);
 
         } catch (error) {
-            const errorTemplate = document.getElementById("wrong-password");
+            let errorTemplate = document.getElementById("wrong-password");
             console.log(error.message);
             errorTemplate.innerText = error.message;
             errorTemplate.style.display = "block";
@@ -88,9 +88,10 @@ function forgotPassword() {
             const email = document.getElementById('forgot-password-email').value;
             const password = document.getElementById('new-password').value;
 
-            newPassword(email, password);
+            await newPassword(email, password);
+
         } catch (error) {
-            const errorTemplate = document.getElementById("wrong-password");
+            let errorTemplate = document.getElementById("wrong-password");
             console.log(error.message);
             errorTemplate.innerText = error.message;
             errorTemplate.style.display = "block";

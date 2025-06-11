@@ -61,7 +61,6 @@ export async function newPassword(email, password) {
 
     if (response.status !== 200) {
         const error = await response.json();
-        console.log(error);
         if (error.errors?.password) {
             throw new ResponseErrorMessage(error.errors.password)
         } else {
