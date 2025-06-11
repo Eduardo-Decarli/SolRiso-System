@@ -14,5 +14,5 @@ public interface AdminService {
     Admin getAdminById(String id);
     Admin getAdminByEmail(String email);
     List<Admin> getAllAdmins();
-    void forgotPassword(AdminLoginDto dto);
+    void forgotPassword(String email, String password);
 }

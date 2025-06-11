@@ -1,4 +1,4 @@
-import { auth, createRegister } from "./services/authService.js";
+import { auth, createRegister, newPassword } from "./services/authService.js";
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js"
@@ -9,7 +9,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const reservationToday = document.getElementById('reservations');
     const cepInput = document.getElementById('cep');
     const createReservation = document.getElementById('create-reservation-form');
-    let exitButton = document.getElementById('exit-button');
+    const exitButton = document.getElementById('exit-button');
+    const forgotPasswordForm = document.getElementById('forgot-password-forms');
 
     if (login) Login();
     if (register) Register();
@@ -17,9 +18,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (cepInput) InsertAddress();
     if (createReservation) CreateReservation();
     if (exitButton) Logout();
+    if (forgotPasswordForm) forgotPassword();
 })
 
-if (localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html' && window.location.pathname !== '/src/pages/register.html') {
+if (localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html' && window.location.pathname !== '/src/pages/register.html' && window.location.pathname !== '/src/pages/forgot-password.html') {
     window.location.href = '/src/pages/login.html'
 }
 
@@ -42,9 +44,9 @@ function Login() {
 
         } catch (error) {
             const errorTemplate = document.getElementById("wrong-password");
-            console.log(error.message)
-            errorTemplate.innerText = error.message
-            errorTemplate.style.display = "block"
+            console.log(error.message);
+            errorTemplate.innerText = error.message;
+            errorTemplate.style.display = "block";
         }
     })
 }
@@ -68,9 +70,30 @@ function Register() {
 
         } catch (error) {
             const errorTemplate = document.getElementById("wrong-password");
-            console.log(error.message)
-            errorTemplate.innerText = error.message
-            errorTemplate.style.display = "block"
+            console.log(error.message);
+            errorTemplate.innerText = error.message;
+            errorTemplate.style.display = "block";
+        }
+    })
+}
+
+function forgotPassword() {
+
+    const form = document.getElementById('forgot-password-forms');
+
+    form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        try {
+            const email = document.getElementById('forgot-password-email').value;
+            const password = document.getElementById('new-password').value;
+
+            newPassword(email, password);
+        } catch (error) {
+            const errorTemplate = document.getElementById("wrong-password");
+            console.log(error.message);
+            errorTemplate.innerText = error.message;
+            errorTemplate.style.display = "block";
         }
     })
 }

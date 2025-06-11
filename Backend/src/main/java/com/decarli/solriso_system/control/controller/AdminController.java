@@ -45,8 +45,8 @@ public class AdminController {
 
     @PostMapping("/forgot-password")
     public ResponseEntity<Void> forgotPassword(@RequestBody @Valid AdminLoginDto dto) {
-        adminService.forgotPassword(dto);
-        return ResponseEntity.status(200).build();
+        adminService.forgotPassword(dto.getEmail(), dto.getPassword());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @GetMapping("/admins")

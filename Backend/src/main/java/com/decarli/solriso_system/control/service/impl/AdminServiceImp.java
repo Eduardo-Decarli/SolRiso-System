@@ -70,9 +70,9 @@ public class AdminServiceImp implements AdminService {
     }
 
     @Override
-    public void forgotPassword(AdminLoginDto dto) {
-        Admin adm = adminRepository.findByEmail(dto.getEmail());
-        adm.setPassword(passwordEncoder.encode(dto.getPassword()));
+    public void forgotPassword(String email, String password) {
+        Admin adm = getAdminByEmail(email);
+        adm.setPassword(passwordEncoder.encode(password));
         adminRepository.save(adm);
     }
 }
