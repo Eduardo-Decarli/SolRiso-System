@@ -43,6 +43,12 @@ public class AdminController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @PostMapping("/forgot-password")
+    public ResponseEntity<Void> forgotPassword(@RequestBody @Valid AdminLoginDto dto) {
+        adminService.forgotPassword(dto.getEmail(), dto.getPassword());
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
     @GetMapping("/admins")
     public ResponseEntity<List<AdminResponseDto>> getAllAdmins() {
         List<Admin> admins = adminService.getAllAdmins();
