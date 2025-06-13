@@ -1,0 +1,17 @@
+# Define uma imagem de servidor para os arquivos HTML
+FROM nginx:alpine
+
+# Define o Autor
+LABEL maintainer="decarliedu@gmail.com"
+
+# Diretório raiz do container
+WORKDIR /app
+
+# Roda um comando para deletar os arquivos padrões do Nginx
+RUN rm -rf /usr/share/nginx/html/*
+
+# Copia os arquivos para dentro do container
+COPY . /usr/share/nginx/html
+
+# Define a porta de saida
+EXPOSE 80
