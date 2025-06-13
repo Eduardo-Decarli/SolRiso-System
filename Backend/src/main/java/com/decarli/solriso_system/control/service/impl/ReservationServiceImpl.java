@@ -13,6 +13,8 @@ import com.decarli.solriso_system.model.exceptions.DateReservationException;
 import com.decarli.solriso_system.model.exceptions.EntityNotFoundException;
 import com.decarli.solriso_system.model.exceptions.RoomReservationException;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +25,8 @@ import java.util.List;
 @Slf4j
 @Service
 public class ReservationServiceImpl implements ReservationService {
+
+    private static final Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
     private final ReservationRepository repository;
     private final AdminService adminService;
@@ -40,6 +44,8 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public Reservation createReservation(ReservationCreateDto create) {
 
+        logger.info("Creating new reservation {}", create);
+
         validateReservationDates(create.getCheckin(), create.getCheckout());
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
         Reservation reservation = reservationMapper.toReservation(create);
@@ -54,6 +60,8 @@ public class ReservationServiceImpl implements ReservationService {
         if(checkin.isAfter(checkout) || checkin.isEqual(checkout)) throw new DateReservationException("Date of check-in would be before checkout");
 
         if(checkin.isBefore(LocalDate.now())) throw new DateReservationException("Date of checkin can't be before today");
+
+        logger.info("Validate dates successfully from checkin {} to checkout {} ", checkin, checkout);
     }
 
     private void validateRoomViability(int room, LocalDate checkin, LocalDate checkout) {
@@ -64,6 +72,8 @@ public class ReservationServiceImpl implements ReservationService {
                 throw new RoomReservationException("This room is already occupied");
             }
         }
+
+        logger.info("Validate successfully room {} viability from {} to {}", room, checkin, checkout);
     }
 
     @Override
@@ -75,6 +85,8 @@ public class ReservationServiceImpl implements ReservationService {
         if(reservation == null) {
             throw new EntityNotFoundException("Reservation not found");
         }
+
+        logger.info("Found reservation {} by id {}", reservation, id);
         return reservation;
     }
 
@@ -82,8 +94,11 @@ public class ReservationServiceImpl implements ReservationService {
     public List<Reservation> getReservationsToday() {
         List<Reservation> reservations = repository.findReservationByCheckin(LocalDate.now());
         if(reservations.isEmpty()) {
+            logger.error("Fail to find reservations today");
             throw new EntityNotFoundException("there are no reservations today");
         }
+
+        logger.info("Found reservations today");
         return reservations;
     }
 
@@ -93,7 +108,7 @@ public class ReservationServiceImpl implements ReservationService {
         if(reservations.isEmpty()) {
             throw new EntityNotFoundException("there are no reservations for this room");
         }
-
+        logger.info("Found reservations by room {}", room);
         return reservations;
     }
 
@@ -104,11 +119,13 @@ public class ReservationServiceImpl implements ReservationService {
             throw new EntityNotFoundException("there are no reservations for this responsible");
         }
 
+        logger.info("Found reservations by responsible name {}", name);
         return reservations;
     }
 
     @Override
     public List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout) {
+        logger.info("Looking for reservations from checkin {} to checkout {}", checkin, checkout);
         return repository.findReservationsBetween(checkin, checkout);
     }
 
@@ -117,6 +134,8 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional
     public Reservation updateReservation(ReservationUpdateDto update) {
         Reservation reservation = getReservationById(update.getId());
+
+        logger.info("Making update about reservation {}", reservation);
 
         validateReservationDates(update.getCheckin(), update.getCheckout());
         validateRoomViability(update.getRoom(), update.getCheckin(), update.getCheckout());
@@ -132,6 +151,8 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setAdmin(adminService.getAdminByEmail(update.getAdminEmail()));
         reservation.setResponsible(responsibleBookingMapper.toResponsibleBooking(update.getResponsible()));
         reservation.setParking(update.getParking());
+
+        logger.info("Finish update reservation to {}", reservation);
 
         return repository.save(reservation);
     }
@@ -149,6 +170,7 @@ public class ReservationServiceImpl implements ReservationService {
         }
 
         repository.deleteById(id);
+        logger.warn("Reservation with id {} deleted", id);
     }
 
     @Override
@@ -157,6 +179,7 @@ public class ReservationServiceImpl implements ReservationService {
         if(reservations.isEmpty()) {
             throw new EntityNotFoundException("there are no reservations in the system");
         }
+        logger.info("Got all reservations");
         return reservations;
     }
 }
