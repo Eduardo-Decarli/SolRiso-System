@@ -100,8 +100,25 @@ function forgotPassword() {
 }
 
 async function InsertReservationsToday() {
-    let main = document.getElementById('reservations');
+
     const reservations = await GetReservationsToday();
+    let roomsModal = document.getElementsByClassName('room');
+    let statusModal = document.getElementsByClassName('status');
+
+    reservations.forEach((reservation) => {
+
+        for (let i = 0; i < roomsModal.length; i++) {
+            let roomModal = roomsModal[i];
+            let data_room = parseInt(roomModal.getAttribute('data-room'))
+
+            if (reservation.room === data_room) {
+                roomModal.classList = "room ocupado";
+                statusModal[data_room - 1].innerHTML = "Quarto Ocupado"
+            }
+        }
+    })
+
+    let main = document.getElementById('reservations');
 
     reservations.forEach((reservation) => {
         const content = `<div class="card">
@@ -202,8 +219,6 @@ function FormatDate(date) {
     let year = data.getFullYear();
     return `${day}/${month}/${year}`;
 }
-
-/* Provisório */
 
 function Logout() {
     let exitButton = document.getElementById('exit-button');
