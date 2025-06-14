@@ -3,16 +3,22 @@ version: "3.9"
 services:
 
   backend:
-    build: backend/.
+    build: ./backend
+    container_name: backend
     ports:
       - "8080:8080"
     depends_on:
       - mongodb
+    networks:
+      - solriso
 
   frontend:
-    build: frontend/.
+    build: ./frontend
+    container_name: frontend
     ports:
       - "3500:3500"
+    networks:
+      - solriso
 
   mongodb:
     image: mongo:latest
@@ -22,3 +28,13 @@ services:
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: root
+    volumes:
+      - db_data:/data/db
+    networks:
+      - solriso
+
+volumes:
+  db_data:
+
+networks:
+  solriso:

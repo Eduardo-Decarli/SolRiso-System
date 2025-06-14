@@ -12,6 +12,3 @@ RUN rm -rf /usr/share/nginx/html/*
 
 # Copia os arquivos para dentro do container
 COPY . /usr/share/nginx/html
-
-# Define a porta de saida
-EXPOSE 3500

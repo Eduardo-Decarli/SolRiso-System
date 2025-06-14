@@ -6,6 +6,4 @@ WORKDIR /app
 
 COPY target/solriso-system-1.0.jar /app/solriso-system.jar
 
-EXPOSE 8080
-
 CMD ["java", "-jar", "solriso-system.jar"]
