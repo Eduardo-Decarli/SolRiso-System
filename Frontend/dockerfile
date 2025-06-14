@@ -14,4 +14,4 @@ RUN rm -rf /usr/share/nginx/html/*
 COPY . /usr/share/nginx/html
 
 # Define a porta de saida
-EXPOSE 80
+EXPOSE 3500
