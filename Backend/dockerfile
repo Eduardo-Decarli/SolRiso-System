@@ -1,0 +1,9 @@
+FROM openjdk:21
+
+LABEL maintainer="decarliedu@gmail.com"
+
+WORKDIR /app
+
+COPY target/solriso-system-1.0.jar /app/solriso-system.jar
+
+CMD ["java", "-jar", "solriso-system.jar"]

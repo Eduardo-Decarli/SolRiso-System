@@ -26,7 +26,7 @@ export async function GetReservationsToday() {
     catch (error) {
         document.getElementById("reservations").innerHTML += `
             <div class="no-reservations">
-                <p>${error}</p>
+                <p>${error.message}</p>
             </div>`;
     }
 }

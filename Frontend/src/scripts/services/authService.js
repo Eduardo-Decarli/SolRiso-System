@@ -1,4 +1,3 @@
-import { InvalidCaracter } from "../errors/InvalidCaracter.js";
 import { ResponseErrorMessage } from "../errors/ResponseErrorMessage.js";
 
 export async function auth(email, password) {
@@ -48,4 +47,26 @@ export async function createRegister(name, email, password, role = 'ADMIN') {
     }
 
     window.location.href = "./login.html"
+}
+
+export async function newPassword(email, password) {
+    
+    const response = await fetch("http://localhost:8080/auth/forgot-password", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password })
+    })
+
+    if (response.status !== 200) {
+        const error = await response.json();
+        if (error.errors?.password) {
+            throw new ResponseErrorMessage(error.errors.password)
+        } else {
+            throw new ResponseErrorMessage(error.message)
+        }
+    }
+
+    window.location.href = "./login.html";
 }
