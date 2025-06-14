@@ -98,6 +98,7 @@
     display: flex;
     flex-direction: column;
     gap: 30px;
+    margin-bottom: 25px;
 }
 
 .solriso-rooms, .decarli-rooms {
@@ -135,6 +136,7 @@
     text-align: center;
     transition: transform 0.3s ease;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
 }
 
 .room:hover {

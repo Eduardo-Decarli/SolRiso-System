@@ -113,6 +113,7 @@ async function InsertReservationsToday() {
 
             if (reservation.room === data_room) {
                 roomModal.classList = "room ocupado";
+                roomModal.setAttribute("href", `#${data_room}`)
                 statusModal[data_room - 1].innerHTML = "Quarto Ocupado"
             }
         }
@@ -121,7 +122,7 @@ async function InsertReservationsToday() {
     let main = document.getElementById('reservations');
 
     reservations.forEach((reservation) => {
-        const content = `<div class="card">
+        const content = `<div class="card" id="${reservation.room}">
             <div class="reservation-details">
                 <h3>Dados da Reserva</h3>
                 <p id="id"><strong>ID:</strong> ${reservation.id}</p>
