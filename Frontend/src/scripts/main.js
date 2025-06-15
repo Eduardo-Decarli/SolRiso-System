@@ -175,6 +175,8 @@ async function InsertReservationsToday() {
                 <div class="modal-actions">
                     <a href="#" class="modal-btn btn-excluir">Excluir Reserva</a>
                     <a href="#" class="modal-btn">Editar Reserva</a>
+                    <a href="#" class="modal-btn">Ver Reserva</a>
+                    <a href="#" class="modal-btn">Emitir Comprovante</a>
                 </div>
 
             </div>
