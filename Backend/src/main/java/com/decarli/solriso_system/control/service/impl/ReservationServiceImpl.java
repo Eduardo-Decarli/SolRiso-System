@@ -59,7 +59,7 @@ public class ReservationServiceImpl implements ReservationService {
 
         if(checkin.isAfter(checkout) || checkin.isEqual(checkout)) throw new DateReservationException("Date of check-in would be before checkout");
 
-        if(checkin.isBefore(LocalDate.now())) throw new DateReservationException("Date of checkin can't be before today");
+        // if(checkin.isBefore(LocalDate.now())) throw new DateReservationException("Date of checkin can't be before today");
 
         logger.info("Validate dates successfully from checkin {} to checkout {} ", checkin, checkout);
     }
@@ -92,7 +92,7 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public List<Reservation> getReservationsToday() {
-        List<Reservation> reservations = repository.findReservationByCheckin(LocalDate.now());
+        List<Reservation> reservations = repository.findReservationsToday(LocalDate.now());
         if(reservations.isEmpty()) {
             logger.error("Fail to find reservations today");
             throw new EntityNotFoundException("there are no reservations today");
