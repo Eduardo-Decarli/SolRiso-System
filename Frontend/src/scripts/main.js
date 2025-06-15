@@ -4,6 +4,11 @@ import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js"
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    if (localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html' && window.location.pathname !== '/src/pages/register.html' && window.location.pathname !== '/src/pages/forgot-password.html') {
+        window.location.href = '/src/pages/login.html'
+    }
+
     const login = document.getElementById("login");
     const register = document.getElementById('register-form');
     const reservationToday = document.getElementById('reservations');
@@ -19,11 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (createReservation) CreateReservation();
     if (exitButton) Logout();
     if (forgotPasswordForm) forgotPassword();
-})
 
-if (localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html' && window.location.pathname !== '/src/pages/register.html' && window.location.pathname !== '/src/pages/forgot-password.html') {
-    window.location.href = '/src/pages/login.html'
-}
+})
 
 function Login() {
 
@@ -122,7 +124,10 @@ async function InsertReservationsToday() {
     let main = document.getElementById('reservations');
 
     reservations.forEach((reservation) => {
-        const content = `<div class="card" id="${reservation.room}">
+        const modalId = `modal-room-${reservation.room}`;
+
+        const content = `
+        <div class="card" id="${reservation.room}">
             <div class="reservation-details">
                 <h3>Dados da Reserva</h3>
                 <p id="id"><strong>ID:</strong> ${reservation.id}</p>
@@ -137,11 +142,32 @@ async function InsertReservationsToday() {
                 <p><strong>Telefone:</strong> ${reservation.responsible.phoneNumber}</p>
                 <p><strong>Email:</strong> ${reservation.responsible.email}</p>
             </div>
-            <button>Ver Mais</button>
+            <button class="open-modal-btn" data-modal="${modalId}">Ver Mais</button>
+        </div>
+        
+        <div class="modal" id="${modalId}">
+            <div class="modal-content">
+                <span class="close-modal-btn" data-close="${modalId}">&times;</span>
+                <div class="reservation-details">
+                    <h3>Dados da Reserva</h3>
+                    <p><strong>ID:</strong> ${reservation.id}</p>
+                    <p><strong>Quarto:</strong> ${reservation.room}</p>
+                    <p><strong>Checkin:</strong> ${reservation.checkin}</p>
+                    <p><strong>Checkout:</strong> ${reservation.checkout}</p>
+                    <p><strong>Valor da Reserva:</strong> ${reservation.totalValue}</p>
+                </div>
+                <div class="booking-details">
+                    <h3>Dados do Hóspede</h3>
+                    <p><strong>Nome:</strong> ${reservation.responsible.name}</p>
+                    <p><strong>Telefone:</strong> ${reservation.responsible.phoneNumber}</p>
+                    <p><strong>Email:</strong> ${reservation.responsible.email}</p>
+                </div>
+            </div>
         </div>`
 
         main.innerHTML += content;
-    })
+    });
+    addModalEvents()
 }
 
 async function InsertAddress() {
@@ -227,4 +253,31 @@ function Logout() {
     exitButton.addEventListener('click', () => {
         localStorage.clear();
     })
+}
+
+function addModalEvents() {
+    const openButtons = document.querySelectorAll(".open-modal-btn");
+    const closeButtons = document.querySelectorAll(".close-modal-btn");
+
+    openButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const modalId = btn.getAttribute("data-modal");
+            const modal = document.getElementById(modalId);
+            modal.style.display = "block";
+        });
+    });
+
+    closeButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const modalId = btn.getAttribute("data-close");
+            const modal = document.getElementById(modalId);
+            modal.style.display = "none";
+        });
+    });
+
+    window.addEventListener("click", (event) => {
+        if (event.target.classList.contains("modal")) {
+            event.target.style.display = "none";
+        }
+    });
 }
