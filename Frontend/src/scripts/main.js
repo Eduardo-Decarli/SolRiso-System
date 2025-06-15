@@ -145,23 +145,38 @@ async function InsertReservationsToday() {
             <button class="open-modal-btn" data-modal="${modalId}">Ver Mais</button>
         </div>
         
-        <div class="modal" id="${modalId}">
+        <div class="modal" id="${modalId}" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
             <div class="modal-content">
-                <span class="close-modal-btn" data-close="${modalId}">&times;</span>
-                <div class="reservation-details">
-                    <h3>Dados da Reserva</h3>
+
+                
+        
+                <div class="reservation-section">
+                    <h3 id="modalTitle">Dados da Reserva</h3>
                     <p><strong>ID:</strong> ${reservation.id}</p>
                     <p><strong>Quarto:</strong> ${reservation.room}</p>
+                    <p><strong>Tipo da Reserva:</strong> ${reservation.typeReservation}</p>
+                    <p><strong>Status da Reserva:</strong> ${reservation.status}</p>
                     <p><strong>Checkin:</strong> ${reservation.checkin}</p>
                     <p><strong>Checkout:</strong> ${reservation.checkout}</p>
-                    <p><strong>Valor da Reserva:</strong> ${reservation.totalValue}</p>
+                    <p><strong>Valor de Entrada:</strong> ${reservation.entryValue}</p>
+                    <p><strong>Valor Total:</strong> ${reservation.totalValue}</p>
                 </div>
-                <div class="booking-details">
+
+                <div class="guest-section">
                     <h3>Dados do Hóspede</h3>
                     <p><strong>Nome:</strong> ${reservation.responsible.name}</p>
                     <p><strong>Telefone:</strong> ${reservation.responsible.phoneNumber}</p>
                     <p><strong>Email:</strong> ${reservation.responsible.email}</p>
+                    <p><strong>CPF:</strong> ${reservation.responsible.cpf}</p>
                 </div>
+
+                <span class="close-modal-btn" data-close="${modalId}" aria-label="Fechar modal">&times;</span>
+
+                <div class="modal-actions">
+                    <a href="#" class="modal-btn btn-excluir">Excluir Reserva</a>
+                    <a href="#" class="modal-btn">Editar Reserva</a>
+                </div>
+
             </div>
         </div>`
 
