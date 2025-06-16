@@ -88,17 +88,17 @@
                 <fieldset class="responsable-properties">
                     <legend>Responsável</legend>
                     <label>Nome: <span class="priority">*</span> <br> 
-                        <input type="text" name="name" required>
+                        <input type="text" name="name" autofocus required>
                     </label>
 
                     <label>Telefone: <br><input type="tel" name="phoneNumber">
                     </label>
 
                     <label>Email: <span class="priority">*</span> <br> 
-                        <input type="email" name="email">
+                        <input type="email" name="email" required>
                     </label>
 
-                    <label>CPF: <br><input type="text" id="cpf" name="cpf">
+                    <label>CPF: <br><input type="text" id="cpf" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" name="cpf">
                     </label>
 
                     <label>CEP: <br><input type="text" name="cep" id="cep">
