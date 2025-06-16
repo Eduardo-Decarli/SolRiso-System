@@ -1,9 +1,15 @@
 import { auth, createRegister, newPassword } from "./services/authService.js";
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
-import { getAddressByCEP } from "./services/getAddress.js"
+import { getAddressByCEP } from "./services/getAddress.js";
+import { FormatDate } from "./utils/formatDate.js";
 
 document.addEventListener("DOMContentLoaded", () => {
+
+    if (localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html' && window.location.pathname !== '/src/pages/register.html' && window.location.pathname !== '/src/pages/forgot-password.html') {
+        window.location.href = '/src/pages/login.html'
+    }
+
     const login = document.getElementById("login");
     const register = document.getElementById('register-form');
     const reservationToday = document.getElementById('reservations');
@@ -19,11 +25,8 @@ document.addEventListener("DOMContentLoaded", () => {
     if (createReservation) CreateReservation();
     if (exitButton) Logout();
     if (forgotPasswordForm) forgotPassword();
-})
 
-if (localStorage.getItem('jwt') === null && window.location.pathname !== '/src/pages/login.html' && window.location.pathname !== '/src/pages/register.html' && window.location.pathname !== '/src/pages/forgot-password.html') {
-    window.location.href = '/src/pages/login.html'
-}
+})
 
 function Login() {
 
@@ -122,7 +125,10 @@ async function InsertReservationsToday() {
     let main = document.getElementById('reservations');
 
     reservations.forEach((reservation) => {
-        const content = `<div class="card" id="${reservation.room}">
+        const modalId = `modal-room-${reservation.room}`;
+
+        const content = `
+        <div class="card" id="${reservation.room}">
             <div class="reservation-details">
                 <h3>Dados da Reserva</h3>
                 <p id="id"><strong>ID:</strong> ${reservation.id}</p>
@@ -137,11 +143,49 @@ async function InsertReservationsToday() {
                 <p><strong>Telefone:</strong> ${reservation.responsible.phoneNumber}</p>
                 <p><strong>Email:</strong> ${reservation.responsible.email}</p>
             </div>
-            <button>Ver Mais</button>
+            <button class="open-modal-btn" data-modal="${modalId}">Ver Mais</button>
+        </div>
+        
+        <div class="modal" id="${modalId}" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+            <div class="modal-content">
+
+                
+        
+                <div class="reservation-section">
+                    <h3 id="modalTitle">Dados da Reserva</h3>
+                    <p><strong>ID:</strong> ${reservation.id}</p>
+                    <p><strong>Quarto:</strong> ${reservation.room}</p>
+                    <p><strong>Tipo da Reserva:</strong> ${reservation.typeReservation}</p>
+                    <p><strong>Status da Reserva:</strong> ${reservation.status}</p>
+                    <p><strong>Checkin:</strong> ${reservation.checkin}</p>
+                    <p><strong>Checkout:</strong> ${reservation.checkout}</p>
+                    <p><strong>Valor de Entrada:</strong> ${reservation.entryValue}</p>
+                    <p><strong>Valor Total:</strong> ${reservation.totalValue}</p>
+                </div>
+
+                <div class="guest-section">
+                    <h3>Dados do Hóspede</h3>
+                    <p><strong>Nome:</strong> ${reservation.responsible.name}</p>
+                    <p><strong>Telefone:</strong> ${reservation.responsible.phoneNumber}</p>
+                    <p><strong>Email:</strong> ${reservation.responsible.email}</p>
+                    <p><strong>CPF:</strong> ${reservation.responsible.cpf}</p>
+                </div>
+
+                <span class="close-modal-btn" data-close="${modalId}" aria-label="Fechar modal">&times;</span>
+
+                <div class="modal-actions">
+                    <a href="#" class="modal-btn btn-excluir">Excluir Reserva</a>
+                    <a href="#" class="modal-btn">Editar Reserva</a>
+                    <a href="#" class="modal-btn">Ver Reserva</a>
+                    <a href="#" class="modal-btn">Emitir Comprovante</a>
+                </div>
+
+            </div>
         </div>`
 
         main.innerHTML += content;
-    })
+    });
+    addModalEvents()
 }
 
 async function InsertAddress() {
@@ -212,19 +256,37 @@ async function CreateReservation() {
     })
 }
 
-function FormatDate(date) {
-    let data = new Date(date);
-    data.setHours(data.getHours() + 3);
-    let day = String(data.getDate()).padStart(2, '0');
-    let month = String(data.getMonth() + 1).padStart(2, '0');
-    let year = data.getFullYear();
-    return `${day}/${month}/${year}`;
-}
-
 function Logout() {
     let exitButton = document.getElementById('exit-button');
 
     exitButton.addEventListener('click', () => {
         localStorage.clear();
     })
+}
+
+function addModalEvents() {
+    const openButtons = document.querySelectorAll(".open-modal-btn");
+    const closeButtons = document.querySelectorAll(".close-modal-btn");
+
+    openButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const modalId = btn.getAttribute("data-modal");
+            const modal = document.getElementById(modalId);
+            modal.style.display = "block";
+        });
+    });
+
+    closeButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            const modalId = btn.getAttribute("data-close");
+            const modal = document.getElementById(modalId);
+            modal.style.display = "none";
+        });
+    });
+
+    window.addEventListener("click", (event) => {
+        if (event.target.classList.contains("modal")) {
+            event.target.style.display = "none";
+        }
+    });
 }
