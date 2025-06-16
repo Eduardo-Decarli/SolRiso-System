@@ -3,6 +3,7 @@ import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
 import { FormatDate } from "./utils/formatDate.js";
+import { formaterCPF } from "./utils/formaterCPF.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -17,6 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const createReservation = document.getElementById('create-reservation-form');
     const exitButton = document.getElementById('exit-button');
     const forgotPasswordForm = document.getElementById('forgot-password-forms');
+    const cpfInput = document.getElementById('cpf');
 
     if (login) Login();
     if (register) Register();
@@ -25,8 +27,16 @@ document.addEventListener("DOMContentLoaded", () => {
     if (createReservation) CreateReservation();
     if (exitButton) Logout();
     if (forgotPasswordForm) forgotPassword();
+    if (cpfInput) formatCPF(cpfInput);
+    
 
 })
+
+function formatCPF(cpf) {
+    document.addEventListener("input", () => {
+        cpf.value = formaterCPF(cpf.value);
+    })
+}
 
 function Login() {
 
