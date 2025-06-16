@@ -1,7 +1,8 @@
 import { auth, createRegister, newPassword } from "./services/authService.js";
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
-import { getAddressByCEP } from "./services/getAddress.js"
+import { getAddressByCEP } from "./services/getAddress.js";
+import { FormatDate } from "./utils/formatDate.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -253,15 +254,6 @@ async function CreateReservation() {
             console.log(error)
         }
     })
-}
-
-function FormatDate(date) {
-    let data = new Date(date);
-    data.setHours(data.getHours() + 3);
-    let day = String(data.getDate()).padStart(2, '0');
-    let month = String(data.getMonth() + 1).padStart(2, '0');
-    let year = data.getFullYear();
-    return `${day}/${month}/${year}`;
 }
 
 function Logout() {
