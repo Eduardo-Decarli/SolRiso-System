@@ -2,9 +2,10 @@ import { auth, createRegister, newPassword } from "./services/authService.js";
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
-import { FormatDate } from "./utils/formatDate.js";
+import { formatDate } from "./utils/formatDate.js";
 import { formaterCPF } from "./utils/formaterCPF.js";
 import { formaterCEP } from "./utils/formaterCEP.js";
+import { formaterPhone } from "./utils/formaterPhone.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const exitButton = document.getElementById('exit-button');
     const forgotPasswordForm = document.getElementById('forgot-password-forms');
     const cpfInput = document.getElementById('cpf');
+    const phoneInput = document.getElementById('phone');
 
     if (login) Login();
     if (register) Register();
@@ -30,6 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (forgotPasswordForm) forgotPassword();
     if (cpfInput) formatCPF(cpfInput);
     if (cepInput) formatCEP(cepInput);
+    if (phoneInput) formatPhone(phoneInput);
 
 })
 
@@ -42,6 +45,12 @@ function formatCPF(cpf) {
 function formatCEP(cep) {
     document.addEventListener('input', () => {
         cep.value = formaterCEP(cep.value);
+    })
+}
+
+function formatPhone(phone) {
+    document.addEventListener('input', () => {
+        phone.value = formaterPhone(phone.value);
     })
 }
 
@@ -236,8 +245,8 @@ async function CreateReservation() {
             const reservation = {
                 room: Number(formData.get('room')),
                 quantGuests: Number(formData.get('quantGuests')),
-                checkin: FormatDate(formData.get('checkin')),
-                checkout: FormatDate(formData.get('checkout')),
+                checkin: formatDate(formData.get('checkin')),
+                checkout: formatDate(formData.get('checkout')),
                 typeReservation: formData.get('typeReservation'),
                 status: formData.get('status'),
                 entryValue: Number(formData.get('entryValue')),
@@ -259,12 +268,12 @@ async function CreateReservation() {
                 },
                 parking: {
                     carType: formData.get('carType'),
-                    checkin: FormatDate(formData.get('parkingCheckin')),
-                    checkout: FormatDate(formData.get('parkingCheckout'))
+                    checkin: formatDate(formData.get('parkingCheckin')),
+                    checkout: formatDate(formData.get('parkingCheckout'))
                 }
             };
-
-            PostReservation(reservation);
+            console.log(reservation);
+            await PostReservation(reservation);
 
         }
         catch (error) {

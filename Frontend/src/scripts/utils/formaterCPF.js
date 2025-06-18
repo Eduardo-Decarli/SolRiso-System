@@ -1,4 +1,5 @@
 export function formaterCPF(cpf) {
+  
   cpf = cpf.replace(/\D/g, '');
 
   if (cpf.length <= 3) {
