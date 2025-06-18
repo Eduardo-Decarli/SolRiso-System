@@ -45,6 +45,7 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation createReservation(ReservationCreateDto create) {
 
         logger.info("Creating new reservation {}", create);
+        create.getResponsible().setCpf(create.getResponsible().getCpf().replaceAll("^\\D+",""));
 
         validateReservationDates(create.getCheckin(), create.getCheckout());
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
