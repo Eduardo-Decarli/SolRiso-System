@@ -4,6 +4,7 @@ import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
 import { FormatDate } from "./utils/formatDate.js";
 import { formaterCPF } from "./utils/formaterCPF.js";
+import { formaterCEP } from "./utils/formaterCEP.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -28,13 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (exitButton) Logout();
     if (forgotPasswordForm) forgotPassword();
     if (cpfInput) formatCPF(cpfInput);
-    
+    if (cepInput) formatCEP(cepInput);
 
 })
 
 function formatCPF(cpf) {
     document.addEventListener("input", () => {
         cpf.value = formaterCPF(cpf.value);
+    })
+}
+
+function formatCEP(cep) {
+    document.addEventListener('input', () => {
+        cep.value = formaterCEP(cep.value);
     })
 }
 
