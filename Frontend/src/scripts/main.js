@@ -1,4 +1,4 @@
-import { auth, createRegister, newPassword } from "./services/authService.js";
+import { auth, createRegister, newPassword, getLoggedUser } from "./services/authService.js";
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
@@ -241,6 +241,7 @@ async function CreateReservation() {
         try {
 
             const formData = new FormData(form);
+            const emailUser = getLoggedUser();
 
             const reservation = {
                 room: Number(formData.get('room')),
@@ -251,7 +252,7 @@ async function CreateReservation() {
                 status: formData.get('status'),
                 entryValue: Number(formData.get('entryValue')),
                 totalValue: Number(formData.get('totalValue')),
-                adminEmail: formData.get('adminEmail'),
+                adminEmail: emailUser,
                 responsible: {
                     name: formData.get('name'),
                     phoneNumber: formData.get('phoneNumber'),
