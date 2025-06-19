@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -45,7 +44,6 @@ public class ReservationServiceImpl implements ReservationService {
     public Reservation createReservation(ReservationCreateDto create) {
 
         logger.info("Creating new reservation {}", create);
-        create.getResponsible().setCpf(create.getResponsible().getCpf().replaceAll("^\\D+",""));
 
         validateReservationDates(create.getCheckin(), create.getCheckout());
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());

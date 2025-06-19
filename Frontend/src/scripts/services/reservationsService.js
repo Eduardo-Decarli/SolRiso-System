@@ -42,17 +42,21 @@ export async function PostReservation(reservation) {
         body: JSON.stringify(reservation)
     });
 
-    
+
     const data = await response.json();
 
-    if(response.status !== 201) {
+    if (response.status !== 201) {
         console.log(data.message)
         throw new Error(data.message);
     }
 
     console.log(data);
-    /*setTimeout(() => {
-        window.location.href = "/src/pages/reservations.html"
-    }, 1000);*/
+
+    if (response.status === 201) {
+        setTimeout(() => {
+            window.location.href = "/src/pages/reservations.html"
+        }, 1000);
+    }
+
 
 }

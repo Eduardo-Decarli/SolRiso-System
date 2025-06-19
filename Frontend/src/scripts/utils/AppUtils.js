@@ -2,6 +2,14 @@ export function isNullOrEmpty(value) {
     return value === null || value === undefined || value === "";
 }
 
+export function isObjectBlank(obj) {
+    const values = Object.values(obj);
+    if(values.every(value => String(value).trim() === "" || value === null)) {
+        return null;
+    }
+    return obj;
+}
+
 export function formatDate(date) {
     if(!date) {
         return null;

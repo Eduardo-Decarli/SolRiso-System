@@ -2,7 +2,7 @@ import { auth, createRegister, newPassword, getLoggedUser } from "./services/aut
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
-import { formaterPhone, formaterCEP, formaterCPF, formatDate, isNullOrEmpty} from "./utils/AppUtils.js";
+import { formaterPhone, formaterCEP, formaterCPF, formatDate, isNullOrEmpty, isObjectBlank} from "./utils/AppUtils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -240,7 +240,7 @@ async function CreateReservation() {
             const formData = new FormData(form);
             const emailUser = getLoggedUser();
 
-            const reservation = {
+            let reservation = {
                 room: Number(formData.get('room')),
                 quantGuests: Number(formData.get('quantGuests')),
                 checkin: formatDate(formData.get('checkin')),
@@ -252,9 +252,9 @@ async function CreateReservation() {
                 adminEmail: emailUser,
                 responsible: {
                     name: formData.get('name'),
-                    phoneNumber: formData.get('phoneNumber'),
+                    phoneNumber: (formData.get('phoneNumber') !== "") ?formData.get('phoneNumber') : null,
                     email: formData.get('email'),
-                    cpf: formData.get('cpf'),
+                    cpf: (formData.get('cpf') !== "") ? formData.get('cpf'): null,
                     address: {
                         cep: formData.get('cep'),
                         state: formData.get('uf'),
@@ -271,7 +271,8 @@ async function CreateReservation() {
                 }
             };
 
-            if(reservation.responsible.address.cep)
+            reservation.responsible.address = isObjectBlank(reservation.responsible.address);
+            reservation.parking = isObjectBlank(reservation.parking);
 
             console.log(reservation);
             await PostReservation(reservation);
