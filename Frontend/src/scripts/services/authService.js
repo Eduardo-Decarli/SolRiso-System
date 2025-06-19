@@ -1,5 +1,5 @@
 import { ResponseErrorMessage } from "../errors/ResponseErrorMessage.js";
-import { decodeJwtPayload } from "../utils/decrypt.js";
+import { decodeJwtPayload } from "../utils/AppUtils.js";
 
 export async function auth(email, password) {
 

@@ -2,10 +2,7 @@ import { auth, createRegister, newPassword, getLoggedUser } from "./services/aut
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
-import { formatDate } from "./utils/formatDate.js";
-import { formaterCPF } from "./utils/formaterCPF.js";
-import { formaterCEP } from "./utils/formaterCEP.js";
-import { formaterPhone } from "./utils/formaterPhone.js";
+import { formaterPhone, formaterCEP, formaterCPF, formatDate, isNullOrEmpty} from "./utils/AppUtils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -273,6 +270,9 @@ async function CreateReservation() {
                     checkout: formatDate(formData.get('parkingCheckout'))
                 }
             };
+
+            if(reservation.responsible.address.cep)
+
             console.log(reservation);
             await PostReservation(reservation);
 
