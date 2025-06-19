@@ -62,6 +62,5 @@ public class ReservationCreateDto {
     private ResponsibleBookingCreateDto responsible;
 
     @Schema(description = "Informações sobre o estacionamento (se aplicável)")
-    @Valid
     private Parking parking;
 }

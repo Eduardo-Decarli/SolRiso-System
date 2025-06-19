@@ -9,7 +9,7 @@ export async function GetReservationsToday() {
                 'Content-Type': 'application/json'
             }
         });
-        
+
         if (response.status === 404) {
             console.log("Nenhuma Reserva Encontrada")
             throw new Error("Nenhuma Reserva Encontrada para Hoje");
@@ -33,23 +33,26 @@ export async function GetReservationsToday() {
 
 export async function PostReservation(reservation) {
 
-    try {
-        const response = await fetch(URL_RESERVATION, {
-            method: "POST",
-            headers: {
-                'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(reservation)
-        })
+    const response = await fetch(URL_RESERVATION, {
+        method: "POST",
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(reservation)
+    });
 
-        const data = await response.json();
-        console.log(data);
-        setTimeout(() => {
-            window.location.href = "/src/pages/reservations.html"
-        }, 1000)
+    
+    const data = await response.json();
 
-    } catch (error) {
-        alert(error)
+    if(response.status !== 201) {
+        console.log(data.message)
+        throw new Error(data.message);
     }
+
+    console.log(data);
+    /*setTimeout(() => {
+        window.location.href = "/src/pages/reservations.html"
+    }, 1000);*/
+
 }

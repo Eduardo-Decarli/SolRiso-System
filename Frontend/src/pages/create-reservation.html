@@ -74,11 +74,11 @@
                         </select>
                     </label>
 
-                    <label>Valor de Entrada: <br> <input type="number" name="entryValue" step="0.01">
-                    </label>
-
                     <label>Valor Total: <span class="priority">*</span> <br>
                         <input type="number" name="totalValue" step="0.01" required>
+                    </label>
+
+                    <label>Valor de Entrada: <br> <input type="number" name="entryValue" step="0.01">
                     </label>
                 </fieldset>
 
@@ -125,7 +125,7 @@
                     <label>Check-out: <br><input type="date" name="parkingCheckout"></label>
                 </fieldset>
             </div>
-
+            <div class="errorMessage" id="errorMessage"></div>
             <button type="submit">Salvar Reserva</button>
         </form>
 

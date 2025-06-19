@@ -278,7 +278,9 @@ async function CreateReservation() {
 
         }
         catch (error) {
-            console.log(error)
+            let errorDisplay = document.getElementById('errorMessage')
+            errorDisplay.style.display = 'block';
+            errorDisplay.innerHTML = error.message
         }
     })
 }
