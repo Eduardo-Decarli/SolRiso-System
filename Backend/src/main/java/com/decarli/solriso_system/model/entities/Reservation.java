@@ -1,5 +1,6 @@
 package com.decarli.solriso_system.model.entities;
 
+import com.decarli.solriso_system.model.enums.Payment;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
 import lombok.Data;
@@ -21,6 +22,8 @@ public class Reservation {
     private TypeReservation typeReservation;
     private LocalDate checkin;
     private LocalDate checkout;
+
+    private Payment payment;
     private double entryValue;
     private double totalValue;
 

@@ -249,6 +249,7 @@ async function CreateReservation() {
                 status: formData.get('status'),
                 entryValue: Number(formData.get('entryValue')),
                 totalValue: Number(formData.get('totalValue')),
+                payment: formData.get('payment'),
                 adminEmail: emailUser,
                 responsible: {
                     name: formData.get('name'),

@@ -2,6 +2,7 @@ package com.decarli.solriso_system.model.dto.reservation;
 
 import com.decarli.solriso_system.model.dto.responsibleBooking.ResponsibleBookingCreateDto;
 import com.decarli.solriso_system.model.entities.Parking;
+import com.decarli.solriso_system.model.enums.Payment;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -44,6 +45,9 @@ public class ReservationUpdateDto {
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate checkout;
 
+    @NotNull(message = "Forma de pagamento inválida")
+    private Payment payment;
+
     @Schema(description = "Valor de entrada da reserva", example = "200.50")
     private Double entryValue;
 
@@ -51,6 +55,7 @@ public class ReservationUpdateDto {
     @NotNull(message = "The total value can't be null")
     private Double totalValue;
 
+    @NotNull(message = "Usuario logado não foi definido")
     private String adminEmail;
 
     @Schema(description = "Responsável pela reserva")
