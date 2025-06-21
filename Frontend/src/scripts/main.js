@@ -250,6 +250,7 @@ async function CreateReservation() {
                 entryValue: Number(formData.get('entryValue')),
                 totalValue: Number(formData.get('totalValue')),
                 payment: formData.get('payment'),
+                paid: false,
                 adminEmail: emailUser,
                 responsible: {
                     name: formData.get('name'),
@@ -271,6 +272,12 @@ async function CreateReservation() {
                     checkout: formatDate(formData.get('parkingCheckout'))
                 }
             };
+
+            if(reservation.totalValue < reservation.entryValue) {
+                throw new Error("Valor de Entrada não pode ser maior do que o valor total");
+            } else if (reservation.totalValue === reservation.entryValue) {
+                reservation.paid = true;
+            }
 
             reservation.responsible.address = isObjectBlank(reservation.responsible.address);
             reservation.parking = isObjectBlank(reservation.parking);

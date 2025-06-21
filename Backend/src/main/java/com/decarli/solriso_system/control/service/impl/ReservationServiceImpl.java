@@ -15,6 +15,7 @@ import com.decarli.solriso_system.model.exceptions.RoomReservationException;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,17 +28,17 @@ public class ReservationServiceImpl implements ReservationService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
-    private final ReservationRepository repository;
-    private final AdminService adminService;
-    private final ReservationMapper reservationMapper;
-    private final ResponsibleBookingMapper responsibleBookingMapper;
+    @Autowired
+    private ReservationRepository repository;
 
-    public ReservationServiceImpl(ReservationRepository repository, AdminRepository adminRepository, AdminService adminService, ReservationMapper reservationMapper, ResponsibleBookingMapper responsibleBookingMapper) {
-        this.repository = repository;
-        this.adminService = adminService;
-        this.reservationMapper = reservationMapper;
-        this.responsibleBookingMapper = responsibleBookingMapper;
-    }
+    @Autowired
+    private AdminService adminService;
+
+    @Autowired
+    private ReservationMapper reservationMapper;
+
+    @Autowired
+    private ResponsibleBookingMapper responsibleBookingMapper;
 
     @Override
     @Transactional
@@ -49,8 +50,10 @@ public class ReservationServiceImpl implements ReservationService {
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
         Reservation reservation = reservationMapper.toReservation(create);
         reservation.setAdmin(adminService.getAdminByEmail(create.getAdminEmail()));
-
-        return repository.save(reservation);
+        log.info("{}",create.getPaid());
+        Reservation reservation1 = repository.save(reservation);
+        log.info("{}", reservation1);
+        return reservation1;
     }
 
     private void validateReservationDates(LocalDate checkin, LocalDate checkout) {

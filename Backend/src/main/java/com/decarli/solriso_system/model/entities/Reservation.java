@@ -26,6 +26,7 @@ public class Reservation {
     private Payment payment;
     private double entryValue;
     private double totalValue;
+    private Boolean paid;
 
     @DBRef
     private Admin admin;

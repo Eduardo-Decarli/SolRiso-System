@@ -56,6 +56,9 @@ public class ReservationResponseDto {
     @NotNull(message = "The total value can't be null")
     private Double totalValue;
 
+    @NotNull(message = "Não foi especificado se foi pago ou não")
+    private Boolean paid;
+
     @NotNull(message = "Admin can't be null")
     private AdminResponseDto admin;
 

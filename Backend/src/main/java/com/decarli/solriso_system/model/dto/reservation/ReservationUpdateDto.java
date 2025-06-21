@@ -55,6 +55,9 @@ public class ReservationUpdateDto {
     @NotNull(message = "The total value can't be null")
     private Double totalValue;
 
+    @NotNull(message = "Não foi especificado se foi pago ou não")
+    private Boolean paid;
+
     @NotNull(message = "Usuario logado não foi definido")
     private String adminEmail;
 

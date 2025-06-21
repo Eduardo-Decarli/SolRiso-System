@@ -57,6 +57,9 @@ public class ReservationCreateDto {
     @NotNull(message = "The total value can't be null")
     private double totalValue;
 
+    @NotNull(message = "Não foi especificado se foi pago ou não")
+    private Boolean paid;
+
     @NotNull(message = "Admin email can't be null")
     private String adminEmail;
 
