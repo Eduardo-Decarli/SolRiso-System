@@ -1,6 +1,8 @@
+import { ResponseErrorMessage } from "../errors/ResponseErrorMessage";
+
 const URL_RESERVATION = "http://localhost:8080/api/v1/reservation";
 
-export async function GetReservationsToday() {
+export async function getReservationsToday() {
     try {
         const response = await fetch(URL_RESERVATION, {
             method: "GET",
@@ -10,14 +12,9 @@ export async function GetReservationsToday() {
             }
         });
 
-        if (response.status === 404) {
-            console.log("Nenhuma Reserva Encontrada")
-            throw new Error("Nenhuma Reserva Encontrada para Hoje");
-        }
-
-        if (response.status === 403) {
-            console.log("Entrada Não Autorizada")
-            return []
+        if (response.status !== 201) {
+            console.log(`Erro ao realizar o fetch: ${data.message}`);
+            throw new ResponseErrorMessage(data.message);
         }
 
         const content = await response.json();
@@ -31,7 +28,7 @@ export async function GetReservationsToday() {
     }
 }
 
-export async function PostReservation(reservation) {
+export async function postReservation(reservation) {
 
     const response = await fetch(URL_RESERVATION, {
         method: "POST",
@@ -46,8 +43,8 @@ export async function PostReservation(reservation) {
     const data = await response.json();
 
     if (response.status !== 201) {
-        console.log(data.message)
-        throw new Error(data.message);
+        console.log(`Erro ao realizar o fetch: ${data.message}`);
+        throw new ResponseErrorMessage(data.message);
     }
 
     console.log(data);
@@ -57,6 +54,118 @@ export async function PostReservation(reservation) {
             window.location.href = "/src/pages/reservations.html"
         }, 1000);
     }
+}
 
+export async function getAllReservations() {
+    const response = await fetch(`${URL_RESERVATION}/allReservations`, {
+        method: "GET",
+        headers: {
+            'Authorization': `Bearer ${localStorage.getItem("jwt")}`,
+            'Content-Type': 'application/json'
+        }
+    });
 
+    const data = response.json();
+
+    if (data.status !== 200) {
+        console.log(`Erro ao realizar o fetch: ${data.message}`);
+        throw new ResponseErrorMessage(data.message);
+    }
+
+    return response;
+}
+
+export async function getReservationById(id) {
+    const response = await fetch(`${URL_RESERVATION}/id?id=${id}`, {
+        method: "GET",
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('jwt')}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = response.json();
+
+    if (data.status !== 200) {
+        console.log(`Erro ao realizar o fetch: ${data.message}`);
+        throw new ResponseErrorMessage(data.message);
+    }
+
+    return data;
+}
+
+export async function getReservationByBetween(checkin, checkout) {
+    const response = await fetch(`${URL_RESERVATION}/byBetween?checkin=${checkin}&checkout=${checkout}`, {
+        method: "GET",
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('jwt')}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = response.json();
+
+    if (data.status !== 200) {
+        console.log(`Erro ao realizar o fetch: ${data.message}`);
+        throw new ResponseErrorMessage(data.message);
+    }
+
+    return data;
+}
+
+export async function getReservationByRoom(room) {
+    const response = await fetch(`${URL_RESERVATION}/byRoom?room=${room}`, {
+        method: "GET",
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('jwt')}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = response.json();
+
+    if (data.status !== 200) {
+        console.log(`Erro ao realizar o fetch: ${data.message}`);
+        throw new ResponseErrorMessage(data.message);
+    }
+
+    return data;
+}
+
+export async function getReservationByResponsibleName(name) {
+    const response = await fetch(`${URL_RESERVATION}/byResponsibleName?name=${name}`, {
+        method: "GET",
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('jwt')}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = response.json();
+
+    if (data.status !== 200) {
+        console.log(`Erro ao realizar o fetch: ${data.message}`);
+        throw new ResponseErrorMessage(data.message);
+    }
+
+    return data;
+}
+
+export async function deleteReservationById(id) {
+    const response = await fetch(`${URL_RESERVATION}?id=${id}`, {
+        method: "DELETE",
+        headers: {
+            'authorization': `Bearer ${localStorage.getItem('jwt')}`,
+            'Content-Type': 'application/json'
+        }
+    });
+
+    const data = response.json();
+
+    if (data.status !== 200) {
+        console.log(`Erro ao realizar o fetch: ${data.message}`);
+        throw new ResponseErrorMessage(data.message);
+    }
+
+    return data;
 }

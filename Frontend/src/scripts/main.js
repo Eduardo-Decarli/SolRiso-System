@@ -1,6 +1,6 @@
 import { auth, createRegister, newPassword, getLoggedUser } from "./services/authService.js";
-import { GetReservationsToday } from "./services/reservationsService.js";
-import { PostReservation } from "./services/reservationsService.js";
+import { getReservationsToday } from "./services/reservationsService.js";
+import { postReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
 import { formaterPhone, formaterCEP, formaterCPF, formatDate, formatReal, isNullOrEmpty, isObjectBlank } from "./utils/AppUtils.js";
 
@@ -104,7 +104,7 @@ function forgotPassword() {
 
 async function InsertReservationsToday() {
 
-    const reservations = await GetReservationsToday();
+    const reservations = await getReservationsToday();
     let roomsModal = document.getElementsByClassName('room');
     let statusModal = document.getElementsByClassName('status');
 
@@ -272,7 +272,7 @@ async function createReservation() {
             reservation.parking = isObjectBlank(reservation.parking);
 
             console.log(reservation);
-            await PostReservation(reservation);
+            await postReservation(reservation);
 
         }
         catch (error) {
