@@ -2,7 +2,7 @@ import { auth, createRegister, newPassword, getLoggedUser } from "./services/aut
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
-import { formaterPhone, formaterCEP, formaterCPF, formatDate, isNullOrEmpty, isObjectBlank} from "./utils/AppUtils.js";
+import { formaterPhone, formaterCEP, formaterCPF, formatDate, formatReal, isNullOrEmpty, isObjectBlank } from "./utils/AppUtils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -14,42 +14,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const register = document.getElementById('register-form');
     const reservationToday = document.getElementById('reservations');
     const cepInput = document.getElementById('cep');
-    const createReservation = document.getElementById('create-reservation-form');
+    const createReservationForms = document.getElementById('create-reservation-form');
     const exitButton = document.getElementById('exit-button');
     const forgotPasswordForm = document.getElementById('forgot-password-forms');
-    const cpfInput = document.getElementById('cpf');
-    const phoneInput = document.getElementById('phone');
 
     if (login) Login();
     if (register) Register();
     if (reservationToday) InsertReservationsToday();
     if (cepInput) InsertAddress();
-    if (createReservation) CreateReservation();
+    if (createReservationForms) createReservation();
     if (exitButton) Logout();
     if (forgotPasswordForm) forgotPassword();
-    if (cpfInput) formatCPF(cpfInput);
-    if (cepInput) formatCEP(cepInput);
-    if (phoneInput) formatPhone(phoneInput);
 
 })
-
-function formatCPF(cpf) {
-    document.addEventListener("input", () => {
-        cpf.value = formaterCPF(cpf.value);
-    })
-}
-
-function formatCEP(cep) {
-    document.addEventListener('input', () => {
-        cep.value = formaterCEP(cep.value);
-    })
-}
-
-function formatPhone(phone) {
-    document.addEventListener('input', () => {
-        phone.value = formaterPhone(phone.value);
-    })
-}
 
 function Login() {
 
@@ -228,7 +205,19 @@ async function InsertAddress() {
     }
 }
 
-async function CreateReservation() {
+async function createReservation() {
+
+    const cpf = document.getElementById('cpf');
+    const phone = document.getElementById('phone');
+    const cep = document.getElementById('cep');
+    const totalValue = document.getElementById('totalValue');
+
+    document.addEventListener("input", () => {
+
+        cpf.value = formaterCPF(cpf.value);
+        cep.value = formaterCEP(cep.value);
+        phone.value = formaterPhone(phone.value);
+    })
 
     const form = document.getElementById('create-reservation-form');
 
@@ -254,9 +243,9 @@ async function CreateReservation() {
                 adminEmail: emailUser,
                 responsible: {
                     name: formData.get('name'),
-                    phoneNumber: (formData.get('phoneNumber') !== "") ?formData.get('phoneNumber') : null,
+                    phoneNumber: (formData.get('phoneNumber') !== "") ? formData.get('phoneNumber') : null,
                     email: formData.get('email'),
-                    cpf: (formData.get('cpf') !== "") ? formData.get('cpf'): null,
+                    cpf: (formData.get('cpf') !== "") ? formData.get('cpf') : null,
                     address: {
                         cep: formData.get('cep'),
                         state: formData.get('uf'),
@@ -273,7 +262,7 @@ async function CreateReservation() {
                 }
             };
 
-            if(reservation.totalValue < reservation.entryValue) {
+            if (reservation.totalValue < reservation.entryValue) {
                 throw new Error("Valor de Entrada não pode ser maior do que o valor total");
             } else if (reservation.totalValue === reservation.entryValue) {
                 reservation.paid = true;

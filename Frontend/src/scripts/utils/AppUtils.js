@@ -10,6 +10,10 @@ export function isObjectBlank(obj) {
     return obj;
 }
 
+export function formatReal(value) {
+    /* Falta montar a Função */
+}
+
 export function formatDate(date) {
     if(!date) {
         return null;
