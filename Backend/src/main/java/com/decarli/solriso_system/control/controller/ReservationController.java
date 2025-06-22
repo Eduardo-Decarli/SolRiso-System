@@ -7,6 +7,7 @@ import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,11 @@ import java.util.List;
 @RequestMapping("/api/v1/reservation")
 public class ReservationController {
 
-    private final ReservationService service;
-    private final ReservationMapper mapper;
+    @Autowired
+    private ReservationService service;
 
-    public ReservationController(ReservationService service, ReservationMapper mapper) {
-        this.service = service;
-        this.mapper = mapper;
-    }
+    @Autowired
+    private ReservationMapper mapper;
 
     @PostMapping
     public ResponseEntity<ReservationResponseDto> addReservation(@Valid @RequestBody ReservationCreateDto reservation) {
