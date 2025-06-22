@@ -1,8 +1,8 @@
-import { auth, createRegister, newPassword } from "./services/authService.js";
+import { auth, createRegister, newPassword, getLoggedUser } from "./services/authService.js";
 import { GetReservationsToday } from "./services/reservationsService.js";
 import { PostReservation } from "./services/reservationsService.js";
 import { getAddressByCEP } from "./services/getAddress.js";
-import { FormatDate } from "./utils/formatDate.js";
+import { formaterPhone, formaterCEP, formaterCPF, formatDate, formatReal, isNullOrEmpty, isObjectBlank } from "./utils/AppUtils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const register = document.getElementById('register-form');
     const reservationToday = document.getElementById('reservations');
     const cepInput = document.getElementById('cep');
-    const createReservation = document.getElementById('create-reservation-form');
+    const createReservationForms = document.getElementById('create-reservation-form');
     const exitButton = document.getElementById('exit-button');
     const forgotPasswordForm = document.getElementById('forgot-password-forms');
 
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (register) Register();
     if (reservationToday) InsertReservationsToday();
     if (cepInput) InsertAddress();
-    if (createReservation) CreateReservation();
+    if (createReservationForms) createReservation();
     if (exitButton) Logout();
     if (forgotPasswordForm) forgotPassword();
 
@@ -205,7 +205,19 @@ async function InsertAddress() {
     }
 }
 
-async function CreateReservation() {
+async function createReservation() {
+
+    const cpf = document.getElementById('cpf');
+    const phone = document.getElementById('phone');
+    const cep = document.getElementById('cep');
+    const totalValue = document.getElementById('totalValue');
+
+    document.addEventListener("input", () => {
+
+        cpf.value = formaterCPF(cpf.value);
+        cep.value = formaterCEP(cep.value);
+        phone.value = formaterPhone(phone.value);
+    })
 
     const form = document.getElementById('create-reservation-form');
 
@@ -215,22 +227,25 @@ async function CreateReservation() {
         try {
 
             const formData = new FormData(form);
+            const emailUser = getLoggedUser();
 
-            const reservation = {
+            let reservation = {
                 room: Number(formData.get('room')),
                 quantGuests: Number(formData.get('quantGuests')),
-                checkin: FormatDate(formData.get('checkin')),
-                checkout: FormatDate(formData.get('checkout')),
+                checkin: formatDate(formData.get('checkin')),
+                checkout: formatDate(formData.get('checkout')),
                 typeReservation: formData.get('typeReservation'),
                 status: formData.get('status'),
                 entryValue: Number(formData.get('entryValue')),
                 totalValue: Number(formData.get('totalValue')),
-                adminEmail: formData.get('adminEmail'),
+                payment: formData.get('payment'),
+                paid: false,
+                adminEmail: emailUser,
                 responsible: {
                     name: formData.get('name'),
-                    phoneNumber: formData.get('phoneNumber'),
+                    phoneNumber: (formData.get('phoneNumber') !== "") ? formData.get('phoneNumber') : null,
                     email: formData.get('email'),
-                    cpf: formData.get('cpf'),
+                    cpf: (formData.get('cpf') !== "") ? formData.get('cpf') : null,
                     address: {
                         cep: formData.get('cep'),
                         state: formData.get('uf'),
@@ -242,16 +257,28 @@ async function CreateReservation() {
                 },
                 parking: {
                     carType: formData.get('carType'),
-                    checkin: FormatDate(formData.get('parkingCheckin')),
-                    checkout: FormatDate(formData.get('parkingCheckout'))
+                    checkin: formatDate(formData.get('parkingCheckin')),
+                    checkout: formatDate(formData.get('parkingCheckout'))
                 }
             };
 
-            PostReservation(reservation);
+            if (reservation.totalValue < reservation.entryValue) {
+                throw new Error("Valor de Entrada não pode ser maior do que o valor total");
+            } else if (reservation.totalValue === reservation.entryValue) {
+                reservation.paid = true;
+            }
+
+            reservation.responsible.address = isObjectBlank(reservation.responsible.address);
+            reservation.parking = isObjectBlank(reservation.parking);
+
+            console.log(reservation);
+            await PostReservation(reservation);
 
         }
         catch (error) {
-            console.log(error)
+            let errorDisplay = document.getElementById('errorMessage')
+            errorDisplay.style.display = 'block';
+            errorDisplay.innerHTML = error.message
         }
     })
 }

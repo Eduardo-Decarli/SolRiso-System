@@ -41,13 +41,21 @@
                 <fieldset class="reservation-properties">
                     <legend>Dados da Reserva</legend>
                     <label>Quarto: <span class="priority">*</span> <br>
-                        <input type="number" name="room" required></label>
+                        <input type="number" min="1" max="10" name="room" autofocus required>
+                    </label>
+
                     <label>Quantidade de Hóspedes: <span class="priority">*</span><br>
-                        <input type="number" name="quantGuests" required></label>
+                        <input type="number" min="1" name="quantGuests" required>
+                    </label>
+
                     <label>Check-in: <span class="priority">*</span> <br> 
-                        <input type="date" name="checkin" required></label>
+                        <input type="date" name="checkin" required>
+                    </label>
+
                     <label>Check-out: <span class="priority">*</span> <br>
-                        <input type="date" name="checkout" required></label>
+                        <input type="date" name="checkout" required>
+                    </label>
+
                     <label>Tipo de Reserva: <span class="priority">*</span><br>
                         <select name="typeReservation" required>
                             <option value="PHONE">Telefone</option>
@@ -57,6 +65,7 @@
                             <option value="EXPEDIA">Expedia</option>
                         </select>
                     </label>
+
                     <label>Status: <span class="priority">*</span> <br>
                         <select name="status" required>
                             <option value="ACTIVE">Ativa</option>
@@ -64,28 +73,58 @@
                             <option value="CANCELED">Cancelada</option>
                         </select>
                     </label>
-                    <label>Valor de Entrada: <br> <input type="number" name="entryValue" step="0.01"></label>
+
                     <label>Valor Total: <span class="priority">*</span> <br>
-                        <input type="number" name="totalValue" step="0.01" required></label>
-                        
-                    <label>Email do Admin: <span class="priority">*</span> <br>
-                        <input type="email" name="adminEmail" required></label>
+                        <input type="number" name="totalValue" id="totalValue" step="0.01" required>
+                    </label>
+
+                    <label>Valor de Entrada: <br> <input type="number" name="entryValue" step="0.01">
+                    </label>
+
+                    <label>Forma de Pagamento: <span class="priority">*</span> <br>
+                        <select name="payment" required>
+                            <option value="PIX">Pix</option>
+                            <option value="MONEY">Dinheiro</option>
+                            <option value="DEBIT">Débito</option>
+                            <option value="CREDIT">Crédito</option>
+                        </select>
+                    </label>
                 </fieldset>
 
                 <fieldset class="responsable-properties">
                     <legend>Responsável</legend>
                     <label>Nome: <span class="priority">*</span> <br> 
-                        <input type="text" name="name" required></label>
-                    <label>Telefone: <br><input type="tel" name="phoneNumber"></label>
+                        <input type="text" name="name" required>
+                    </label>
+
+                    <label>Telefone: <br><input type="tel" name="phoneNumber" id="phone" placeholder="(xx) xxxxx-xxxx">
+                    </label>
+
                     <label>Email: <span class="priority">*</span> <br> 
-                        <input type="email" name="email"></label>
-                    <label>CPF: <br><input type="text" name="cpf"></label>
-                    <label>CEP: <br><input type="text" name="cep" id="cep"></label>
-                    <label>Estado: <br><input type="text" name="uf"></label>
-                    <label>Cidade: <br><input type="text" name="city"></label>
-                    <label>Bairro: <br><input type="text" name="neighborhood"></label>
-                    <label>Rua: <br><input type="text" name="street"></label>
-                    <label>Número: <br><input type="text" name="number"></label>
+                        <input type="email" name="email" placeholder="exemplo@gmail.com" required>
+                    </label>
+
+                    <label>CPF: <br><input type="text" id="cpf" pattern="\d{3}\.?\d{3}\.?\d{3}-?\d{2}" name="cpf" placeholder="xxx.xxx.xxx-xx">
+                    </label>
+
+                    <label>CEP: <br><input type="text" name="cep" id="cep" placeholder="xxxxx-xxx">
+                    </label>
+
+                    <label>Estado: <br><input type="text" name="uf">
+                    </label>
+
+                    <label>Cidade: <br><input type="text" name="city">
+                    </label>
+
+                    <label>Bairro: <br><input type="text" name="neighborhood">
+                    </label>
+
+                    <label>Rua: <br><input type="text" name="street">
+                    </label>
+
+                    <label>Número: <br><input type="text" name="number">
+                    </label>
+
                 </fieldset>
 
                 <fieldset class="parking-properties">
@@ -95,7 +134,7 @@
                     <label>Check-out: <br><input type="date" name="parkingCheckout"></label>
                 </fieldset>
             </div>
-
+            <div class="errorMessage" id="errorMessage"></div>
             <button type="submit">Salvar Reserva</button>
         </form>
 

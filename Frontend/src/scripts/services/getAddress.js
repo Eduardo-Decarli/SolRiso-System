@@ -22,8 +22,7 @@ export async function getAddressByCEP(cep) {
       postalCode: data.cep
     };
   } catch (error) {
-    console.error("Erro ao buscar endereço:", error);
-    alert("Erro ao buscar endereço: " + error.message);
+    console.error("Erro ao buscar endereço:", error.message);
     return null;
   }
 }

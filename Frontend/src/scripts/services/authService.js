@@ -1,4 +1,5 @@
 import { ResponseErrorMessage } from "../errors/ResponseErrorMessage.js";
+import { decodeJwtPayload } from "../utils/AppUtils.js";
 
 export async function auth(email, password) {
 
@@ -69,4 +70,10 @@ export async function newPassword(email, password) {
     }
 
     window.location.href = "./login.html";
+}
+
+export function getLoggedUser() {
+    const token = localStorage.getItem("jwt");
+    let emailCripted = token.split('.')[1];
+    return decodeJwtPayload(emailCripted);
 }

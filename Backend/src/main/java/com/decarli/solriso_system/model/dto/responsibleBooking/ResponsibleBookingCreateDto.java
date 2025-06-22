@@ -8,6 +8,7 @@ import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,4 +40,5 @@ public class ResponsibleBookingCreateDto {
     @Schema(description = "Endereço do responsável")
     @Valid
     private AddressCreateDto address;
+
 }
