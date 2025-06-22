@@ -1,25 +1,31 @@
-.search-reservations {
+.new-reservation {
     display: flex;
-    justify-content: end;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-.search-reservations input {
-    padding: 5px;
-    width: 300px;
-    border-radius: 15px;
-}
+.new-reservation a {
+    display: inline-flex;
+    align-items: center;
+    width: auto;
+    height: 4em;
+    background-color: #4f9ed2;
+    padding: 20px;
 
-.reservations {
-    display: flex;
-    flex-wrap: wrap;
-    margin-top: 75px;
-    border: solid red 1px;
+    font-size: 14px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #FFF;
 }
 
 .card {
     display: flex;
     z-index: 1;
-    font-size: 18px;
+    margin-bottom: 1.5rem;
+    font-size: 16px;
     border: solid rgb(185, 179, 179) .5px;
     border-radius: 10px;
     box-shadow: 0 9px 15px rgba(0, 0, 0, 0.1);
@@ -79,6 +85,81 @@
     background-color: var(--primary-color);
 }
 
+.no-reservations {
+    background-color: #FFFFFF;
+    padding: 40px;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.rooms {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 25px;
+}
+
+.solriso-rooms, .decarli-rooms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+
+.rooms h2 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 16px;
+    width: 100%;
+    border-bottom: 2px solid #0077b6;
+    padding-bottom: 8px;
+}
+
+.room {
+    flex: 1 1 140px;
+    max-width: 150px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+    padding: 16px;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    text-decoration: none;
+}
+
+.room:hover {
+    transform: scale(1.05);
+}
+
+.room.livre {
+    background-color: #4CAF50; 
+}
+
+.room.ocupado {
+    background-color: #E53935; 
+}
+
+.room .status {
+    background-color: rgba(255, 255, 255, 0.25);
+    padding: 6px 12px;
+    border-radius: 12px;
+    font-size: 0.85em;
+    font-weight: 500;
+    margin-top: auto;
+    color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 
 .modal {
     display: none;
@@ -176,4 +257,33 @@
 
 .close-modal-btn:hover {
     color: #000;
+}
+
+@media (max-width: 768px) {
+    .card {
+        flex-direction: column;
+        padding: 1.5rem;
+    }
+
+    .reservation-details,
+    .booking-details {
+        width: 100%;
+        margin-bottom: 1.5rem;
+    }
+
+    .reservation-details {
+        margin-right: 0;
+    }
+
+        .modal-content {
+        padding: 1rem;
+    }
+
+    .modal-content h3 {
+        font-size: 20px;
+    }
+
+    .modal-content p {
+        font-size: 14px;
+    }
 }

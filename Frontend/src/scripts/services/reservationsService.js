@@ -1,4 +1,4 @@
-import { ResponseErrorMessage } from "../errors/ResponseErrorMessage";
+//import { ResponseErrorMessage } from "../errors/ResponseErrorMessage";
 
 const URL_RESERVATION = "http://localhost:8080/api/v1/reservation";
 
@@ -12,13 +12,14 @@ export async function getReservationsToday() {
             }
         });
 
-        if (response.status !== 201) {
+        if (response.status !== 200) {
             console.log(`Erro ao realizar o fetch: ${data.message}`);
-            throw new ResponseErrorMessage(data.message);
+            throw new Error(response.message);
         }
 
-        const content = await response.json();
-        return content;
+        const data = await response.json();
+
+        return data;
     }
     catch (error) {
         document.getElementById("reservations").innerHTML += `
@@ -39,15 +40,13 @@ export async function postReservation(reservation) {
         body: JSON.stringify(reservation)
     });
 
-
     const data = await response.json();
+    
 
     if (response.status !== 201) {
         console.log(`Erro ao realizar o fetch: ${data.message}`);
-        throw new ResponseErrorMessage(data.message);
+        throw new Error(data.message);
     }
-
-    console.log(data);
 
     if (response.status === 201) {
         setTimeout(() => {
@@ -67,12 +66,12 @@ export async function getAllReservations() {
 
     const data = response.json();
 
-    if (data.status !== 200) {
-        console.log(`Erro ao realizar o fetch: ${data.message}`);
-        throw new ResponseErrorMessage(data.message);
+    if (response.status !== 200) {
+        console.log(`Erro ao realizar o fetch: ${response.message}`);
+        throw new Error(data.message);
     }
 
-    return response;
+    return data;
 }
 
 export async function getReservationById(id) {
@@ -86,9 +85,9 @@ export async function getReservationById(id) {
 
     const data = response.json();
 
-    if (data.status !== 200) {
-        console.log(`Erro ao realizar o fetch: ${data.message}`);
-        throw new ResponseErrorMessage(data.message);
+    if (response.status !== 200) {
+        console.log(`Erro ao realizar o fetch: ${response.message}`);
+        throw new Error(response.message);
     }
 
     return data;
@@ -107,7 +106,7 @@ export async function getReservationByBetween(checkin, checkout) {
 
     if (data.status !== 200) {
         console.log(`Erro ao realizar o fetch: ${data.message}`);
-        throw new ResponseErrorMessage(data.message);
+        throw new Error(data.message);
     }
 
     return data;
@@ -126,7 +125,7 @@ export async function getReservationByRoom(room) {
 
     if (data.status !== 200) {
         console.log(`Erro ao realizar o fetch: ${data.message}`);
-        throw new ResponseErrorMessage(data.message);
+        throw new Error(data.message);
     }
 
     return data;
@@ -145,7 +144,7 @@ export async function getReservationByResponsibleName(name) {
 
     if (data.status !== 200) {
         console.log(`Erro ao realizar o fetch: ${data.message}`);
-        throw new ResponseErrorMessage(data.message);
+        throw new Error(data.message);
     }
 
     return data;
@@ -164,7 +163,7 @@ export async function deleteReservationById(id) {
 
     if (data.status !== 200) {
         console.log(`Erro ao realizar o fetch: ${data.message}`);
-        throw new ResponseErrorMessage(data.message);
+        throw new Error(data.message);
     }
 
     return data;

@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const login = document.getElementById("login");
     const register = document.getElementById('register-form');
-    const reservationToday = document.getElementById('reservations');
+    const reservationToday = document.getElementById('reservations-today');
     const cepInput = document.getElementById('cep');
     const createReservationForms = document.getElementById('create-reservation-form');
     const exitButton = document.getElementById('exit-button');
@@ -122,7 +122,7 @@ async function InsertReservationsToday() {
         }
     })
 
-    let main = document.getElementById('reservations');
+    let main = document.getElementById('reservations-today');
 
     reservations.forEach((reservation) => {
         const modalId = `modal-room-${reservation.room}`;
