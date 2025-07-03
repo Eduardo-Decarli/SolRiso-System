@@ -13,7 +13,6 @@
     display: flex;
     flex-wrap: wrap;
     margin-top: 75px;
-    border: solid red 1px;
 }
 
 .card {
