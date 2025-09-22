@@ -1,7 +1,5 @@
-package com.decarli.solriso_system.model.dto.reservation;
+package com.decarli.solriso_system.model.dto.response;
 
-import com.decarli.solriso_system.model.dto.admin.AdminResponseDto;
-import com.decarli.solriso_system.model.dto.responsibleBooking.ResponsibleBookingResponseDto;
 import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.enums.Payment;
 import com.decarli.solriso_system.model.enums.Status;
@@ -13,13 +11,14 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
 @Schema(description = "Resposta contendo os detalhes de uma reserva")
 public class ReservationResponseDto {
 
     @Schema(description = "ID da reserva", example = "64f8b9a0e3b2d40a7c8e4b29")
-    private String id;
+    private UUID id;
 
     @Schema(description = "Número do quarto associado à reserva", example = "101")
     @NotNull(message = "Room number can't be null")

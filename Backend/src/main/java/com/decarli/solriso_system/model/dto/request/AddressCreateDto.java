@@ -1,4 +1,4 @@
-package com.decarli.solriso_system.model.dto.address;
+package com.decarli.solriso_system.model.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Schema(description = "Representa o endereço de uma entidade ou usuário")
-public class AddressResponseDto {
+public class AddressCreateDto {
 
     @Size(max = 9, message = "Cep must be 9 caracters")
     private String cep;

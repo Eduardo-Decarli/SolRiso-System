@@ -1,6 +1,5 @@
-package com.decarli.solriso_system.model.dto.reservation;
+package com.decarli.solriso_system.model.dto.request;
 
-import com.decarli.solriso_system.model.dto.responsibleBooking.ResponsibleBookingCreateDto;
 import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.enums.Payment;
 import com.decarli.solriso_system.model.enums.Status;
@@ -9,28 +8,27 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Schema(description = "Dados para a criação de uma reserva no sistema")
-public class ReservationCreateDto {
+@Schema(description = "Dados para a atualização de uma reserva existente")
+public class ReservationUpdateDto {
 
-    @Schema(description = "Número do quarto associado à respectiva reserva", example = "101")
+    @Schema(description = "ID da reserva a ser atualizada", example = "64f8b9a0e3b2d40a7c8e4b29")
+    private UUID id;
+
+    @Schema(description = "Número do quarto associado à reserva", example = "101")
     @NotNull(message = "Room number can't be null")
-    private int room;
+    private Integer room;
 
     @Schema(description = "Quantidade de hóspedes associados à reserva", example = "2")
     @NotNull(message = "Quantity guests can't be null")
-    private int quantGuests;
+    private Integer quantGuests;
 
-    @Schema(description = "Tipo da reserva (ex: PHONE, EMAIL, BOOKING)", example = "PHONE")
-    @NotNull(message = "type of reservation can't be null")
+    @Schema(description = "Tipo da reserva (ex: PHONE, EMAIL, BOOKING, AIRBNB, EXPEDIA)", example = "PHONE")
     private TypeReservation typeReservation;
 
     @Schema(description = "Status da reserva (ex: ACTIVE, MISSED, CANCELED)", example = "ACTIVE")
@@ -51,23 +49,24 @@ public class ReservationCreateDto {
     private Payment payment;
 
     @Schema(description = "Valor de entrada da reserva", example = "200.50")
-    private double entryValue;
+    private Double entryValue;
 
     @Schema(description = "Valor total da reserva", example = "1200.75")
     @NotNull(message = "The total value can't be null")
-    private double totalValue;
+    private Double totalValue;
 
     @NotNull(message = "Não foi especificado se foi pago ou não")
     private Boolean paid;
 
-    @NotNull(message = "Admin email can't be null")
+    @NotNull(message = "Usuario logado não foi definido")
     private String adminEmail;
 
     @Schema(description = "Responsável pela reserva")
-    @NotNull(message = "The responsible of reservation can't be null")
+    @NotNull(message = "The responsible of the reservation can't be null")
     @Valid
     private ResponsibleBookingCreateDto responsible;
 
     @Schema(description = "Informações sobre o estacionamento (se aplicável)")
+    @Valid
     private Parking parking;
 }

@@ -1,9 +1,9 @@
 package com.decarli.solriso_system.control.controller;
 
 import com.decarli.solriso_system.control.service.ReservationService;
-import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationResponseDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
+import com.decarli.solriso_system.model.dto.request.ReservationCreateDto;
+import com.decarli.solriso_system.model.dto.response.ReservationResponseDto;
+import com.decarli.solriso_system.model.dto.request.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
 import jakarta.validation.Valid;
@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/reservation")
@@ -38,7 +39,7 @@ public class ReservationController {
     }
 
     @GetMapping("/id")
-    public ResponseEntity<ReservationResponseDto> getReservationsById(@RequestParam String id) {
+    public ResponseEntity<ReservationResponseDto> getReservationsById(@RequestParam UUID id) {
         Reservation response = service.getReservationById(id);
         return ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(response));
     }
@@ -74,7 +75,7 @@ public class ReservationController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteReservation(@RequestParam String id) {
+    public ResponseEntity<Void> deleteReservation(@RequestParam UUID id) {
         service.deleteReservation(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

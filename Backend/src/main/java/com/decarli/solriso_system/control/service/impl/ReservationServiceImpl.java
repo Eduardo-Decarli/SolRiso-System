@@ -1,12 +1,11 @@
 package com.decarli.solriso_system.control.service.impl;
 
-import com.decarli.solriso_system.control.repositories.AdminRepository;
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
-import com.decarli.solriso_system.control.service.AdminService;
+import com.decarli.solriso_system.control.service.UserService;
 import com.decarli.solriso_system.control.service.ReservationService;
 import com.decarli.solriso_system.model.dto.mapper.ResponsibleBookingMapper;
-import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
+import com.decarli.solriso_system.model.dto.request.ReservationCreateDto;
+import com.decarli.solriso_system.model.dto.request.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
 import com.decarli.solriso_system.model.exceptions.DateReservationException;
@@ -21,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -28,20 +28,13 @@ public class ReservationServiceImpl implements ReservationService {
 
     private static final Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
 
-    @Autowired
-    private ReservationRepository repository;
+    @Autowired private ReservationRepository repository;
+    @Autowired private UserService userService;
+    @Autowired private ReservationMapper reservationMapper;
+    @Autowired private ResponsibleBookingMapper responsibleBookingMapper;
 
-    @Autowired
-    private AdminService adminService;
-
-    @Autowired
-    private ReservationMapper reservationMapper;
-
-    @Autowired
-    private ResponsibleBookingMapper responsibleBookingMapper;
-
-    @Override
     @Transactional
+    @Override
     public Reservation createReservation(ReservationCreateDto create) {
 
         logger.info("Creating new reservation {}", create);
@@ -49,7 +42,7 @@ public class ReservationServiceImpl implements ReservationService {
         validateReservationDates(create.getCheckin(), create.getCheckout());
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
         Reservation reservation = reservationMapper.toReservation(create);
-        reservation.setAdmin(adminService.getAdminByEmail(create.getAdminEmail()));
+        reservation.setUser(userService.getAdminByEmail(create.getAdminEmail()));
         log.info("{}",create.getPaid());
         Reservation reservation1 = repository.save(reservation);
         log.info("{}", reservation1);
@@ -79,8 +72,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation getReservationById(String id) {
-        if(id.isEmpty()) {
+    public Reservation getReservationById(UUID id) {
+        if(id.toString().trim().isEmpty()) {
             throw new IllegalArgumentException("Id cannot be empty");
         }
         Reservation reservation = repository.findReservationById(id);
@@ -132,8 +125,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
 
-    @Override
     @Transactional
+    @Override
     public Reservation updateReservation(ReservationUpdateDto update) {
         Reservation reservation = getReservationById(update.getId());
 
@@ -150,7 +143,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservation.setCheckout(update.getCheckout());
         reservation.setEntryValue(update.getEntryValue());
         reservation.setTotalValue(update.getTotalValue());
-        reservation.setAdmin(adminService.getAdminByEmail(update.getAdminEmail()));
+        reservation.setUser(userService.getAdminByEmail(update.getAdminEmail()));
         reservation.setResponsible(responsibleBookingMapper.toResponsibleBooking(update.getResponsible()));
         reservation.setParking(update.getParking());
 
@@ -159,11 +152,10 @@ public class ReservationServiceImpl implements ReservationService {
         return repository.save(reservation);
     }
 
-    @Override
     @Transactional
-    public void deleteReservation(String id) {
+    public void deleteReservation(UUID id) {
 
-        if(id == null || id.trim().isEmpty()) {
+        if(id == null || id.toString().trim().isEmpty()) {
             throw new IllegalArgumentException("Id cannot be empty or null");
         }
 

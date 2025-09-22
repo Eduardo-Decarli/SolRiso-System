@@ -1,13 +1,13 @@
 package com.decarli.solriso_system.control.service.impl;
 
-import com.decarli.solriso_system.control.repositories.AdminRepository;
-import com.decarli.solriso_system.control.service.AdminService;
-import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
+import com.decarli.solriso_system.control.repositories.UserRepository;
+import com.decarli.solriso_system.control.service.UserService;
+import com.decarli.solriso_system.model.dto.request.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
-import com.decarli.solriso_system.model.entities.Admin;
+import com.decarli.solriso_system.model.entities.User;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
-import com.decarli.solriso_system.model.security.TokenService;
+import com.decarli.solriso_system.security.JwtService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -17,38 +17,38 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
-public class AdminServiceImp implements AdminService {
+public class UserServiceImp implements UserService {
 
-    public static final Logger logger = LoggerFactory.getLogger(AdminServiceImp.class);
+    public static final Logger logger = LoggerFactory.getLogger(UserServiceImp.class);
 
-
-    private final AdminRepository adminRepository;
+    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final AdminMapper adminMapper;
     private final AuthenticationManager authenticationManager;
-    private final TokenService tokenService;
+    private final JwtService jwtService;
 
-    public AdminServiceImp(AdminRepository adminRepository, PasswordEncoder passwordEncoder, AdminMapper adminMapper, AuthenticationManager authenticationManager, TokenService tokenService) {
-        this.adminRepository = adminRepository;
+    public UserServiceImp(UserRepository userRepository, PasswordEncoder passwordEncoder, AdminMapper adminMapper, AuthenticationManager authenticationManager, JwtService jwtService) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.adminMapper = adminMapper;
         this.authenticationManager = authenticationManager;
-        this.tokenService = tokenService;
+        this.jwtService = jwtService;
     }
 
     public void register(AdminCreateDto create) {
-        if (adminRepository.existsByEmail(create.getEmail())) {
+        if (userRepository.existsByEmail(create.getEmail())) {
             logger.error("User {} can't be registered, it's already exist", create);
             throw new UserAlreadyExistsException("Usuário já está registrado no sistema");
         }
 
-        Admin admin = adminMapper.toAdmin(create);
-        admin.setEmail(create.getEmail().toLowerCase());
-        admin.setPassword(passwordEncoder.encode(create.getPassword()));
-        adminRepository.save(admin);
-        logger.info("User {} created successfully", admin);
+        User user = adminMapper.toAdmin(create);
+        user.setEmail(create.getEmail().toLowerCase());
+        user.setPassword(passwordEncoder.encode(create.getPassword()));
+        userRepository.save(user);
+        logger.info("User {} created successfully", user);
     }
 
     public String login(String email, String password) {
@@ -56,37 +56,37 @@ public class AdminServiceImp implements AdminService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
-        var token = tokenService.generateToken((Admin) authentication.getPrincipal());
+        var token = jwtService.generateToken((User) authentication.getPrincipal());
         logger.info("User {} did login successfully", email);
         return token;
     }
 
-    public Admin getAdminById(String id) {
+    public User getAdminById(UUID id) {
         logger.info("Looking for admin by id {}", id);
-        return adminRepository.findById(id)
+        return userRepository.findById(id)
                 .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com o id: " + id));
     }
 
-    public Admin getAdminByEmail(String email) {
-        Admin admin = adminRepository.findByEmail(email);
-        if(admin != null) {
-            logger.info("Found user {} by email {}", admin, email);
-            return admin;
+    public User getAdminByEmail(String email) {
+        User user = userRepository.findByEmail(email);
+        if(user != null) {
+            logger.info("Found user {} by email {}", user, email);
+            return user;
         }
         return null;
     }
 
     @Override
-    public List<Admin> getAllAdmins() {
+    public List<User> getAllAdmins() {
         logger.info("Looking for all admins");
-        return adminRepository.findAll();
+        return userRepository.findAll();
     }
 
     @Override
     public void forgotPassword(String email, String password) {
-        Admin adm = getAdminByEmail(email);
+        User adm = getAdminByEmail(email);
         adm.setPassword(passwordEncoder.encode(password));
-        adminRepository.save(adm);
+        userRepository.save(adm);
         logger.info("User {} changed his password", email);
     }
 }

@@ -1,10 +1,8 @@
 package com.decarli.solriso_system.model.entities;
 
 import com.decarli.solriso_system.model.enums.Role;
+import jakarta.persistence.*;
 import lombok.Data;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,15 +11,21 @@ import java.util.Collection;
 import java.util.Collections;
 
 @Data
-@Document(collection = "users")
-public class Admin implements UserDetails {
+@Entity
+@Table(name = "users")
+public class User implements UserDetails {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id_user")
     private String id;
+    @Column(nullable = false)
     private String name;
-    @Indexed(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
+    @Column(nullable = false)
     private String password;
+    @Column(nullable = false)
     private Role role;
 
     @Override
