@@ -1,7 +1,5 @@
-package com.decarli.solriso_system.model.dto.reservation;
+package com.decarli.solriso_system.model.dto.request;
 
-import com.decarli.solriso_system.model.dto.admin.AdminResponseDto;
-import com.decarli.solriso_system.model.dto.responsibleBooking.ResponsibleBookingResponseDto;
 import com.decarli.solriso_system.model.entities.Parking;
 import com.decarli.solriso_system.model.enums.Payment;
 import com.decarli.solriso_system.model.enums.Status;
@@ -13,23 +11,24 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Data
-@Schema(description = "Resposta contendo os detalhes de uma reserva")
-public class ReservationResponseDto {
+@Schema(description = "Dados para a atualização de uma reserva existente")
+public class ReservationUpdateDto {
 
-    @Schema(description = "ID da reserva", example = "64f8b9a0e3b2d40a7c8e4b29")
-    private String id;
+    @Schema(description = "ID da reserva a ser atualizada", example = "31")
+    private Long id;
 
     @Schema(description = "Número do quarto associado à reserva", example = "101")
     @NotNull(message = "Room number can't be null")
     private Integer room;
 
-    @Schema(description = "Quantidade de hóspedes na reserva", example = "2")
+    @Schema(description = "Quantidade de hóspedes associados à reserva", example = "2")
     @NotNull(message = "Quantity guests can't be null")
     private Integer quantGuests;
 
-    @Schema(description = "Tipo da reserva (ex: PHONE, EMAIL, BOOKING)", example = "PHONE")
+    @Schema(description = "Tipo da reserva (ex: PHONE, EMAIL, BOOKING, AIRBNB, EXPEDIA)", example = "PHONE")
     private TypeReservation typeReservation;
 
     @Schema(description = "Status da reserva (ex: ACTIVE, MISSED, CANCELED)", example = "ACTIVE")
@@ -59,13 +58,13 @@ public class ReservationResponseDto {
     @NotNull(message = "Não foi especificado se foi pago ou não")
     private Boolean paid;
 
-    @NotNull(message = "Admin can't be null")
-    private AdminResponseDto admin;
+    @NotNull(message = "Usuario logado não foi definido")
+    private String adminEmail;
 
     @Schema(description = "Responsável pela reserva")
     @NotNull(message = "The responsible of the reservation can't be null")
     @Valid
-    private ResponsibleBookingResponseDto responsible;
+    private ResponsibleBookingCreateDto responsible;
 
     @Schema(description = "Informações sobre o estacionamento (se aplicável)")
     @Valid

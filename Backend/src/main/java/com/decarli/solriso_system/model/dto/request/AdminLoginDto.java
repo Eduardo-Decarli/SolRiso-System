@@ -1,4 +1,4 @@
-package com.decarli.solriso_system.model.dto.admin;
+package com.decarli.solriso_system.model.dto.request;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;

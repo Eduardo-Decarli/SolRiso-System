@@ -1,6 +1,5 @@
-package com.decarli.solriso_system.model.dto.admin;
+package com.decarli.solriso_system.model.dto.request;
 
-import com.decarli.solriso_system.model.enums.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -27,6 +26,6 @@ public class AdminCreateDto {
 
     @Schema(description = "Cargo do usuário no sistema", example = "ADMIN")
     @NotBlank(message = "Role can't be null")
-    @Pattern(regexp = "ADMIN|USER")
+    @Pattern(regexp = "ROOT|ADMINISTRADOR|USER")
     private String role;
 }

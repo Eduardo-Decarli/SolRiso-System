@@ -1,11 +1,10 @@
 package com.decarli.solriso_system.model.dto.mapper;
 
-import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationResponseDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
+import com.decarli.solriso_system.model.dto.request.ReservationCreateDto;
+import com.decarli.solriso_system.model.dto.response.ReservationResponseDto;
+import com.decarli.solriso_system.model.dto.request.ReservationUpdateDto;
 import com.decarli.solriso_system.model.entities.Reservation;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 

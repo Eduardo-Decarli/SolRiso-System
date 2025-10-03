@@ -1,9 +1,9 @@
 package com.decarli.solriso_system.control.controller;
 
 import com.decarli.solriso_system.control.service.ReservationService;
-import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationResponseDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
+import com.decarli.solriso_system.model.dto.request.ReservationCreateDto;
+import com.decarli.solriso_system.model.dto.response.ReservationResponseDto;
+import com.decarli.solriso_system.model.dto.request.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
 import com.decarli.solriso_system.model.entities.Reservation;
 import jakarta.validation.Valid;
@@ -38,7 +38,7 @@ public class ReservationController {
     }
 
     @GetMapping("/id")
-    public ResponseEntity<ReservationResponseDto> getReservationsById(@RequestParam String id) {
+    public ResponseEntity<ReservationResponseDto> getReservationsById(@RequestParam Long id) {
         Reservation response = service.getReservationById(id);
         return ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(response));
     }
@@ -74,7 +74,7 @@ public class ReservationController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteReservation(@RequestParam String id) {
+    public ResponseEntity<Void> deleteReservation(@RequestParam Long id) {
         service.deleteReservation(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

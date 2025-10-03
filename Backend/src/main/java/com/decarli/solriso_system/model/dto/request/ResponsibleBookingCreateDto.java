@@ -1,13 +1,8 @@
-package com.decarli.solriso_system.model.dto.responsibleBooking;
+package com.decarli.solriso_system.model.dto.request;
 
-import com.decarli.solriso_system.model.dto.address.AddressCreateDto;
-import com.decarli.solriso_system.model.dto.address.AddressResponseDto;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Schema(description = "Dados do responsável pela reserva")
-public class ResponsibleBookingResponseDto {
+public class ResponsibleBookingCreateDto {
 
     @Schema(description = "Nome completo do responsável", example = "João da Silva")
     @NotBlank(message = "Responsible name can't be blank")
@@ -29,6 +24,7 @@ public class ResponsibleBookingResponseDto {
 
     @Schema(description = "E-mail do responsável", example = "joao.silva@email.com")
     @Email(message = "Insert a valid email")
+    @NotBlank(message = "Responsible email can't be blank")
     private String email;
 
     @Schema(description = "CPF do responsável", example = "123.456.789-09")
@@ -40,5 +36,6 @@ public class ResponsibleBookingResponseDto {
 
     @Schema(description = "Endereço do responsável")
     @Valid
-    private AddressResponseDto address;
+    private AddressCreateDto address;
+
 }
