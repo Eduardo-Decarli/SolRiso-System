@@ -18,7 +18,7 @@ import java.util.UUID;
 public class ReservationResponseDto {
 
     @Schema(description = "ID da reserva", example = "64f8b9a0e3b2d40a7c8e4b29")
-    private UUID id;
+    private Long id;
 
     @Schema(description = "Número do quarto associado à reserva", example = "101")
     @NotNull(message = "Room number can't be null")

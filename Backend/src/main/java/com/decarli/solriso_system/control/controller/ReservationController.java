@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/reservation")
@@ -39,7 +38,7 @@ public class ReservationController {
     }
 
     @GetMapping("/id")
-    public ResponseEntity<ReservationResponseDto> getReservationsById(@RequestParam UUID id) {
+    public ResponseEntity<ReservationResponseDto> getReservationsById(@RequestParam Long id) {
         Reservation response = service.getReservationById(id);
         return ResponseEntity.status(HttpStatus.OK).body(mapper.toDto(response));
     }
@@ -75,7 +74,7 @@ public class ReservationController {
     }
 
     @DeleteMapping
-    public ResponseEntity<Void> deleteReservation(@RequestParam UUID id) {
+    public ResponseEntity<Void> deleteReservation(@RequestParam Long id) {
         service.deleteReservation(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }

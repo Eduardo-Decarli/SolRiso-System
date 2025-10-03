@@ -11,42 +11,49 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "reservations")
+@Table(name = "RESERVATIONS")
 public class Reservation {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_reservation")
-    private UUID id;
-    @Column(nullable = false)
-    private int room;
-    @Column(nullable = false)
-    private int quantGuests;
-    @Column(nullable = false)
-    private Status status;
-    @Column(nullable = false)
-    private TypeReservation typeReservation;
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_RESERVATION")
+    private Long id;
+    @Column(name = "ROOM", nullable = false)
+    private Integer room;
+    @Column(name = "QUANT_GUESTS", nullable = false)
+    private Integer quantGuests;
+    @Column(name = "CHECKIN", nullable = false)
     private LocalDate checkin;
-    @Column(nullable = false)
+    @Column(name = "CHECKOUT", nullable = false)
     private LocalDate checkout;
-
-    @Column(nullable = false)
-    private Payment payment;
-    @Column(nullable = false)
-    private double entryValue;
-    @Column(nullable = false)
-    private double totalValue;
-    @Column(nullable = false)
+    @Column(name = "ENTRY_VALUE", nullable = false)
+    private Double entryValue;
+    @Column(name = "TOTAL_VALUE", nullable = false)
+    private Double totalValue;
+    @Column(name = "PAID", nullable = false)
     private Boolean paid;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_user")
+    @JoinColumn(name = "ID_USER", nullable = false)
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_guest")
+    @JoinColumn(name = "ID_GUEST", nullable = false)
     private Guest responsible;
-    @Embedded
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ID_PAYMENT_TYPE", nullable = false)
+    private Payment payment;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "ID_TYPE_RESERVATION", nullable = false)
+    private TypeReservation typeReservation;
+
+    @Column(name = "ID_STATUS", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_PARKING", nullable = false)
     private Parking parking;
 }

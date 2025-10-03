@@ -7,18 +7,22 @@ import java.util.UUID;
 
 @Data
 @Entity
-@Table(name = "guests")
+@Table(name = "GUESTS")
 public class Guest {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_guest")
-    private UUID id;
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_GUEST")
+    private Long id;
+    @Column(name = "NAME", nullable = false)
     private String name;
-    private String phoneNumber;
+    @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
+    @Column(name = "CPF", unique = true, nullable = false)
     private String cpf;
-    @Embedded
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNumber;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "ID_ADDRESS",  nullable = false)
     private Address address;
 }

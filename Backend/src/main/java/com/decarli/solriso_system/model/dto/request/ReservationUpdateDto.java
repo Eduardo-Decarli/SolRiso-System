@@ -17,8 +17,8 @@ import java.util.UUID;
 @Schema(description = "Dados para a atualização de uma reserva existente")
 public class ReservationUpdateDto {
 
-    @Schema(description = "ID da reserva a ser atualizada", example = "64f8b9a0e3b2d40a7c8e4b29")
-    private UUID id;
+    @Schema(description = "ID da reserva a ser atualizada", example = "31")
+    private Long id;
 
     @Schema(description = "Número do quarto associado à reserva", example = "101")
     @NotNull(message = "Room number can't be null")

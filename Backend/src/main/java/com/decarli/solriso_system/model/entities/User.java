@@ -1,6 +1,7 @@
 package com.decarli.solriso_system.model.entities;
 
 import com.decarli.solriso_system.model.enums.Role;
+import com.decarli.solriso_system.model.enums.RoleConverter;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,20 +13,21 @@ import java.util.Collections;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "USERS")
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_user")
-    private String id;
-    @Column(nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_USER")
+    private Long id;
+    @Column(name = "NAME", nullable = false)
     private String name;
-    @Column(nullable = false, unique = true)
+    @Column(name = "EMAIL", nullable = false, unique = true)
     private String email;
-    @Column(nullable = false)
+    @Column(name = "PASSWORD", nullable = false)
     private String password;
-    @Column(nullable = false)
+    @Convert(converter = RoleConverter.class)
+    @Column(name = "ID_ROLE", nullable = false)
     private Role role;
 
     @Override

@@ -17,7 +17,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -61,7 +60,7 @@ public class UserServiceImp implements UserService {
         return token;
     }
 
-    public User getAdminById(UUID id) {
+    public User getAdminById(Long id) {
         logger.info("Looking for admin by id {}", id);
         return userRepository.findById(id)
                 .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com o id: " + id));

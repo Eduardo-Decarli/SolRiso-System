@@ -7,13 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 public interface ReservationService {
 
     @Transactional
     Reservation createReservation(ReservationCreateDto create);
-    Reservation getReservationById(UUID id);
+    Reservation getReservationById(Long id);
     List<Reservation> getReservationsToday();
     List<Reservation> getReservationsByRoom(int room);
     List<Reservation> getReservationsByResponsibleName(String name);
@@ -21,5 +20,5 @@ public interface ReservationService {
     @Transactional
     Reservation updateReservation(ReservationUpdateDto update);
     List<Reservation> getAllReservations();
-    void deleteReservation(UUID id);
+    void deleteReservation(Long id);
 }

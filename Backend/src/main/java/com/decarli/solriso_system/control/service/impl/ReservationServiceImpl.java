@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -72,7 +71,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Reservation getReservationById(UUID id) {
+    public Reservation getReservationById(Long id) {
         if(id.toString().trim().isEmpty()) {
             throw new IllegalArgumentException("Id cannot be empty");
         }
@@ -153,7 +152,7 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Transactional
-    public void deleteReservation(UUID id) {
+    public void deleteReservation(Long id) {
 
         if(id == null || id.toString().trim().isEmpty()) {
             throw new IllegalArgumentException("Id cannot be empty or null");

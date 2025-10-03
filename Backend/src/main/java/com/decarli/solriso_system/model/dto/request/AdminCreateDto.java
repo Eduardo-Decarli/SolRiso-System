@@ -26,6 +26,6 @@ public class AdminCreateDto {
 
     @Schema(description = "Cargo do usuário no sistema", example = "ADMIN")
     @NotBlank(message = "Role can't be null")
-    @Pattern(regexp = "ADMIN|USER")
+    @Pattern(regexp = "ROOT|ADMINISTRADOR|USER")
     private String role;
 }
