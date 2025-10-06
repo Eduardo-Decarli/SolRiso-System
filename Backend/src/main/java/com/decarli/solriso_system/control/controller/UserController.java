@@ -5,7 +5,7 @@ import com.decarli.solriso_system.model.dto.request.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.request.AdminLoginDto;
 import com.decarli.solriso_system.model.dto.response.AdminResponseDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
-import com.decarli.solriso_system.model.entities.User;
+import com.decarli.solriso_system.model.entities.UserEntity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,13 +43,13 @@ public class UserController {
 
     @GetMapping("/admins")
     public ResponseEntity<List<AdminResponseDto>> getAllAdmins() {
-        List<User> users = userService.getAllAdmins();
-        return ResponseEntity.status(HttpStatus.FOUND).body(adminMapper.toDtoList(users));
+        List<UserEntity> userEntities = userService.getAllAdmins();
+        return ResponseEntity.status(HttpStatus.FOUND).body(adminMapper.toDtoList(userEntities));
     }
 
     @GetMapping("/admins/byEmail")
     public ResponseEntity<AdminResponseDto> getAllAdmins(@RequestParam String email) {
-        User user = userService.getAdminByEmail(email);
-        return ResponseEntity.status(HttpStatus.FOUND).body(adminMapper.toResponseDto(user));
+        UserEntity userEntity = userService.getAdminByEmail(email);
+        return ResponseEntity.status(HttpStatus.FOUND).body(adminMapper.toResponseDto(userEntity));
     }
 }

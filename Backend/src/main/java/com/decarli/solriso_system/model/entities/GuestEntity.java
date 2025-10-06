@@ -3,12 +3,10 @@ package com.decarli.solriso_system.model.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.UUID;
-
 @Data
 @Entity
 @Table(name = "GUESTS")
-public class Guest {
+public class GuestEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,5 +22,5 @@ public class Guest {
     private String phoneNumber;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_ADDRESS",  nullable = false)
-    private Address address;
+    private AddressEntity addressEntity;
 }

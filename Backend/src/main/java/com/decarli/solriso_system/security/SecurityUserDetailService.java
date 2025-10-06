@@ -1,7 +1,7 @@
 package com.decarli.solriso_system.security;
 
 import com.decarli.solriso_system.control.repositories.UserRepository;
-import com.decarli.solriso_system.model.entities.User;
+import com.decarli.solriso_system.model.entities.UserEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,10 +18,10 @@ public class SecurityUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email);
-        if(user == null) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        if(userEntity == null) {
             throw new UsernameNotFoundException("User not found with email: " + email);
         }
-        return user;
+        return userEntity;
     }
 }

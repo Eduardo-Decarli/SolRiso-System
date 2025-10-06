@@ -1,6 +1,6 @@
 package com.decarli.solriso_system.model.dto.request;
 
-import com.decarli.solriso_system.model.entities.Parking;
+import com.decarli.solriso_system.model.entities.ParkingEntity;
 import com.decarli.solriso_system.model.enums.Payment;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
@@ -68,5 +68,5 @@ public class ReservationCreateDto {
     private ResponsibleBookingCreateDto responsible;
 
     @Schema(description = "Informações sobre o estacionamento (se aplicável)")
-    private Parking parking;
+    private ParkingEntity parkingEntity;
 }

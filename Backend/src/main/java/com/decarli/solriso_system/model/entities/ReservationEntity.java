@@ -7,12 +7,11 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Entity
 @Table(name = "RESERVATIONS")
-public class Reservation {
+public class ReservationEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,11 +34,11 @@ public class Reservation {
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_USER", nullable = false)
-    private User user;
+    private UserEntity userEntity;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_GUEST", nullable = false)
-    private Guest responsible;
+    private GuestEntity responsible;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ID_PAYMENT_TYPE", nullable = false)
@@ -55,5 +54,5 @@ public class Reservation {
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ID_PARKING", nullable = false)
-    private Parking parking;
+    private ParkingEntity parkingEntity;
 }

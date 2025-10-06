@@ -2,7 +2,7 @@ package com.decarli.solriso_system.control.service;
 
 import com.decarli.solriso_system.model.dto.request.ReservationCreateDto;
 import com.decarli.solriso_system.model.dto.request.ReservationUpdateDto;
-import com.decarli.solriso_system.model.entities.Reservation;
+import com.decarli.solriso_system.model.entities.ReservationEntity;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
@@ -11,14 +11,14 @@ import java.util.List;
 public interface ReservationService {
 
     @Transactional
-    Reservation createReservation(ReservationCreateDto create);
-    Reservation getReservationById(Long id);
-    List<Reservation> getReservationsToday();
-    List<Reservation> getReservationsByRoom(int room);
-    List<Reservation> getReservationsByResponsibleName(String name);
-    List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout);
+    ReservationEntity createReservation(ReservationCreateDto create);
+    ReservationEntity getReservationById(Long id);
+    List<ReservationEntity> getReservationsToday();
+    List<ReservationEntity> getReservationsByRoom(int room);
+    List<ReservationEntity> getReservationsByResponsibleName(String name);
+    List<ReservationEntity> getReservationsBetween(LocalDate checkin, LocalDate checkout);
     @Transactional
-    Reservation updateReservation(ReservationUpdateDto update);
-    List<Reservation> getAllReservations();
+    ReservationEntity updateReservation(ReservationUpdateDto update);
+    List<ReservationEntity> getAllReservations();
     void deleteReservation(Long id);
 }

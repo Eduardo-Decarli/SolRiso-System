@@ -4,7 +4,7 @@ import com.decarli.solriso_system.control.repositories.UserRepository;
 import com.decarli.solriso_system.control.service.UserService;
 import com.decarli.solriso_system.model.dto.request.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
-import com.decarli.solriso_system.model.entities.User;
+import com.decarli.solriso_system.model.entities.UserEntity;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
 import com.decarli.solriso_system.security.JwtService;
@@ -43,11 +43,11 @@ public class UserServiceImp implements UserService {
             throw new UserAlreadyExistsException("Usuário já está registrado no sistema");
         }
 
-        User user = adminMapper.toAdmin(create);
-        user.setEmail(create.getEmail().toLowerCase());
-        user.setPassword(passwordEncoder.encode(create.getPassword()));
-        userRepository.save(user);
-        logger.info("User {} created successfully", user);
+        UserEntity userEntity = adminMapper.toAdmin(create);
+        userEntity.setEmail(create.getEmail().toLowerCase());
+        userEntity.setPassword(passwordEncoder.encode(create.getPassword()));
+        userRepository.save(userEntity);
+        logger.info("User {} created successfully", userEntity);
     }
 
     public String login(String email, String password) {
@@ -55,35 +55,35 @@ public class UserServiceImp implements UserService {
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
-        var token = jwtService.generateToken((User) authentication.getPrincipal());
+        var token = jwtService.generateToken((UserEntity) authentication.getPrincipal());
         logger.info("User {} did login successfully", email);
         return token;
     }
 
-    public User getAdminById(Long id) {
+    public UserEntity getAdminById(Long id) {
         logger.info("Looking for admin by id {}", id);
         return userRepository.findById(id)
                 .orElseThrow(() -> new AdminNotFoundException("Admin não encontrado com o id: " + id));
     }
 
-    public User getAdminByEmail(String email) {
-        User user = userRepository.findByEmail(email);
-        if(user != null) {
-            logger.info("Found user {} by email {}", user, email);
-            return user;
+    public UserEntity getAdminByEmail(String email) {
+        UserEntity userEntity = userRepository.findByEmail(email);
+        if(userEntity != null) {
+            logger.info("Found user {} by email {}", userEntity, email);
+            return userEntity;
         }
         return null;
     }
 
     @Override
-    public List<User> getAllAdmins() {
+    public List<UserEntity> getAllAdmins() {
         logger.info("Looking for all admins");
         return userRepository.findAll();
     }
 
     @Override
     public void forgotPassword(String email, String password) {
-        User adm = getAdminByEmail(email);
+        UserEntity adm = getAdminByEmail(email);
         adm.setPassword(passwordEncoder.encode(password));
         userRepository.save(adm);
         logger.info("User {} changed his password", email);

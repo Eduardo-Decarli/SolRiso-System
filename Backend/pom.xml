@@ -12,7 +12,7 @@
 	<artifactId>solriso-system</artifactId>
 	<version>1.0</version>
 	<name>solriso-system</name>
-	<description>A system for management reservations to the hotel</description>
+	<description>A system for management reservationEntities to the hotel</description>
 	<url/>
 	<licenses>
 		<license/>

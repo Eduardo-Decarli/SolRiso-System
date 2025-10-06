@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Sistem ###
-out.log
+*.log

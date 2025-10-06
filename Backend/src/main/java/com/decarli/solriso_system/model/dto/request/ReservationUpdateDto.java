@@ -1,6 +1,6 @@
 package com.decarli.solriso_system.model.dto.request;
 
-import com.decarli.solriso_system.model.entities.Parking;
+import com.decarli.solriso_system.model.entities.ParkingEntity;
 import com.decarli.solriso_system.model.enums.Payment;
 import com.decarli.solriso_system.model.enums.Status;
 import com.decarli.solriso_system.model.enums.TypeReservation;
@@ -11,7 +11,6 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.UUID;
 
 @Data
 @Schema(description = "Dados para a atualização de uma reserva existente")
@@ -68,5 +67,5 @@ public class ReservationUpdateDto {
 
     @Schema(description = "Informações sobre o estacionamento (se aplicável)")
     @Valid
-    private Parking parking;
+    private ParkingEntity parkingEntity;
 }

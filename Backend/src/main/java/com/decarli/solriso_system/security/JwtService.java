@@ -5,10 +5,9 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.decarli.solriso_system.model.entities.User;
+import com.decarli.solriso_system.model.entities.UserEntity;
 import com.decarli.solriso_system.model.exceptions.InvalidJwtException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -26,14 +25,14 @@ public class JwtService {
     @Value("${jwt.issuer}")
     private String issuer;
 
-    public String generateToken(User user) {
+    public String generateToken(UserEntity userEntity) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             Instant now = Instant.now();
             return JWT.create()
                     .withIssuer(issuer)
-                    .withSubject(user.getEmail())
-                    .withClaim("role", user.getRole().name())
+                    .withSubject(userEntity.getEmail())
+                    .withClaim("role", userEntity.getRole().name())
                     .withIssuedAt(Date.from(now))
                     .withExpiresAt(Date.from(now.plusSeconds(expirationInMinutes * 60)))
                     .sign(algorithm);
