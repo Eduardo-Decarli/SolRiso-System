@@ -21,6 +21,13 @@ import java.io.IOException;
 @RestControllerAdvice
 public class GlobalHandlerException{
 
+    @ExceptionHandler(InvalidJwtException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ResponseEntity<ErrorMessage> handlerInvalidJwtException(InvalidJwtException ex, HttpServletRequest request) {
+        ErrorMessage error = new ErrorMessage(request, HttpStatus.FORBIDDEN, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest request, BindingResult result){
         ErrorMessage error = new ErrorMessage(request, HttpStatus.BAD_REQUEST, "Os campos de entrada são inválidos", result);
@@ -82,10 +89,5 @@ public class GlobalHandlerException{
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
-    @ExceptionHandler(InvalidJwtException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<ErrorMessage> handlerInvalidJwtException(InvalidJwtException ex, HttpServletRequest request) {
-        ErrorMessage error = new ErrorMessage(request, HttpStatus.FORBIDDEN, ex.getMessage());
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
-    }
+
 }
