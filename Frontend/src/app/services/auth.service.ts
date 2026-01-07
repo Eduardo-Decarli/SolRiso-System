@@ -1,26 +1,26 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { ILogin } from '../interfaces/auth/ILogin.interface';
 import { IRegister } from '../interfaces/auth/IRegister.interface';
+import { Observable } from 'rxjs';
+import { IJwtToken } from '../interfaces/auth/IJwtResponse.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  private readonly http = inject(HttpClient);
 
-  private readonly HTTP = inject(HttpClient);
-
-  private register(register: IRegister) {
-    return this.HTTP.post(`${environment}/register`, register);
+  public register(register: IRegister) {
+    return this.http.post(`${environment.AUTH_URL}/register`, register);
   }
 
-  private login(login: ILogin) {
-    return this.HTTP.post(`${environment}/login`, login);
+  public login(login: ILogin): Observable<IJwtToken> {
+    return this.http.post<IJwtToken>(`${environment.AUTH_URL}/login`, login);
   }
 
-  private forgotPassword(forgotPassword: ILogin) {
-    return this.HTTP.post(`${environment}/forgot-password`, forgotPassword);
+  public forgotPassword(forgotPassword: ILogin) {
+    return this.http.post(`${environment.AUTH_URL}/forgot-password`, forgotPassword);
   }
-
 }

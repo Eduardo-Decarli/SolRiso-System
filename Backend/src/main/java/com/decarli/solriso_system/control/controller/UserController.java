@@ -5,6 +5,7 @@ import com.decarli.solriso_system.model.dto.request.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.request.AdminLoginDto;
 import com.decarli.solriso_system.model.dto.response.AdminResponseDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
+import com.decarli.solriso_system.model.dto.response.JwtResponse;
 import com.decarli.solriso_system.model.entities.UserEntity;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,7 @@ public class UserController {
     private AdminMapper adminMapper;
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody @Valid AdminLoginDto adminLoginDto) {
+    public ResponseEntity<JwtResponse> login(@RequestBody @Valid AdminLoginDto adminLoginDto) {
         return ResponseEntity.status(HttpStatus.OK).body(userService.login(adminLoginDto.getEmail(), adminLoginDto.getPassword()));
     }
 

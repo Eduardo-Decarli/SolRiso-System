@@ -5,12 +5,14 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.decarli.solriso_system.model.dto.response.JwtResponse;
 import com.decarli.solriso_system.model.entities.UserEntity;
 import com.decarli.solriso_system.model.exceptions.InvalidJwtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Service
@@ -25,17 +27,18 @@ public class JwtService {
     @Value("${jwt.issuer}")
     private String issuer;
 
-    public String generateToken(UserEntity userEntity) {
+    public JwtResponse generateToken(UserEntity userEntity) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
             Instant now = Instant.now();
-            return JWT.create()
+            String token = JWT.create()
                     .withIssuer(issuer)
                     .withSubject(userEntity.getEmail())
                     .withClaim("role", userEntity.getRole().name())
                     .withIssuedAt(Date.from(now))
                     .withExpiresAt(Date.from(now.plusSeconds(expirationInMinutes * 60)))
                     .sign(algorithm);
+            return new JwtResponse(token, Date.from(now.plusSeconds(expirationInMinutes * 60)));
         } catch (JWTCreationException ex) {
             throw new RuntimeException("Error while generating token", ex);
         }

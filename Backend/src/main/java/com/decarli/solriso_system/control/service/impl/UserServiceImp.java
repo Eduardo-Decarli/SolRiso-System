@@ -4,6 +4,7 @@ import com.decarli.solriso_system.control.repositories.UserRepository;
 import com.decarli.solriso_system.control.service.UserService;
 import com.decarli.solriso_system.model.dto.request.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
+import com.decarli.solriso_system.model.dto.response.JwtResponse;
 import com.decarli.solriso_system.model.entities.UserEntity;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
@@ -50,12 +51,12 @@ public class UserServiceImp implements UserService {
         logger.info("User {} created successfully", userEntity);
     }
 
-    public String login(String email, String password) {
+    public JwtResponse login(String email, String password) {
 
         UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(email, password);
         Authentication authentication = authenticationManager.authenticate(authenticationToken);
 
-        var token = jwtService.generateToken((UserEntity) authentication.getPrincipal());
+        JwtResponse token = jwtService.generateToken((UserEntity) authentication.getPrincipal());
         logger.info("User {} did login successfully", email);
         return token;
     }

@@ -1,1 +1,3 @@
-export const environment = {};
+export const environment = {
+  AUTH_URL: 'http://localhost:8080/auth',
+};
