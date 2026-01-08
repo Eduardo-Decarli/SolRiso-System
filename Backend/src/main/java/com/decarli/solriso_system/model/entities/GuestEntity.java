@@ -16,7 +16,7 @@ public class GuestEntity {
     private String name;
     @Column(name = "EMAIL", unique = true, nullable = false)
     private String email;
-    @Column(name = "CPF", unique = true, nullable = false)
+    @Column(name = "CPF", unique = true, nullable = true)
     private String cpf;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;

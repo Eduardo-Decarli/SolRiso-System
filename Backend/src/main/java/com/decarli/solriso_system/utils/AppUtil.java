@@ -4,7 +4,7 @@ import com.decarli.solriso_system.model.exceptions.InvalidCpfException;
 
 public class AppUtil {
 
-    public boolean validateCPF(String cpf) {
+    public static boolean validateCPF(String cpf) {
         cpf = cpf.replaceAll("\\D", "");
 
         if (cpf.length() != 11) {
@@ -13,7 +13,7 @@ public class AppUtil {
 
         // Elimina CPFs com todos os dígitos iguais
         if (cpf.matches("(\\d)\\1{10}")) {
-            return false;
+            throw new InvalidCpfException("O CPF não deve conter apenas dígitos iguais");
         }
 
         int sum = 0;

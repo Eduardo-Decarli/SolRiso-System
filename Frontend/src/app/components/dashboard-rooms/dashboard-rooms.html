@@ -1,0 +1,9 @@
+<section class="pousada">
+  <!-- <h2>{{ titulo }}</h2> -->
+
+  <div class="quartos-grid">
+    @for (room of roomsToday; track $index) {
+      <app-room [room]="room"></app-room>
+    }
+  </div>
+</section>

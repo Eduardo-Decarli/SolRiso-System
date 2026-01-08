@@ -11,7 +11,7 @@ import java.util.List;
 public interface ReservationService {
 
     @Transactional
-    ReservationEntity createReservation(ReservationCreateDto create);
+    void createReservation(ReservationCreateDto create);
     ReservationEntity getReservationById(Long id);
     List<ReservationEntity> getReservationsToday();
     List<ReservationEntity> getReservationsByRoom(int room);

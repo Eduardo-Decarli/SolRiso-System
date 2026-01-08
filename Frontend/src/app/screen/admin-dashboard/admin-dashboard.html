@@ -1,0 +1,12 @@
+<app-header (showSideMenu)="onShowSideMenu()"></app-header>
+<app-sidebar-menu [style.display]="showMenu"></app-sidebar-menu>
+<div class="container">
+
+  <div class="admin-dashboard">
+
+    <app-dashboard-rooms [RoomsToday]="showRooms()" titulo="Pousada X"></app-dashboard-rooms>
+
+    <app-reservation-list [reservations]="reservationsToday"></app-reservation-list>
+
+  </div>
+</div>

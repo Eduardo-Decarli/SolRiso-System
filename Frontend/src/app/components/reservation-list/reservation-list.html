@@ -1,0 +1,14 @@
+<section class="reservation-list">
+  <header class="reservation-list__header">
+    <h2>Reservas</h2>
+    <span class="reservation-list__count"></span>
+  </header>
+
+  <div class="reservation-list__content">
+    @for (reservation of reservations; track $index) {
+      <app-reservation-card [reservation]="reservation"></app-reservation-card>
+
+    }
+
+  </div>
+</section>

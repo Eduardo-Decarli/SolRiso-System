@@ -41,7 +41,7 @@ public class UserServiceImp implements UserService {
     public void register(AdminCreateDto create) {
         if (userRepository.existsByEmail(create.getEmail())) {
             logger.error("User {} can't be registered, it's already exist", create);
-            throw new UserAlreadyExistsException("Usuário já está registrado no sistema");
+            throw new UserAlreadyExistsException("Email já cadastrado no sistema");
         }
 
         UserEntity userEntity = adminMapper.toAdmin(create);

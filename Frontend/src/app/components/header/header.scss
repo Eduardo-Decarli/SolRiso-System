@@ -1,0 +1,46 @@
+.app-header {
+  height: 80px;
+  background-color: #1f2933;
+  color: #fff;
+  padding: 0 24px;
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+
+  img {
+    height: 50px;
+    border-radius: 150px;
+  }
+
+  span {
+    font-size: 18px;
+    font-weight: bold;
+  }
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .user-name {
+    font-size: 14px;
+  }
+
+  .avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #fff;
+  }
+}

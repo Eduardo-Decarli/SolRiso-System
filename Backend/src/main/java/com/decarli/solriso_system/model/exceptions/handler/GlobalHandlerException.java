@@ -85,4 +85,11 @@ public class GlobalHandlerException{
         return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
     }
 
+    @ExceptionHandler(InvalidCpfException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<ErrorMessage> handlerInvalidCpfException(InvalidCpfException ex, HttpServletRequest request) {
+        ErrorMessage error = new ErrorMessage(request, HttpStatus.BAD_REQUEST, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+    }
+
 }
