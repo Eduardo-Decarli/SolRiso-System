@@ -1,32 +1,21 @@
 package com.decarli.solriso_system.model.exceptions.handler;
 
 import com.decarli.solriso_system.model.exceptions.*;
-import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.postgresql.util.PSQLException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.io.IOException;
-
 @RestControllerAdvice
 public class GlobalHandlerException{
-
-    @ExceptionHandler(InvalidJwtException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ResponseEntity<ErrorMessage> handlerInvalidJwtException(InvalidJwtException ex, HttpServletRequest request) {
-        ErrorMessage error = new ErrorMessage(request, HttpStatus.FORBIDDEN, ex.getMessage());
-        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
-    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorMessage> handlerMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest request, BindingResult result){
@@ -89,5 +78,11 @@ public class GlobalHandlerException{
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
+    @ExceptionHandler(PSQLException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ResponseEntity<ErrorMessage> handlerPSQLException(PSQLException ex, HttpServletRequest request) {
+        ErrorMessage error = new ErrorMessage(request, HttpStatus.CONFLICT, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+    }
 
 }
