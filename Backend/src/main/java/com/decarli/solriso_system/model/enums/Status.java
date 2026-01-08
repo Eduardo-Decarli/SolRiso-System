@@ -12,8 +12,15 @@ public enum Status {
         this.id = id;
         this.description = description;
     }
+
+    public static Status fromId(Long id) {
+        for (Status status : values()) {
+            if (status.getId().equals(id)) return status;
+        }
+        throw new IllegalArgumentException("Invalid Status id: " + id);
+    }
     
-    public Long getid() {
+    public Long getId() {
         return id;
     }
 

@@ -1,8 +1,6 @@
 package com.decarli.solriso_system.model.entities;
 
-import com.decarli.solriso_system.model.enums.Payment;
-import com.decarli.solriso_system.model.enums.Status;
-import com.decarli.solriso_system.model.enums.TypeReservation;
+import com.decarli.solriso_system.model.enums.*;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -40,16 +38,16 @@ public class ReservationEntity {
     @JoinColumn(name = "ID_GUEST", nullable = false)
     private GuestEntity responsible;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "ID_PAYMENT_TYPE", nullable = false)
+    @Convert(converter = PaymentConverter.class)
     private Payment payment;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "ID_TYPE_RESERVATION", nullable = false)
+    @Convert(converter = TypeReservationConverter.class)
     private TypeReservation typeReservation;
 
     @Column(name = "ID_STATUS", nullable = false)
-    @Enumerated(EnumType.STRING)
+    @Convert(converter = StatusConverter.class)
     private Status status;
 
     @OneToOne(cascade = CascadeType.ALL)

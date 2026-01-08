@@ -14,6 +14,13 @@ public enum Payment {
         this.description = description;
     }
 
+    public static Payment fromId(Long id) {
+        for (Payment p : values()) {
+            if (p.getId().equals(id)) return p;
+        }
+        throw new IllegalArgumentException("Invalid Payment id: " + id);
+    }
+
     public Long getId() {
         return id;
     }

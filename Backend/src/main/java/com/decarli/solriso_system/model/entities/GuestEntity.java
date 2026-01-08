@@ -20,7 +20,6 @@ public class GuestEntity {
     private String cpf;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "ID_ADDRESS",  nullable = false)
+    @Embedded
     private AddressEntity addressEntity;
 }

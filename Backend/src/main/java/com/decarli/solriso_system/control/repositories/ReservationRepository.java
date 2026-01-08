@@ -12,11 +12,11 @@ import java.util.List;
 @Repository
 public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
 
-    @Query(value = "SELECT * FROM guesthouse.RESERVATIONS r WHERE r.checkin = :today", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESERVATIONS r WHERE r.checkin = :today", nativeQuery = true)
     List<ReservationEntity> findReservationsToday(@Param("today") LocalDate today);
     List<ReservationEntity> findReservationByRoom(int room);
 
-    @Query(value = "SELECT * FROM guesthouse.RESERVATIONS r WHERE r.checkin <= r.checkout", nativeQuery = true)
+    @Query(value = "SELECT * FROM RESERVATIONS r WHERE r.checkin <= r.checkout", nativeQuery = true)
     List<ReservationEntity> findReservationsBetween(LocalDate checkin, LocalDate checkout);
     List<ReservationEntity> findReservationByResponsibleName(String responsibleName);
     ReservationEntity findReservationById(Long id);
