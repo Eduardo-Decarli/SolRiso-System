@@ -1,0 +1,89 @@
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: #d1d5db;
+}
+
+.form-group input {
+  background-color: #020617;
+  border: 1px solid #1e293b;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #f9fafb;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-group input::placeholder {
+  color: #6b7280;
+}
+
+.form-group input:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+}
+
+.submit-button {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: #38bdf8;
+  color: #020617;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.4s, transform 0.1s;
+}
+
+.submit-button:hover {
+  background-color: #0ea5e9;
+}
+
+.submit-button:active {
+  transform: scale(0.98);
+}
+
+.login-router {
+  margin-top: 12px;
+  padding: 12px;
+  background-color: #020617;
+  color: #38bdf8 ;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.4s, transform 0.1s;
+}
+
+.login-router:hover {
+  background-color: #040920;
+}
+
+.login-router:active {
+  transform: scale(0.98);
+}
+
+.register-error {
+  background: rgba(255, 77, 79, 0.15);
+  border: 1px solid #ff4d4f;
+  color: #ffb3b3;
+  padding: 0.75rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  font-size: 0.85rem;
+  text-align: center;
+}

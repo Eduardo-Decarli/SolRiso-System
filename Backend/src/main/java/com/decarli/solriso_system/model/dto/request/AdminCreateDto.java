@@ -24,8 +24,4 @@ public class AdminCreateDto {
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "A senha precisa ter no mínimo 8 caracteres, uma letra maiúscula, uma minuscula, um número e um caracter especial")
     private String password;
 
-    @Schema(description = "Cargo do usuário no sistema", example = "ADMIN")
-    @NotBlank(message = "Role can't be null")
-    @Pattern(regexp = "ROOT|ADMINISTRADOR|USER")
-    private String role;
 }

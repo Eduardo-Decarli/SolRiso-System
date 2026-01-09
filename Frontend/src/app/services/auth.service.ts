@@ -12,8 +12,8 @@ import { IJwtToken } from '../interfaces/auth/IJwtResponse.interface';
 export class AuthService {
   private readonly http = inject(HttpClient);
 
-  public register(register: IRegister) {
-    return this.http.post(`${environment.AUTH_URL}/register`, register);
+  public register(register: IRegister): Observable<void> {
+    return this.http.post<void>(`${environment.AUTH_URL}/register`, register);
   }
 
   public login(login: ILogin): Observable<IJwtToken> {

@@ -6,6 +6,7 @@ import com.decarli.solriso_system.model.dto.request.AdminCreateDto;
 import com.decarli.solriso_system.model.dto.mapper.AdminMapper;
 import com.decarli.solriso_system.model.dto.response.JwtResponse;
 import com.decarli.solriso_system.model.entities.UserEntity;
+import com.decarli.solriso_system.model.enums.Role;
 import com.decarli.solriso_system.model.exceptions.AdminNotFoundException;
 import com.decarli.solriso_system.model.exceptions.UserAlreadyExistsException;
 import com.decarli.solriso_system.security.JwtService;
@@ -47,6 +48,7 @@ public class UserServiceImp implements UserService {
         UserEntity userEntity = adminMapper.toAdmin(create);
         userEntity.setEmail(create.getEmail().toLowerCase());
         userEntity.setPassword(passwordEncoder.encode(create.getPassword()));
+        userEntity.setRole(Role.ADMINISTRADOR);
         userRepository.save(userEntity);
         logger.info("User {} created successfully", userEntity);
     }
