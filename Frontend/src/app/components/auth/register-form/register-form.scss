@@ -12,22 +12,22 @@
 
 .form-group label {
   font-size: 0.85rem;
-  color: #d1d5db;
+  color: var(--color-text-primary);
 }
 
 .form-group input {
-  background-color: #020617;
-  border: 1px solid #1e293b;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
   border-radius: 8px;
   padding: 10px 12px;
-  color: #f9fafb;
+  color: var(--color-text-primary);
   font-size: 0.95rem;
   outline: none;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .form-group input::placeholder {
-  color: #6b7280;
+  color: var(--color-text-muted);
 }
 
 .form-group input:focus {
@@ -80,7 +80,7 @@
 .register-error {
   background: rgba(255, 77, 79, 0.15);
   border: 1px solid #ff4d4f;
-  color: #ffb3b3;
+  color: var(--color-error);
   padding: 0.75rem;
   border-radius: 5px;
   margin-bottom: 1rem;

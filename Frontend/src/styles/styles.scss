@@ -10,3 +10,37 @@ body {
   font-optical-sizing: auto;
   font-style: normal;
 }
+
+input {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 0.85rem 0.9rem;
+  color: var(--color-text-primary);
+  font-size: 1rem;
+  outline: none;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background-color 0.25s ease;
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  &:hover {
+    border-color: #5a5a7a;
+  }
+
+  &:focus {
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.25);
+  }
+
+  &:disabled {
+    background: #181924;
+    color: #666;
+    cursor: not-allowed;
+  }
+}

@@ -1,0 +1,153 @@
+<app-header (showSideMenu)="onShowSideMenu()"></app-header>
+<app-sidebar-menu [style.display]="showMenu"></app-sidebar-menu>
+<div class="container">
+
+<div class="reservation-page">
+  <div class="reservation-container">
+
+    <header class="reservation-header">
+      <h1>Nova Reserva</h1>
+      <p>Preencha os dados para registrar uma nova reserva</p>
+    </header>
+
+    <form class="reservation-form">
+
+      <!-- Dados principais -->
+      <section class="form-section">
+        <h2>Reserva</h2>
+
+        <div class="grid two">
+          <div class="form-group">
+            <label>Número do quarto</label>
+            <input name="room" type="number" placeholder="Ex: 1" [(ngModel)]="reservation.room">
+          </div>
+
+          <div class="form-group">
+            <label>Quantidade de hóspedes</label>
+            <input name="number" type="number" placeholder="Ex: 2" [(ngModel)]="reservation.quantGuests">
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="form-group">
+            <label>Check-in</label>
+            <input name="checkin" type="date" [(ngModel)]="reservation.checkin">
+          </div>
+
+          <div class="form-group">
+            <label>Check-out</label>
+            <input name="checkout" type="date" [(ngModel)]="reservation.checkout">
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div class="form-group">
+            <label>Tipo de reserva</label>
+            <select  [(ngModel)]="reservation.typeReservation">
+              <option [ngValue]="null">Selecione</option>
+              @for (type of typesReservation; track type) {
+                <option [ngValue]="type">{{ type }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Status</label>
+            <select  [(ngModel)]="reservation.status">
+              <option [ngValue]="null">Selecione</option>
+              @for (status of statusReservation; track status) {
+                <option [ngValue]="status">{{ status }}</option>
+              }
+            </select>
+          </div>
+        </div>
+      </section>
+
+      <!-- Valores -->
+      <section class="form-section">
+        <h2>Valores e Pagamento</h2>
+
+        <div class="grid three">
+
+          <div class="form-group">
+            <label>Valor total</label>
+            <input name="total-value" type="number" placeholder="R$ 0,00" [(ngModel)]="reservation.totalValue">
+          </div>
+
+          <div class="form-group">
+            <label>Valor de entrada</label>
+            <input name="entriy-value" type="number" placeholder="R$ 0,00" [(ngModel)]="reservation.entryValue">
+          </div>
+
+          <div class="form-group">
+            <label>Valor a Pagar</label>
+            <input name="total-value" type="number" disabled placeholder="R$ 0,00" [value]="showRemaningValue()">
+          </div>
+
+          <div class="form-group">
+            <label>Forma de Pagamento</label>
+            <select  [(ngModel)]="reservation.payment">
+              <option [ngValue]="null">Selecione</option>
+              @for (payment of payments; track payment) {
+                <option [ngValue]="payment">{{ payment }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group checkbox">
+          <input type="checkbox" id="paid">
+          <label for="paid">Pagamento realizado</label>
+        </div>
+      </section>
+
+      <!-- Responsável -->
+      <section class="form-section">
+        <h2>Responsável</h2>
+
+        <div class="grid two">
+          <div class="form-group">
+            <label>Nome</label>
+            <input type="text" placeholder="Nome do responsável">
+          </div>
+
+          <div class="form-group">
+            <label>Documento</label>
+            <input type="text" placeholder="CPF / RG">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" placeholder="(00) 00000-0000">
+        </div>
+      </section>
+
+      <!-- Estacionamento -->
+      <section class="form-section">
+        <h2>Estacionamento</h2>
+
+        <div class="grid two">
+          <div class="form-group">
+            <label>Vaga</label>
+            <input type="text" placeholder="Ex: A12">
+          </div>
+
+          <div class="form-group">
+            <label>Placa do veículo</label>
+            <input type="text" placeholder="ABC-1234">
+          </div>
+        </div>
+      </section>
+
+      <!-- Ações -->
+      <footer class="form-actions">
+        <button type="submit" class="primary">
+          Cadastrar Reserva
+        </button>
+      </footer>
+
+    </form>
+  </div>
+</div>
+</div>

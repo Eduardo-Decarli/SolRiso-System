@@ -1,0 +1,5 @@
+export enum Status {
+  ATIVO = 'ATIVO',
+  NAO_COMPARECEU = 'NAO COMPARECEU',
+  CANCELADO = 'CANCELADO'
+}

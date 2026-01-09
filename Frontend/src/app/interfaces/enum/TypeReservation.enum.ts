@@ -1,0 +1,8 @@
+export enum TypeReservation {
+  TELEFONE = 'TELEFONE',
+  BOOKING = 'BOOKING',
+  EXPEDIA = 'EXPEDIA',
+  PRESENCIAL = 'PRESENCIAL',
+  AIDBNB = 'AIDBNB',
+  EMAIL = 'EMAIL',
+}

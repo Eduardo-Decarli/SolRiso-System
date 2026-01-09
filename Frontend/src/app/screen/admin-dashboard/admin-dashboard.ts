@@ -7,6 +7,8 @@ import { IReservation } from '../../interfaces/reservation/IReservation.interfac
 import { environment } from '../../../environments/environment';
 import { IRoom } from '../../interfaces/reservation/IRoom.interface';
 import { ReservationList } from "../../components/reservation-list/reservation-list";
+import { routes } from '../../app.routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -16,12 +18,15 @@ import { ReservationList } from "../../components/reservation-list/reservation-l
 })
 export class AdminDashboard implements OnInit {
   private readonly reservationService = inject(ReservationService);
-
-  showMenu: 'block' | 'none' = 'block';
-
+  private router: Router = new Router();
+  public showMenu: 'block' | 'none' = 'block';
   public reservationsToday: IReservation[] | undefined;
 
   ngOnInit(): void {
+    if(!localStorage.getItem('jwt')) {
+      this.router.navigate(['login']);
+      // Fazer rota de validação de token
+    }
     this.reservationService.getReservationsToday().subscribe({
       next: (data) => (this.reservationsToday = data),
       error: (err) => console.log(err),

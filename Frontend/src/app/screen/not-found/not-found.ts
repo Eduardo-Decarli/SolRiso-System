@@ -2,11 +2,11 @@ import { Component } from '@angular/core';
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-sidebar-menu',
+  selector: 'app-not-found',
   imports: [RouterLink],
-  templateUrl: './sidebar-menu.html',
-  styleUrl: './sidebar-menu.scss',
+  templateUrl: './not-found.html',
+  styleUrl: './not-found.scss',
 })
-export class SidebarMenu {
+export class NotFound {
 
 }

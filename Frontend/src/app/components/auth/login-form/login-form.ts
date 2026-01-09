@@ -7,7 +7,7 @@ import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './login-form.html',
   styleUrl: './login-form.scss',
   standalone: true,

@@ -1,5 +1,5 @@
 .login-form {
-  background: #2e2f3e;
+  background: var(--color-surface);
   padding: 2rem;
   border-radius: 10px;
   width: 100%;
@@ -14,39 +14,24 @@
     label {
       margin-bottom: 0.5rem;
       font-size: 0.9rem;
-      color: #ccc;
-    }
-
-    input {
-      background: #1f202b;
-      border: 1px solid #444;
-      border-radius: 5px;
-      padding: 0.75rem;
-      color: #fff;
-      font-size: 1rem;
-      outline: none;
-      transition: border 0.3s ease;
-
-      &:focus {
-        border-color: #6c63ff;
-      }
+      color: var(--color-text-primary);
     }
   }
 
   .btn-login {
     width: 100%;
-    background: #6c63ff;
+    background: var(--color-primary);
     border: none;
     border-radius: 5px;
     padding: 0.9rem;
-    color: #fff;
+    color: var(--color-text-primary);
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.3s ease;
 
     &:hover {
-      background: #5a53e0;
+      background: var(--color-primary-hover);
     }
   }
 
@@ -56,7 +41,7 @@
     margin-top: 1rem;
 
     a {
-      color: #9b9bff;
+      color: var(--color-text-secondary);
       font-size: 0.85rem;
       text-decoration: none;
 
@@ -68,7 +53,7 @@
 
   .login-error {
     background: rgba(255, 77, 79, 0.15);
-    border: 1px solid #ff4d4f;
+    border: 1px solid var(--color-error);
     color: #ffb3b3;
     padding: 0.75rem;
     border-radius: 5px;

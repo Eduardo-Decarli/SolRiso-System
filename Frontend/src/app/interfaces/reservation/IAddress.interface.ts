@@ -1,8 +1,8 @@
 export interface IAddress {
-  cep: string;
-  state: string;
-  city: string;
-  neighborhood: string;
-  street: string;
-  number: string;
+  cep: string | null;
+  state: string | null;
+  city: string | null;
+  neighborhood: string | null;
+  street: string | null;
+  number: string | null;
 }
