@@ -19,8 +19,8 @@ import { Router } from '@angular/router';
 export class AdminDashboard implements OnInit {
   private readonly reservationService = inject(ReservationService);
   private router: Router = new Router();
-  public showMenu: 'block' | 'none' = 'block';
   public reservationsToday: IReservation[] | undefined;
+  public showMenu = true;
 
   ngOnInit(): void {
     if(!localStorage.getItem('jwt')) {
@@ -34,11 +34,7 @@ export class AdminDashboard implements OnInit {
   }
 
   public onShowSideMenu() {
-    if (this.showMenu === 'block') {
-      this.showMenu = 'none';
-    } else {
-      this.showMenu = 'block';
-    }
+    this.showMenu = !this.showMenu;
   }
 
   public showRooms(): IRoom[] {

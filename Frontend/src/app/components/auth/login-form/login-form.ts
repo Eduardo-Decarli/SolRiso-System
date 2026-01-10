@@ -33,7 +33,13 @@ export class LoginForm {
             this.router.navigate(['inicio']);
           }
         },
-        error: (err) => this.showErrorMessage(err)
+        error: (err: HttpErrorResponse) => {
+          if(err.status === 0) {
+            this.showErrorMessage('Impossível realizar login, por favor, verifique sua conexão com o servidor');
+          } else {
+            this.showErrorMessage(err.error.message);
+          }
+        }
       });
     }
   }
@@ -46,8 +52,8 @@ export class LoginForm {
     return false;
   }
 
-  public showErrorMessage(error: HttpErrorResponse): void {
-    this.loginError = error.error.message;
+  public showErrorMessage(error: string): void {
+    this.loginError = error;
 
   }
 }

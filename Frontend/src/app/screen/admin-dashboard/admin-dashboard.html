@@ -1,5 +1,5 @@
 <app-header (showSideMenu)="onShowSideMenu()"></app-header>
-<app-sidebar-menu [style.display]="showMenu"></app-sidebar-menu>
+<app-sidebar-menu [hidden]="!showMenu"></app-sidebar-menu>
 <div class="container">
 
   <div class="admin-dashboard">

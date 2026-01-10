@@ -8,6 +8,20 @@
   top: 80px;
   padding-top: 16px;
   z-index: 10000;
+
+  transform: translateX(0);
+  transition:
+    transform 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.35s ease;
+  will-change: transform;
+
+  box-shadow: 2px 0 12px rgba(0, 0, 0, 0.35);
+}
+
+.sidebar.is-hidden {
+  transform: translateX(-100%);
+  box-shadow: none;
+  pointer-events: none;
 }
 
 nav ul {
