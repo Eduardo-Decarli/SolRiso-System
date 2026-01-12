@@ -16,8 +16,8 @@ public interface ReservationRepository extends JpaRepository<ReservationEntity, 
     List<ReservationEntity> findReservationsToday(@Param("today") LocalDate today);
     List<ReservationEntity> findReservationByRoom(int room);
 
-    @Query(value = "SELECT * FROM RESERVATIONS r WHERE r.checkin <= r.checkout", nativeQuery = true)
-    List<ReservationEntity> findReservationsBetween(LocalDate checkin, LocalDate checkout);
+    @Query(value = "SELECT * FROM RESERVATIONS r WHERE r.checkin >= :checkin AND r.checkout <= :checkout", nativeQuery = true)
+    List<ReservationEntity> findReservationsBetween(@Param("checkin") LocalDate checkin, @Param("checkout") LocalDate checkout);
     List<ReservationEntity> findReservationByResponsibleName(String responsibleName);
     ReservationEntity findReservationById(Long id);
 }

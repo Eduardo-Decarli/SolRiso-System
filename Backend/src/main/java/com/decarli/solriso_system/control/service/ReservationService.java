@@ -10,15 +10,13 @@ import java.util.List;
 
 public interface ReservationService {
 
-    @Transactional
-    void createReservation(ReservationCreateDto create);
+    @Transactional void createReservation(ReservationCreateDto create);
     ReservationEntity getReservationById(Long id);
     List<ReservationEntity> getReservationsToday();
     List<ReservationEntity> getReservationsByRoom(int room);
     List<ReservationEntity> getReservationsByResponsibleName(String name);
     List<ReservationEntity> getReservationsBetween(LocalDate checkin, LocalDate checkout);
-    @Transactional
-    ReservationEntity updateReservation(ReservationUpdateDto update);
+    @Transactional ReservationEntity updateReservation(ReservationUpdateDto update);
     List<ReservationEntity> getAllReservations();
     void deleteReservation(Long id);
 }

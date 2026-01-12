@@ -1,21 +1,12 @@
-.reservation-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #020617, #000000);
-  display: flex;
-  justify-content: center;
-  padding: 40px 16px;
-  font-family: system-ui, sans-serif;
-  color: #e5e7eb;
-}
-
 .reservation-container {
   width: 100%;
   max-width: 900px;
-  background-color: #020617;
-  border-radius: 14px;
   padding: 32px;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 30px 60px rgba(0, 0, 0, 0.8);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow-sm),
+    var(--shadow-md);
 }
 
 .reservation-header {
@@ -24,11 +15,12 @@
   h1 {
     font-size: 1.9rem;
     margin-bottom: 6px;
+    color: var(--color-text-primary);
   }
 
   p {
     font-size: 0.95rem;
-    color: #9ca3af;
+    color: var(--color-text-muted);
   }
 }
 
@@ -39,14 +31,13 @@
 }
 
 .form-section {
-  border-top: 1px solid #1e293b;
+  border-top: 1px solid var(--color-border);
   padding-top: 24px;
 
   h2 {
     font-size: 1.2rem;
     margin-bottom: 16px;
-    color: #38bdf8;
-  }
+    color: var(--color-section-title);  }
 }
 
 .grid {
@@ -73,19 +64,34 @@
     color: #d1d5db;
   }
 
+  input,
   select {
-    background-color: #020617;
-    border: 1px solid #1e293b;
+    background-color: var(--color-input-bg);
+    border: 1px solid var(--color-input-border);
     border-radius: 8px;
     padding: 10px 12px;
-    color: #f9fafb;
+    color: var(--color-text-primary);
     font-size: 0.95rem;
     outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
   }
 
+  input::placeholder {
+    color: var(--color-text-muted);
+  }
+
+  input:focus,
   select:focus {
-    border-color: #38bdf8;
-    box-shadow: 0 0 0 1px rgba(56, 189, 248, 0.5);
+    border-color: var(--color-input-focus);
+    box-shadow: 0 0 0 1px color-mix(in srgb,
+        var(--color-input-focus) 50%,
+        transparent);
+  }
+
+  input:disabled {
+    background-color: var(--color-disabled-bg);
+    color: var(--color-text-muted);
+    cursor: not-allowed;
   }
 }
 
@@ -97,6 +103,7 @@
   input {
     width: 16px;
     height: 16px;
+    accent-color: var(--color-primary);
   }
 }
 
@@ -109,15 +116,15 @@ button.primary {
   padding: 12px 24px;
   border-radius: 8px;
   border: none;
-  background-color: #38bdf8;
-  color: #020617;
+  background-color: var(--color-primary);
+  color: var(--color-text-inverse);
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.2s, transform 0.1s;
 }
 
 button.primary:hover {
-  background-color: #0ea5e9;
+  background-color: var(--color-primary-hover);
 }
 
 button.primary:active {

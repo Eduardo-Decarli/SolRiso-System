@@ -7,8 +7,8 @@ import { IReservation } from '../../interfaces/reservation/IReservation.interfac
 import { environment } from '../../../environments/environment';
 import { IRoom } from '../../interfaces/reservation/IRoom.interface';
 import { ReservationList } from "../../components/reservation-list/reservation-list";
-import { routes } from '../../app.routes';
 import { Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -29,11 +29,30 @@ export class AdminDashboard implements OnInit {
     }
     this.reservationService.getReservationsToday().subscribe({
       next: (data) => (this.reservationsToday = data),
-      error: (err) => console.log(err),
+      error: (err: HttpErrorResponse) => {
+        switch(err.status) {
+          case 0:
+            alert('Erro ao realizar a comunicação com o servidor');
+          break;
+
+          case 403:
+            this.router.navigate(['login'])
+          break;
+
+          case 404:
+            this.reservationsToday = undefined;
+
+          break;
+
+          default:
+            console.log(err.error);
+          break;
+        }
+      },
     });
   }
 
-  public onShowSideMenu() {
+  public toggleMenu() {
     this.showMenu = !this.showMenu;
   }
 
@@ -55,5 +74,13 @@ export class AdminDashboard implements OnInit {
       }
     }
     return rooms;
+  }
+
+  public isReservationsToday(reservations: IReservation[] | undefined): boolean {
+    console.log(reservations)
+    if(reservations === undefined ||  reservations.length === 0) {
+      return false;
+    }
+    return true;
   }
 }

@@ -1,8 +1,7 @@
-<app-header (showSideMenu)="onShowSideMenu()"></app-header>
-<app-sidebar-menu [style.display]="showMenu"></app-sidebar-menu>
-<div class="container">
+<app-header (showSideMenu)="toggleMenu()"></app-header>
+<app-sidebar-menu [hidden]="!showMenu"></app-sidebar-menu>
 
-<div class="reservation-page">
+<div class="container">
   <div class="reservation-container">
 
     <header class="reservation-header">
@@ -19,12 +18,12 @@
         <div class="grid two">
           <div class="form-group">
             <label>Número do quarto</label>
-            <input name="room" type="number" placeholder="Ex: 1" [(ngModel)]="reservation.room">
+            <input name="room" type="number" placeholder="Ex: 1" autocomplete="off" [(ngModel)]="reservation.room">
           </div>
 
           <div class="form-group">
             <label>Quantidade de hóspedes</label>
-            <input name="number" type="number" placeholder="Ex: 2" [(ngModel)]="reservation.quantGuests">
+            <input name="number" type="number" placeholder="Ex: 2" autocomplete="off" [(ngModel)]="reservation.quantGuests">
           </div>
         </div>
 
@@ -71,17 +70,17 @@
 
           <div class="form-group">
             <label>Valor total</label>
-            <input name="total-value" type="number" placeholder="R$ 0,00" [(ngModel)]="reservation.totalValue">
+            <input name="total-value" type="number" placeholder="R$ 0,00" autocomplete="off" [(ngModel)]="reservation.totalValue">
           </div>
 
           <div class="form-group">
             <label>Valor de entrada</label>
-            <input name="entriy-value" type="number" placeholder="R$ 0,00" [(ngModel)]="reservation.entryValue">
+            <input name="entriy-value" type="number" placeholder="R$ 0,00" autocomplete="off" [(ngModel)]="reservation.entryValue">
           </div>
 
           <div class="form-group">
             <label>Valor a Pagar</label>
-            <input name="total-value" type="number" disabled placeholder="R$ 0,00" [value]="showRemaningValue()">
+            <input name="total-value" type="number" placeholder="R$ 0,00" disabled [value]="showRemaningValue()">
           </div>
 
           <div class="form-group">
@@ -108,18 +107,34 @@
         <div class="grid two">
           <div class="form-group">
             <label>Nome</label>
-            <input type="text" placeholder="Nome do responsável">
+            <input
+              name="name"
+              type="text"
+              placeholder="Nome do responsável"
+              autocomplete="off"
+              [(ngModel)]="reservation.responsible!.name"
+              (input)="autocompleteGuests(reservation.responsible!.name!)"
+              (blur)="onGuestSelected()"
+              list="guests"
+              />
+
+              <datalist id="guests">
+              @for (guest of guestsAutocompleteList; track guest) {
+                <option [value]="guest.name"></option>
+              }
+              </datalist>
+
           </div>
 
           <div class="form-group">
             <label>Documento</label>
-            <input type="text" placeholder="CPF / RG">
+            <input name="cpf" type="text" placeholder="CPF / RG" autocomplete="off" [(ngModel)]="reservation.responsible!.cpf!">
           </div>
         </div>
 
         <div class="form-group">
           <label>Telefone</label>
-          <input type="text" placeholder="(00) 00000-0000">
+          <input name="phone" type="text" placeholder="(00) 00000-0000" autocomplete="off" [(ngModel)]="reservation.responsible!.phoneNumber">
         </div>
       </section>
 
@@ -149,5 +164,4 @@
 
     </form>
   </div>
-</div>
 </div>

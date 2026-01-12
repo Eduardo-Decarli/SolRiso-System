@@ -2,8 +2,8 @@
   width: 220px;
   background: #111827;
   color: #fff;
-  height: calc(100vh - 80px);
-  position: fixed;
+  height: 100%;
+  position: absolute;
   left: 0;
   top: 80px;
   padding-top: 16px;
@@ -58,7 +58,7 @@ nav li {
   }
 }
 
-.active a {
+.active a{
   background-color: #1f2933;
   color: #fff;
   border-left: 4px solid #3b82f6;

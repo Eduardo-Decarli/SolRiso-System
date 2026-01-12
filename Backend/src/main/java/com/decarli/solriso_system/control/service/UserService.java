@@ -14,4 +14,5 @@ public interface UserService {
     UserEntity getAdminByEmail(String email);
     List<UserEntity> getAllAdmins();
     void forgotPassword(String email, String password);
+    JwtResponse refreshToken(String token);
 }

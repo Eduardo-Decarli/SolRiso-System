@@ -63,7 +63,7 @@ public class ReservationResponseDto {
     @Schema(description = "Responsável pela reserva")
     @NotNull(message = "The responsible of the reservation can't be null")
     @Valid
-    private ResponsibleBookingResponseDto responsible;
+    private GuestDto responsible;
 
     @Schema(description = "Informações sobre o estacionamento (se aplicável)")
     @Valid

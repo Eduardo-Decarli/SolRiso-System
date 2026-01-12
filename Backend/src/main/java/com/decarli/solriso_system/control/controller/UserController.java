@@ -49,8 +49,14 @@ public class UserController {
     }
 
     @GetMapping("/admins/byEmail")
-    public ResponseEntity<AdminResponseDto> getAllAdmins(@RequestParam String email) {
+    public ResponseEntity<AdminResponseDto> getAdminByEmail(@RequestParam String email) {
         UserEntity userEntity = userService.getAdminByEmail(email);
         return ResponseEntity.status(HttpStatus.FOUND).body(adminMapper.toResponseDto(userEntity));
+    }
+
+    @GetMapping("/token/check")
+    public ResponseEntity<JwtResponse> refreshToken(@RequestParam String token) {
+        JwtResponse jwtResponse = userService.refreshToken(token);
+        return ResponseEntity.status(HttpStatus.OK).body(jwtResponse);
     }
 }

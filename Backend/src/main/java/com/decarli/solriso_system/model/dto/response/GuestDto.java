@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Schema(description = "Dados do responsável pela reserva")
-public class ResponsibleBookingResponseDto {
+public class GuestDto {
 
     @Schema(description = "Nome completo do responsável", example = "João da Silva")
     @NotBlank(message = "Responsible name can't be blank")

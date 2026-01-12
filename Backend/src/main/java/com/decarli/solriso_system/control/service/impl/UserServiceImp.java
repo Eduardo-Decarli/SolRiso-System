@@ -91,4 +91,10 @@ public class UserServiceImp implements UserService {
         userRepository.save(adm);
         logger.info("User {} changed his password", email);
     }
+
+    @Override
+    public JwtResponse refreshToken(String token) {
+        jwtService.validateToken(token);
+        return null;
+    }
 }

@@ -8,7 +8,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring" ,uses = { AdminMapper.class, ResponsibleBookingMapper.class })
+@Mapper(componentModel = "spring" ,uses = { AdminMapper.class, GuestMapper.class })
 public interface ReservationMapper {
 
     ReservationEntity toReservation(ReservationCreateDto dto);

@@ -1,4 +1,4 @@
-<app-header (showSideMenu)="onShowSideMenu()"></app-header>
+<app-header (showSideMenu)="toggleMenu()"></app-header>
 <app-sidebar-menu [hidden]="!showMenu"></app-sidebar-menu>
 <div class="container">
 
@@ -6,7 +6,11 @@
 
     <app-dashboard-rooms [RoomsToday]="showRooms()" titulo="Pousada X"></app-dashboard-rooms>
 
-    <app-reservation-list [reservations]="reservationsToday"></app-reservation-list>
 
+    @if (!isReservationsToday(reservationsToday)) {
+      <p class="warning-no-reservations">Não há reservas agendadas para hoje!</p>
+    } @else {
+      <app-reservation-list [reservations]="reservationsToday"></app-reservation-list>
+    }
   </div>
 </div>

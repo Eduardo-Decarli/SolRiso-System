@@ -1,12 +1,14 @@
 package com.decarli.solriso_system.control.service.impl;
 
 import com.decarli.solriso_system.control.repositories.ReservationRepository;
+import com.decarli.solriso_system.control.service.GuestService;
 import com.decarli.solriso_system.control.service.UserService;
 import com.decarli.solriso_system.control.service.ReservationService;
-import com.decarli.solriso_system.model.dto.mapper.ResponsibleBookingMapper;
+import com.decarli.solriso_system.model.dto.mapper.GuestMapper;
 import com.decarli.solriso_system.model.dto.request.ReservationCreateDto;
 import com.decarli.solriso_system.model.dto.request.ReservationUpdateDto;
 import com.decarli.solriso_system.model.dto.mapper.ReservationMapper;
+import com.decarli.solriso_system.model.entities.GuestEntity;
 import com.decarli.solriso_system.model.entities.ReservationEntity;
 import com.decarli.solriso_system.model.exceptions.DateReservationException;
 import com.decarli.solriso_system.model.exceptions.EntityNotFoundException;
@@ -24,29 +26,38 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class ReservationServiceImpl implements ReservationService {
+public class ReservationServiceImp implements ReservationService {
 
-    private static final Logger logger = LoggerFactory.getLogger(ReservationServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(ReservationServiceImp.class);
 
     @Autowired private ReservationRepository repository;
     @Autowired private UserService userService;
+    @Autowired private GuestService guestService;
     @Autowired private ReservationMapper reservationMapper;
-    @Autowired private ResponsibleBookingMapper responsibleBookingMapper;
+    @Autowired private GuestMapper guestMapper;
 
     @Transactional
     @Override
     public void createReservation(ReservationCreateDto create) {
 
-        logger.info("Criando uma nova reserva: ", create);
-
         validateReservationDates(create.getCheckin(), create.getCheckout());
         validateRoomViability(create.getRoom(), create.getCheckin(), create.getCheckout());
 
+        ReservationEntity entity = reservationMapper.toReservation(create);
+
         if(create.getResponsible().getCpf() != null) {
             AppUtil.validateCPF(create.getResponsible().getCpf());
+            GuestEntity guest = guestService.existByCpf(create.getResponsible().getCpf());
+            if(guest != null) {
+                entity.setResponsible(guest);
+            }
+        } else if(create.getResponsible().getEmail() != null) {
+            GuestEntity guest = guestService.existByEmail(create.getResponsible().getEmail());
+            if(guest != null) {
+                entity.setResponsible(guest);
+            }
         }
 
-        ReservationEntity entity = reservationMapper.toReservation(create);
         entity.setUserEntity(userService.getAdminByEmail(create.getAdminEmail()));
         log.info("{}", create.getPaid());
         repository.save(entity);
@@ -66,9 +77,14 @@ public class ReservationServiceImpl implements ReservationService {
     private void validateRoomViability(int room, LocalDate checkin, LocalDate checkout) {
         List<ReservationEntity> reservationEntities = getReservationsBetween(checkin, checkout);
 
+        if(reservationEntities != null && reservationEntities.isEmpty()) {
+            return;
+        }
+
         for(ReservationEntity current : reservationEntities) {
             if(current.getRoom() == room) {
-                throw new RoomReservationException("Esse quarto já está ocupado");
+                System.out.println(current.toString());
+                throw new RoomReservationException("O quarto " + room + " já está ocupado");
             }
         }
 
@@ -148,7 +164,7 @@ public class ReservationServiceImpl implements ReservationService {
         reservationEntity.setEntryValue(update.getEntryValue());
         reservationEntity.setTotalValue(update.getTotalValue());
         reservationEntity.setUserEntity(userService.getAdminByEmail(update.getAdminEmail()));
-        reservationEntity.setResponsible(responsibleBookingMapper.toResponsibleBooking(update.getResponsible()));
+        reservationEntity.setResponsible(guestMapper.toGuestEntity(update.getResponsible()));
         reservationEntity.setParkingEntity(update.getParkingEntity());
 
         logger.info("Finish update reservation to {}", reservationEntity);
