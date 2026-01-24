@@ -29,6 +29,7 @@ export class CreateReservation {
   public payments: Payment[] = Object.values(Payment);
 
   public reservation: IReservation = {
+    id: null,
     room: null,
     quantGuests: null,
     checkin: null,

@@ -5,6 +5,7 @@ import { IParking } from "./IParking.interface";
 import { IResponsible } from "./IResponsible.interface";
 
 export interface IReservation {
+  id: number | null,
   room: number | null;
   quantGuests: number | null;
   checkin: string | null;

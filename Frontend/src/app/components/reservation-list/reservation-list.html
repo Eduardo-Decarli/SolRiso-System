@@ -6,8 +6,7 @@
 
   <div class="reservation-list__content">
     @for (reservation of reservations; track $index) {
-      <app-reservation-card [reservation]="reservation"></app-reservation-card>
-
+      <app-reservation-card [reservation]="reservation" (selectReservation)="onSelectReservation($event)"></app-reservation-card>
     }
 
   </div>

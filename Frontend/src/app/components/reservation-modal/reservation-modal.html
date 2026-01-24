@@ -1,0 +1,95 @@
+<div class="modal-backdrop">
+  <div class="modal modal-view">
+    <header class="modal-header">
+      <div>
+        <h2>Reserva Nº {{ reservation.id }}</h2>
+        <span class="status ativo">{{ reservation.status }}</span>
+      </div>
+      <button class="close-btn">×</button>
+    </header>
+
+    <section class="modal-body">
+      <!-- Resumo rápido -->
+      <div class="summary">
+        <div>
+          <strong>Quarto</strong>
+          <span>{{ reservation.room }}</span>
+        </div>
+        <div>
+          <strong>Pessoas</strong>
+          <span>{{ reservation.quantGuests }}</span>
+        </div>
+        <div>
+          <strong>Check-in</strong>
+          <span>{{ reservation.checkin }}</span>
+        </div>
+        <div>
+          <strong>Check-out</strong>
+          <span>{{ reservation.checkout }}</span>
+        </div>
+      </div>
+
+      <!-- Financeiro -->
+      <div class="section">
+        <h3>Financeiro</h3>
+        <div class="grid">
+          <div><strong>Entrada</strong><span>R$ {{ reservation.entryValue }}</span></div>
+          <div><strong>Total</strong><span>R$ {{ reservation.totalValue }}</span></div>
+          <div><strong>Pagamento</strong><span>{{ reservation.payment }}</span></div>
+          <div>
+            <strong>Status</strong>
+            <span class="badge" [class.paid]="reservation.paid">
+              {{ reservation.paid ? 'Pago' : 'Pendente' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Responsável -->
+      <div class="section">
+        <h3>Responsável</h3>
+        <div class="grid">
+          <div><strong>Nome</strong><span>{{ reservation.responsible?.name }}</span></div>
+          <div><strong>Telefone</strong><span>{{ reservation.responsible?.phoneNumber }}</span></div>
+          <div><strong>Email</strong><span>{{ reservation.responsible?.email }}</span></div>
+          <div><strong>CPF</strong><span>{{ reservation.responsible?.cpf }}</span></div>
+        </div>
+      </div>
+
+      <!-- Endereço -->
+      <div class="section">
+        <h3>Endereço</h3>
+        <p>
+          {{ reservation.responsible?.address?.street }},
+          {{ reservation.responsible?.address?.number }} –
+          {{ reservation.responsible?.address?.neighborhood }},
+          {{ reservation.responsible?.address?.city }} /
+          {{ reservation.responsible?.address?.state }}
+        </p>
+      </div>
+
+      <!-- Estacionamento -->
+      @if (reservation.parking) {
+        <div class="section">
+          <h3>Estacionamento</h3>
+          <div class="grid">
+            <div><strong>Veículo</strong><span>{{ reservation.parking!.carType }}</span></div>
+            <div><strong>Check-in</strong><span>{{ reservation.parking!.checkin || '-' }}</span></div>
+            <div><strong>Check-out</strong><span>{{ reservation.parking!.checkout || '-' }}</span></div>
+          </div>
+        </div>
+      }
+    </section>
+
+    <footer class="modal-footer actions">
+      <button class="btn ghost">Editar</button>
+      <button class="btn warning">Cancelar Reserva</button>
+      @if (!reservation.paid) {
+        <button class="btn success">
+          Finalizar Pagamento
+        </button>
+      }
+
+    </footer>
+  </div>
+</div>
