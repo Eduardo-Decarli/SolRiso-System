@@ -1,0 +1,690 @@
+{
+  "info": {
+    "_postman_id": "c87458d7-7df2-4c34-9074-78a8e605d0d7",
+    "name": "SolRiso-System",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "37261380"
+  },
+  "item": [
+    {
+      "name": "Reservations",
+      "item": [
+        {
+          "name": "Create Reservation",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "JSESSIONID",
+                "value": "1366135D9647152841FDCD42963FE20C",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"room\":4,\r\n    \"quantGuests\": 2,\r\n    \"checkin\": \"07/01/2026\",\r\n    \"checkout\": \"09/01/2026\",\r\n    \"typeReservation\": \"EMAIL\",\r\n    \"status\": \"ATIVO\",\r\n    \"entryValue\": 100.0,\r\n    \"totalValue\": 1700.0,\r\n    \"payment\": \"PIX\",\r\n    \"paid\": false,\r\n    \"adminEmail\": \"edu@gmail.com\",\r\n    \"responsible\": {\r\n        \"name\": \"Eduardo\",\r\n        \"phoneNumber\": \"(48) 99999-9999\",\r\n        \"email\": \"teste@gmail.com\",\r\n        \"cpf\": \"999.999.999-99\",\r\n        \"address\": {\r\n            \"cep\": \"88047-550\",\r\n            \"state\": \"SC\",\r\n            \"city\": \"Florianópolis\",\r\n            \"neighborhood\": \"Carianos\",\r\n            \"street\": \"Rua Teste\",\r\n            \"number\": \"3000\"\r\n        }\r\n    },\r\n    \"parking\": {\r\n        \"carType\": \"HB20\",\r\n        \"checkin\": null,\r\n        \"checkout\": null\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/reservation",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "reservation"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Reservation",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": \"684f3f10099be9464f24b5c9\",\r\n    \"room\": 2,\r\n    \"quantGuests\": 2,\r\n    \"typeReservation\": \"EMAIL\",\r\n    \"status\": \"ACTIVE\",\r\n    \"checkin\": \"10/06/2025\",\r\n    \"checkout\": \"16/06/2025\",\r\n    \"entryValue\": 100.0,\r\n    \"totalValue\": 1700.0,\r\n    \"admin\": {\r\n        \"name\": \"Eduardo Arcari Decarli\",\r\n        \"email\": \"edu@gmail.com\",\r\n        \"role\": \"ADMIN\"\r\n    },\r\n    \"responsible\": {\r\n        \"name\": \"Eduardo\",\r\n        \"phoneNumber\": \"(48) 99999-9999\",\r\n        \"email\": \"teste@gmail.com\",\r\n        \"cpf\": \"999.999.999-99\",\r\n        \"address\": {\r\n            \"cep\": \"88047-550\",\r\n            \"state\": \"SC\",\r\n            \"city\": \"Florianópolis\",\r\n            \"neighborhood\": \"Carianos\",\r\n            \"street\": \"Rua Teste\",\r\n            \"number\": \"3000\"\r\n        }\r\n    },\r\n    \"parking\": {\r\n        \"carType\": \"HB20\",\r\n        \"checkin\": \"04/03/2025\",\r\n        \"checkout\": \"29/03/2025\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/reservation",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "reservation"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reservations Today",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "JSESSIONID",
+                "value": "787E0B58917C2ECFB40623B8C29235FF",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/reservation",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "reservation"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reservation By Id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/reservation/id?id=67c75e17b565f01d72154d3f",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "reservation",
+                "id"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "67c75e17b565f01d72154d3f"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "All Reservations",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/reservation/allReservations",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "reservation",
+                "allReservations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reservations by Between",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/reservation/byBetween?checkin=2025-03-04&checkout=2025-03-27",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "reservation",
+                "byBetween"
+              ],
+              "query": [
+                {
+                  "key": "checkin",
+                  "value": "2025-03-04"
+                },
+                {
+                  "key": "checkout",
+                  "value": "2025-03-27"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Reservations By Responsible's name",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/reservation/byResponsibleName?Name=Eduardo",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "reservation",
+                "byResponsibleName"
+              ],
+              "query": [
+                {
+                  "key": "Name",
+                  "value": "Eduardo"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Reservation",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"id\": \"67c7135011d68e49c6eb6784\",\r\n    \"roomNumber\":1,\r\n    \"quantGuests\": 3,\r\n    \"checkin\": \"04/03/2025\",\r\n    \"checkout\": \"27/03/2025\",\r\n    \"typeReservation\": \"BOOKING\",\r\n    \"entryValue\": 100.0,\r\n    \"totalValue\": 500.0,\r\n    \"responsible\": {\r\n        \"name\": \"Eduardo\",\r\n        \"phoneNumber\": \"48 996342153\",\r\n        \"email\": \"decarliedu@gmail.com\",\r\n        \"cpf\": \"10070266930\"\r\n    }\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/reservation?id=6827b2943f959f5a9039cd7f",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "reservation"
+              ],
+              "query": [
+                {
+                  "key": "id",
+                  "value": "6827b2943f959f5a9039cd7f"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Login",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Eduardo Arcari Decarli\",\r\n    \"email\": \"edu@gmail.com\",\r\n    \"password\": \"Edu@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"edu@gmail.com\",\r\n    \"password\": \"Edu@1234\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot Password",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"edu@gmail.com\",\r\n    \"password\": \"Edu@1239\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/auth/forgot-password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "forgot-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "All Admins",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/auth/admins",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "admins"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Admin By Email",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/auth/admins/byEmail?email=edu@gmail.com",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "auth",
+                "admins",
+                "byEmail"
+              ],
+              "query": [
+                {
+                  "key": "email",
+                  "value": "edu@gmail.com"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Notes",
+      "item": [
+        {
+          "name": "All Notes",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/notes",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "notes"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Guests",
+      "item": [
+        {
+          "name": "Guests By Name",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{jwt}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/guest/guestsByName?name=Ed",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "guest",
+                "guestsByName"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Ed"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "jwt",
+      "value": ""
+    }
+  ]
+}

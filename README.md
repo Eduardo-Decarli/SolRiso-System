@@ -24,6 +24,7 @@ SolRiso-System/
     ├── src/          # Código Frontend desenvolvido
     ├── .gitignore    # GitIgnore do Frontend
     └── README.md     # Descrição do projeto Frontend
+├── Docs/             # Coleção de Rotas do Postman
 └── README.md         # Arquivo de descrição geral do projeto
 
 ```
@@ -60,51 +61,11 @@ Database:
 - pgAdmin 4 e DBeaver
 - Supabase
 
-## 📚 Documentação
-
-### Backend
-
-Para informações detalhadas sobre o backend, consulte [Backend/README.md](Backend/README.md)
-
-**Principais funcionalidades:**
-- APIs RESTful
-- Segurança com Spring Security
-- Autenticação e autorização
-- Persistência de dados com JPA/Hibernate
-- Tratamento de exceções e validações
-
-### Frontend
-
-Para informações detalhadas sobre o frontend, consulte [Frontend/README.md](Frontend/README.md)
-
-**Principais funcionalidades:**
-- Componentes reutilizáveis
-- Roteamento com Angular Router
-- Gerenciamento de estado
-- Comunicação com APIs via HTTP Client
-- Validação de formulários
-
 ---
 
-## 🔄 Integração Backend-Frontend
+## 📚 Documentação
 
-### Configuração de CORS
-
-O backend deve estar configurado para aceitar requisições do frontend:
-
-**Backend (application.properties ou application.yml):**
-```properties
-# Configurar CORS
-server.servlet.context-path=/api
-spring.web.cors.allowed-origins=http://localhost:4200
-spring.web.cors.allowed-methods=GET,POST,PUT,DELETE,OPTIONS
-spring.web.cors.allowed-headers=*
-spring.web.cors.allow-credentials=true
-```
-
-### Endpoints da API
-
-Consulte a documentação da API do backend ou utilize ferramentas como **Postman** ou **Swagger** para explorar os endpoints disponíveis.
+Para informações detalhadas sobre o backend, consulte o [Swagger](http://localhost:8080/v3/api-docs) e importe a coleção de rotas do postman, localizada dentro da pasta docs/.
 
 ---
 
@@ -123,4 +84,4 @@ Para suporte ou dúvidas, abra uma [issue](https://github.com/Eduardo-Decarli/So
 
 ---
 
-**Desenvolvido com ❤️ por Eduardo Decarli**
+**Desenvolvido por Eduardo Decarli**
