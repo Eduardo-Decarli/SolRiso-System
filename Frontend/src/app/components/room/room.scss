@@ -1,0 +1,45 @@
+.quarto {
+  height: 90px;
+  border-radius: 6px;
+  margin: 5px;
+  color: #fff;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    width: 0;
+    height: 0;
+    border-left: 55px solid transparent;
+    border-right: 55px solid transparent;
+    border-bottom: 18px solid rgba(0, 0, 0, 0.15);
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.livre {
+  background-color: #2ecc71;
+
+  &::before {
+    border-bottom-color: #27ae60;
+  }
+}
+
+.ocupado {
+  background-color: #e74c3c;
+
+  &::before {
+    border-bottom-color: #c0392b;
+  }
+}

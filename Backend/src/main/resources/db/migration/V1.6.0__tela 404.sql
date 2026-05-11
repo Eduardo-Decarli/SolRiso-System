@@ -1,0 +1,2 @@
+INSERT INTO HISTORIC (VERSION, DESCRIPTION)
+    VALUES ('1.6.0', 'Tela 404 de página não encontrada foi adicionada ao sistema, caso acesse uma rota inválida ou quebrada, a página irá instruir e permitir retornar ao início');

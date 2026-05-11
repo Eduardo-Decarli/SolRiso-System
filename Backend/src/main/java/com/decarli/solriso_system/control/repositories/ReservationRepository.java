@@ -1,21 +1,23 @@
 package com.decarli.solriso_system.control.repositories;
 
-import com.decarli.solriso_system.model.entities.Reservation;
-import org.springframework.data.mongodb.repository.MongoRepository;
-import org.springframework.data.mongodb.repository.Query;
+import com.decarli.solriso_system.model.entities.ReservationEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Repository
-public interface ReservationRepository extends MongoRepository<Reservation, String> {
-    @Query("{'checkin': {$lte: ?0}, 'checkout':  {'$gt':  ?0}}")
-    List<Reservation> findReservationsToday(LocalDate today);
-    List<Reservation> findReservationByRoom(int room);
-    @Query("{'checkin': {'$lte': ?1}, 'checkout': {'$gte': ?0}}")
-    List<Reservation> findReservationsBetween(LocalDate checkin, LocalDate checkout);
-    List<Reservation> findReservationByResponsibleName(String responsibleName);
+public interface ReservationRepository extends JpaRepository<ReservationEntity, Long> {
 
-    Reservation findReservationById(String id);
+    @Query(value = "SELECT * FROM RESERVATIONS r WHERE r.checkin = :today", nativeQuery = true)
+    List<ReservationEntity> findReservationsToday(@Param("today") LocalDate today);
+    List<ReservationEntity> findReservationByRoom(int room);
+
+    @Query(value = "SELECT * FROM RESERVATIONS r WHERE r.checkin >= :checkin AND r.checkout <= :checkout", nativeQuery = true)
+    List<ReservationEntity> findReservationsBetween(@Param("checkin") LocalDate checkin, @Param("checkout") LocalDate checkout);
+    List<ReservationEntity> findReservationByResponsibleName(String responsibleName);
+    ReservationEntity findReservationById(Long id);
 }

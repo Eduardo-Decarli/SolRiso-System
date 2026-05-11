@@ -1,21 +1,22 @@
 package com.decarli.solriso_system.control.service;
 
-import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationResponseDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
-import com.decarli.solriso_system.model.entities.Reservation;
+import com.decarli.solriso_system.model.dto.request.ReservationCreateDto;
+import com.decarli.solriso_system.model.dto.request.ReservationUpdateDto;
+import com.decarli.solriso_system.model.entities.ReservationEntity;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
 
 public interface ReservationService {
-    Reservation createReservation(ReservationCreateDto reservation);
-    Reservation getReservationById(String id);
-    List<Reservation> getReservationsToday();
-    List<Reservation> getReservationsByRoom(int roomNumber);
-    List<Reservation> getReservationsByResponsibleName(String name);
-    List<Reservation> getReservationsBetween(LocalDate checkin, LocalDate checkout);
-    Reservation updateReservation(ReservationUpdateDto reservation);
-    void deleteReservation(String id);
-    List<Reservation> getAllReservations();
+
+    @Transactional void createReservation(ReservationCreateDto create);
+    ReservationEntity getReservationById(Long id);
+    List<ReservationEntity> getReservationsToday();
+    List<ReservationEntity> getReservationsByRoom(int room);
+    List<ReservationEntity> getReservationsByResponsibleName(String name);
+    List<ReservationEntity> getReservationsBetween(LocalDate checkin, LocalDate checkout);
+    @Transactional ReservationEntity updateReservation(ReservationUpdateDto update);
+    List<ReservationEntity> getAllReservations();
+    void deleteReservation(Long id);
 }

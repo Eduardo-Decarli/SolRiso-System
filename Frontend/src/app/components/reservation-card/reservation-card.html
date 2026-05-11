@@ -1,0 +1,44 @@
+<article class="reservation-card">
+  <header class="reservation-card__header">
+    <div class="reservation-card__room">
+      <span class="label">Quarto</span>
+      <span class="value">{{ reservation.room }}</span>
+    </div>
+
+    <div class="reservation-card__status">
+      <!-- ocupado / livre / check-in hoje -->
+    </div>
+  </header>
+
+  <section class="reservation-card__main">
+    <div class="info">
+      <span class="label">Hóspede</span>
+      <span class="value">{{ reservation.responsible?.name }}</span>
+    </div>
+
+    <div class="info">
+      <span class="label">Check-in</span>
+      <span class="value">{{ reservation.checkin }}</span>
+    </div>
+
+    <div class="info">
+      <span class="label">Check-out</span>
+      <span class="value">{{ reservation.checkout }}</span>
+    </div>
+
+    <div class="info">
+      <span class="label">Valor Total da Reserva</span>
+      <span class="value"> {{ reservation.totalValue }}</span>
+    </div>
+
+    <div class="info">
+      <span class="label">Pago</span>
+      <span class="value"> {{ reservation.paid}} </span>
+    </div>
+  </section>
+
+  <footer class="reservation-card__footer">
+    <button class="action primary" (click)="onSelectReservation()">Detalhes</button>
+    <button class="action">Editar</button>
+  </footer>
+</article>

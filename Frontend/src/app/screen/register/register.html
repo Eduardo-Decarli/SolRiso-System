@@ -1,0 +1,10 @@
+<div class="register-page">
+  <div class="register-container">
+    <div class="register-header">
+      <h1>Registro de Usuário</h1>
+      <p>Crie sua conta para acessar o sistema</p>
+    </div>
+
+    <app-register-form (submitRegister)="onSubmitRegister($event)" [submitError]="errorMessage"></app-register-form>
+  </div>
+</div>

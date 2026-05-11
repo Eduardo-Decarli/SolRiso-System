@@ -1,24 +1,23 @@
 package com.decarli.solriso_system.model.dto.mapper;
 
-import com.decarli.solriso_system.model.dto.reservation.ReservationCreateDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationResponseDto;
-import com.decarli.solriso_system.model.dto.reservation.ReservationUpdateDto;
-import com.decarli.solriso_system.model.entities.Reservation;
+import com.decarli.solriso_system.model.dto.request.ReservationCreateDto;
+import com.decarli.solriso_system.model.dto.response.ReservationResponseDto;
+import com.decarli.solriso_system.model.dto.request.ReservationUpdateDto;
+import com.decarli.solriso_system.model.entities.ReservationEntity;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring" ,uses = { AdminMapper.class, ResponsibleBookingMapper.class })
+@Mapper(componentModel = "spring" ,uses = { AdminMapper.class, GuestMapper.class })
 public interface ReservationMapper {
 
-    Reservation toReservation(ReservationCreateDto dto);
+    ReservationEntity toReservation(ReservationCreateDto dto);
 
-    Reservation toReservation(ReservationUpdateDto dto);
+    ReservationEntity toReservation(ReservationUpdateDto dto);
 
-    List<Reservation> toReservationList(List<ReservationCreateDto> dtoList);
+    List<ReservationEntity> toReservationList(List<ReservationCreateDto> dtoList);
 
-    ReservationResponseDto toDto(Reservation reservation);
+    ReservationResponseDto toDto(ReservationEntity reservationEntity);
 
-    List<ReservationResponseDto> toDtoList(List<Reservation> reservations);
+    List<ReservationResponseDto> toDtoList(List<ReservationEntity> reservationEntities);
 }

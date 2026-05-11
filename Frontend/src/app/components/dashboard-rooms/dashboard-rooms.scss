@@ -1,0 +1,14 @@
+.pousada {
+  margin-bottom: 32px;
+
+  h2 {
+    margin-bottom: 12px;
+    color: #333;
+  }
+}
+
+.quartos-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 16px;
+}

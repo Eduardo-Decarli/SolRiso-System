@@ -1,9 +1,9 @@
 package com.decarli.solriso_system.model.dto.mapper;
 
-import com.decarli.solriso_system.model.dto.admin.AdminCreateDto;
-import com.decarli.solriso_system.model.dto.admin.AdminLoginDto;
-import com.decarli.solriso_system.model.dto.admin.AdminResponseDto;
-import com.decarli.solriso_system.model.entities.Admin;
+import com.decarli.solriso_system.model.dto.request.AdminCreateDto;
+import com.decarli.solriso_system.model.dto.request.AdminLoginDto;
+import com.decarli.solriso_system.model.dto.response.AdminResponseDto;
+import com.decarli.solriso_system.model.entities.UserEntity;
 import org.mapstruct.Mapper;
 
 import java.util.List;
@@ -11,11 +11,11 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface AdminMapper {
 
-    Admin toAdmin(AdminCreateDto dto);
+    UserEntity toAdmin(AdminCreateDto dto);
 
-    Admin toAdmin(AdminLoginDto dto);
+    UserEntity toAdmin(AdminLoginDto dto);
 
-    AdminResponseDto toResponseDto(Admin admin);
+    AdminResponseDto toResponseDto(UserEntity userEntity);
 
-    List<AdminResponseDto> toDtoList(List<Admin> admins);
+    List<AdminResponseDto> toDtoList(List<UserEntity> userEntities);
 }

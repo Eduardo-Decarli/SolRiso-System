@@ -1,0 +1,24 @@
+<form class="login-form" (submit)="onSubmit()">
+  <div class="form-group">
+    <label for="email">E-mail</label>
+    <input id="email" type="email" placeholder="seuemail@exemplo.com" name="email" [(ngModel)]="login.email"/>
+  </div>
+
+  <div class="form-group">
+    <label for="password">Senha</label>
+    <input id="password" type="password" placeholder="********" name="password" [(ngModel)]="login.password"/>
+  </div>
+
+  @if (loginError) {
+    <div class="login-error" >
+      {{ loginError }}
+    </div>
+  }
+
+  <button type="submit" class="btn-login" >Entrar</button>
+
+  <div class="extra-links">
+    <a href="#">Esqueceu a senha?</a>
+    <a routerLink="/register">Criar conta</a>
+  </div>
+</form>

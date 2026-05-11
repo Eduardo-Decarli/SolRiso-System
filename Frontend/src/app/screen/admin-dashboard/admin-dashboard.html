@@ -1,0 +1,17 @@
+<app-header (showSideMenu)="toggleMenu()"></app-header>
+<app-sidebar-menu [hidden]="!showMenu"></app-sidebar-menu>
+<div class="container">
+
+  <div class="admin-dashboard">
+
+    <app-dashboard-rooms [RoomsToday]="showRooms()" titulo="Pousada X"></app-dashboard-rooms>
+
+    @if (!isReservationsToday(reservationsToday)) {
+      <p class="warning-no-reservations">Não há reservas agendadas para hoje!</p>
+    } @else {
+      <app-reservation-list [reservations]="reservationsToday" (selectReservation)="selectReservation($event)"></app-reservation-list>
+    }
+
+    <app-reservation-modal [reservation]="selectedReservation!" [style.display]="showModal"></app-reservation-modal>
+  </div>
+</div>
