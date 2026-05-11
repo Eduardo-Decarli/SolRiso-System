@@ -59,7 +59,6 @@ Database:
 - PostgreSQL
 - pgAdmin 4 e DBeaver
 - Supabase
-- Docker
 
 ## 📚 Documentação
 
@@ -87,39 +86,6 @@ Para informações detalhadas sobre o frontend, consulte [Frontend/README.md](Fr
 
 ---
 
-## 🛠️ Desenvolvimento
-
-### Scripts Disponíveis
-
-#### Backend
-```bash
-# Build
-mvn clean package
-
-# Testes
-mvn test
-
-# Executar com profile específico
-mvn spring-boot:run -Dspring-boot.run.arguments="--spring.profiles.active=dev"
-```
-
-#### Frontend
-```bash
-# Build de produção
-ng build --configuration production
-
-# Testes unitários
-ng test
-
-# Testes end-to-end
-ng e2e
-
-# Linting
-ng lint
-```
-
----
-
 ## 🔄 Integração Backend-Frontend
 
 ### Configuração de CORS
@@ -139,73 +105,6 @@ spring.web.cors.allow-credentials=true
 ### Endpoints da API
 
 Consulte a documentação da API do backend ou utilize ferramentas como **Postman** ou **Swagger** para explorar os endpoints disponíveis.
-
----
-
-## 📦 Dependências Principais
-
-### Backend
-- Spring Boot 3.x
-- Spring Web (MVC)
-- Spring Data JPA
-- Spring Security
-- MySQL Driver / H2 (testes)
-- Lombok
-- Swagger/OpenAPI
-
-### Frontend
-- Angular 20.x
-- RxJS
-- TypeScript
-- Angular Material (opcional)
-- HttpClientModule
-
----
-
-## 🧪 Testes
-
-### Backend
-```bash
-cd Backend
-mvn test
-```
-
-### Frontend
-```bash
-cd Frontend
-ng test
-```
-
----
-
-## 🔐 Segurança
-
-- Autenticação com JWT (JSON Web Tokens)
-- Validação de entrada em todas as camadas
-- Senhas criptografadas com BCrypt
-- CORS configurado adequadamente
-- Proteção contra CSRF
-
----
-
-## 📝 Contribuindo
-
-1. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
-2. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
-3. Push para a branch (`git push origin feature/AmazingFeature`)
-4. Abra um Pull Request
-
----
-
-## 📄 Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
----
-
-## 👤 Autor
-
-**Eduardo Decarli**
 
 ---
 
