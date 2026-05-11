@@ -53,58 +53,13 @@ Backend:
 - SLF4J
 - Lombok
 - MapStruct
+- Docker
 
 Database: 
 - PostgreSQL
 - pgAdmin 4 e DBeaver
 - Supabase
-
-## 🚀 Início Rápido
-
-### Pré-requisitos
-
-#### Backend
-- **Java 21** ou superior
-- **Maven 3.8+**
-
-#### Frontend
-- **Node.js 18+**
-- **npm 9+** ou **yarn**
-- **Angular CLI 20.3.4+**
-
-### Instalação e Execução
-
-#### 1️⃣ Backend (Java-Spring)
-
-```bash
-# Navegue até a pasta Backend
-cd Backend
-
-# Instale as dependências com Maven
-mvn clean install
-
-# Execute a aplicação
-mvn spring-boot:run
-```
-
-A API estará disponível em: `http://localhost:8080`
-
-#### 2️⃣ Frontend (Angular)
-
-```bash
-# Navegue até a pasta Frontend
-cd Frontend
-
-# Instale as dependências
-npm install
-
-# Inicie o servidor de desenvolvimento
-ng serve
-```
-
-A aplicação estará disponível em: `http://localhost:4200`
-
----
+- Docker
 
 ## 📚 Documentação
 
