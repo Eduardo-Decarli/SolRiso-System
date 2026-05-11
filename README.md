@@ -1,6 +1,6 @@
 # 🌟 SolRiso-System
 
-Um sistema full-stack moderno desenvolvido com **Java-Spring** no backend e **Angular** no frontend, projetado para oferecer uma solução robusta e escalável.
+Um sistema full-stack moderno desenvolvido com **Spring Framework** no backend e **Angular** no frontend, projetado para oferecer uma solução para o gerenciamento de uma pousada, permitindo uma série de funcionalidades e sincronizações.
 
 ## 📋 Visão Geral
 
@@ -15,10 +15,21 @@ O SolRiso-System é uma aplicação completa que combina:
 ## 🏗️ Estrutura do Projeto
 
 ```
+
 SolRiso-System/
 ├── Backend/          # API REST em Java-Spring Boot
+    ├── src/          # Código backend desenvolvido
+    ├── Dockerfile    # Arquivo de gerenciamento do Docker
+    ├── pom.xml       # Gerenciador de pacotes do projeto backend
+    ├── .gitignore    # GitIgnore do Backend
+    └── README.md     # Descrição do projeto Backend
 ├── Frontend/         # Aplicação Angular
-└── README.md         # Este arquivo
+    ├── public/       # Arquivos de imagens do projeto
+    ├── src/          # Código Frontend desenvolvido
+    ├── .gitignore    # GitIgnore do Frontend
+    └── README.md     # Descrição do projeto Frontend
+└── README.md         # Arquivo de descrição geral do projeto
+
 ```
 
 ---
@@ -28,9 +39,8 @@ SolRiso-System/
 ### Pré-requisitos
 
 #### Backend
-- **Java 17** ou superior
-- **Maven 3.8+** ou **Gradle**
-- **MySQL 8.0+** (ou seu banco de dados preferido)
+- **Java 21** ou superior
+- **Maven 3.8+**
 
 #### Frontend
 - **Node.js 18+**
