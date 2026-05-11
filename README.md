@@ -1,18 +1,14 @@
 # 🌟 SolRiso-System
 
-Um sistema full-stack moderno desenvolvido com **Spring Framework** no backend e **Angular** no frontend, projetado para oferecer uma solução para o gerenciamento de uma pousada, permitindo uma série de funcionalidades e sincronizações.
+Um sistema full-stack moderno desenvolvido com **Spring Framework** para o backend e **Angular** para o frontend, foi projetado para oferecer uma solução para o gerenciamento de uma pousada, permitindo uma série de funcionalidades e sincronizações, onde o gestor pode gerenciar e escalar de uma forma mais articulada e facilitada pelo sistema, conta com sistema de login, restrições de roles, cadastro de hóspedes e reservas, integração com busca-CEP e amostragem facilitada de dados da reserva.
 
-## 📋 Visão Geral
-
-O SolRiso-System é uma aplicação completa que combina:
-- **Backend robusto** construído com Spring Boot
-- **Frontend moderno** desenvolvido com Angular
-- Arquitetura em camadas bem definida
-- APIs RESTful para integração eficiente
+Também possui um sistema de gerenciamento financeiro onde o gestor possui pleno controle sobre as receitas e reservas feitas, de acordo com filtros especificados. O SolRiso-System busca criar um ecossistema completo para que a gerencia de um estabelecimento possa ser conduzida de forma integrada e com o mínimo de complicações possíveis.
 
 ---
 
 ## 🏗️ Estrutura do Projeto
+
+Abaixo segue uma visualização geral da arquitetura de pastas do projeto, contendo informações tanto do backend quanto do frontend.
 
 ```
 
@@ -33,6 +29,35 @@ SolRiso-System/
 ```
 
 ---
+
+## 🚀 Stack Tecnológica
+
+Frontend:
+- NodeJS
+- Angular
+- TypeScript
+- HTML
+- CSS
+- SCSS
+
+Backend:
+- Java 21
+- Spring Boot 3.4.3
+- Spring Security 
+- Spring Data JPA
+- Spring Boot Validation
+- SpringDoc
+- JWT
+- Auth0
+- Flyway
+- SLF4J
+- Lombok
+- MapStruct
+
+Database: 
+- PostgreSQL
+- pgAdmin 4 e DBeaver
+- Supabase
 
 ## 🚀 Início Rápido
 
